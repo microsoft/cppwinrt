@@ -1,7 +1,13 @@
 
+#include <intrin.h>
+#include <cstddef>
+
 #ifdef WINRT_ENABLE_LEGACY_COM
 #include <unknwn.h>
 #include <inspectable.h>
+#endif
+
+#ifdef GetCurrentTime
 #undef GetCurrentTime
 #endif
 

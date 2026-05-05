@@ -1,4 +1,6 @@
 
+#include <intrin.h>
+
 export module winrt_numerics;
 
 #if __has_include(<windowsnumerics.impl.h>)
