@@ -9,13 +9,13 @@ namespace cppwinrt
         w.write(strings::base_version_odr, CPPWINRT_VERSION_STRING);
         {
             auto wrap_file_guard = wrap_open_file_guard(w, "BASE");
-            w.write("#ifndef WINRT_IMPORT_MODULE\n");
+            auto wrap_import = wrap_ifndef(w, "WINRT_IMPORT_MODULE");
 
             {
                 auto wrap_includes = wrap_module_aware_includes_guard(w, true);
                 w.write(strings::base_includes);
             }
-            w.write("#include \"winrt/base_macros.h\"\n");
+            w.write_root_include("base_macros");
             w.write(strings::base_source_location);
             w.write(strings::base_types);
             w.write(strings::base_extern);
@@ -47,8 +47,6 @@ namespace cppwinrt
             w.write(strings::base_coroutine_threadpool);
             w.write(strings::base_natvis);
             w.write(strings::base_version);
-
-            w.write("#endif // WINRT_IMPORT_MODULE\n");
         }
         w.flush_to_file(settings.output_folder + "winrt/base.h");
     }
@@ -240,7 +238,7 @@ namespace cppwinrt
         write_namespace_special(w, ns);
 
         write_close_file_guard(w);
-        w.write("#endif\n"); // WINRT_IMPORT_MODULE
+        w.write("#endif // WINRT_IMPORT_MODULE\n");
         w.swap();
         write_preamble(w);
         write_open_file_guard(w, ns);
@@ -303,12 +301,12 @@ namespace cppwinrt
         write_include_guard(w);
 
         w.write("#ifdef WINRT_IMPORT_MODULE\n");
-        w.write("#include \"winrt/base_macros.h\"\n");
+        w.write_root_include("base_macros");
         for (auto&& depends : w.depends)
         {
             w.write("import winrt.%;\n", depends.first);
         }
-        w.write("#else\n");
+        w.write("#else // WINRT_IMPORT_MODULE\n");
 
         for (auto&& depends : w.depends)
         {
