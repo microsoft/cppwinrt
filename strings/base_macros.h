@@ -123,4 +123,11 @@ typedef struct _GUID GUID;
 #define WINRT_IMPL_CONSTEVAL constexpr
 #endif
 
+// CPPWINRT_VERSION is defined here so it is available in module global fragments.
+// In header builds, base_version_odr.h defines it first (before base_macros.h is included),
+// so the #ifndef guard prevents redefinition.
+#ifndef CPPWINRT_VERSION
+#define CPPWINRT_VERSION "%"
+#endif
+
 #endif // WINRT_BASE_MACROS_H

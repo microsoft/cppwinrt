@@ -3,6 +3,10 @@
 
 export module winrt_numerics;
 
+#if defined(_MSC_VER)
+#pragma detect_mismatch("C++/WinRT version", CPPWINRT_VERSION)
+#endif
+
 #if __has_include(<windowsnumerics.impl.h>)
 #ifdef _MSC_VER
 #pragma warning(push)
