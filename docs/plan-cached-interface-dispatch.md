@@ -33,7 +33,7 @@ The runtimeclass **does not inherit from its default interface**. Instead it inh
 
 Each `interface_thunk` is 16 bytes with a vtable pointer into a shared table of 256
 architecture-specific ASM stubs. On first method call through any interface, the stub
-calls `winrt_fast_resolve_thunk()` which QIs the default interface, atomically replaces
+calls `winrt_cached_resolve_thunk()` which QIs the default interface, atomically replaces
 the cache slot with the real pointer, and tail-jumps to the real method. All subsequent
 calls dispatch directly — the thunk is never touched again.
 
@@ -220,30 +220,30 @@ The thunk vtable's first 3 entries (slots 0/1/2 = QI/AddRef/Release) use dedicat
 no-op functions instead of the generic resolve stubs:
 
 ```asm
-winrt_thunk_qi proc
+winrt_cached_thunk_qi proc
     mov     dword ptr [r8], 0       ; *ppv = nullptr
     mov     eax, 80004002h          ; E_NOINTERFACE
     ret
-winrt_thunk_qi endp
+winrt_cached_thunk_qi endp
 
-winrt_thunk_addref proc
+winrt_cached_thunk_addref proc
     mov     eax, 1
     ret
-winrt_thunk_addref endp
+winrt_cached_thunk_addref endp
 
-winrt_thunk_release proc
+winrt_cached_thunk_release proc
     mov     eax, 1
     ret
-winrt_thunk_release endp
+winrt_cached_thunk_release endp
 ```
 
 The vtable array uses these for slots 0–2, regular stubs for slots 3–255:
 
 ```asm
-winrt_fast_thunk_vtable label qword
-    dq winrt_thunk_qi           ; slot 0
-    dq winrt_thunk_addref       ; slot 1
-    dq winrt_thunk_release      ; slot 2
+winrt_cached_thunk_vtable label qword
+    dq winrt_cached_thunk_qi           ; slot 0
+    dq winrt_cached_thunk_addref       ; slot 1
+    dq winrt_cached_thunk_release      ; slot 2
     vtable_entry %3             ; slot 3+
     ...
 ```
@@ -317,14 +317,14 @@ shared table of 256 ASM stubs. Slots 0–2 are no-op QI/AddRef/Release (see abov
 Each method stub (10 bytes on x64):
 
 ```asm
-winrt_fast_thunk_stub_N:
+winrt_cached_thunk_stub_N:
     mov eax, N              ; slot index
-    jmp common_thunk_dispatch
+    jmp common_cached_thunk_dispatch
 ```
 
-`common_thunk_dispatch` (~60 bytes, shared):
+`common_cached_thunk_dispatch` (~60 bytes, shared):
 1. Saves caller's `rdx`/`r8`/`r9` in shadow space
-2. Calls `winrt_fast_resolve_thunk(rcx)` — rcx is `interface_thunk*`
+2. Calls `winrt_cached_resolve_thunk(rcx)` — rcx is `interface_thunk*`
 3. `resolve()` atomically replaces the cache slot with the real interface via QI
 4. Loads `real_vtable[slot_index]`, tail-jumps to the real method
 
@@ -543,21 +543,21 @@ write(strings::base_thunked_runtimeclass);  // NEW
 
 | File | Architecture | Size |
 |------|-------------|------|
-| `strings/thunk_stubs_x64.asm` | x64 (MASM) | ~4.7 KB |
-| `strings/thunk_stubs_x86.asm` | x86 (MASM) | ~2.9 KB |
-| `strings/thunk_stubs_arm64.asm` | ARM64 (armasm64) | ~4.2 KB |
-| `strings/thunk_stubs_arm64ec.asm` | ARM64EC (armasm64) | ~4.2 KB |
+| `strings/cached_thunks_x64.asm` | x64 (MASM) | ~4.7 KB |
+| `strings/cached_thunks_x86.asm` | x86 (MASM) | ~2.9 KB |
+| `strings/cached_thunks_arm64.asm` | ARM64 (armasm64) | ~4.2 KB |
+| `strings/cached_thunks_arm64ec.asm` | ARM64EC (armasm64) | ~4.2 KB |
 
 256 stubs × 10 bytes each + common dispatch + no-op IUnknown slots + vtable array.
 
 ### Extern declarations
 
 ```cpp
-extern "C" void* winrt_fast_resolve_thunk(interface_thunk const* thunk);
-extern "C" const void* winrt_fast_thunk_vtable[256];
+extern "C" void* winrt_cached_resolve_thunk(interface_thunk const* thunk);
+extern "C" const void* winrt_cached_thunk_vtable[256];
 ```
 
-`winrt_fast_resolve_thunk` is a one-line `extern "C"` function that calls
+`winrt_cached_resolve_thunk` is a one-line `extern "C"` function that calls
 `interface_thunk::resolve()`.
 
 ### Build integration
@@ -611,10 +611,10 @@ loads — standard lock-free pattern.
    - Or keep `WINRT_IMPL_SHIM` for the `D == Base` case and add a thunked alternative
 
 5. **ASM stubs** — copy from prototype, add no-op QI/AddRef/Release:
-   - `strings/thunk_stubs_x64.asm`
-   - `strings/thunk_stubs_x86.asm`
-   - `strings/thunk_stubs_arm64.asm`
-   - `strings/thunk_stubs_arm64ec.asm`
+   - `strings/cached_thunks_x64.asm`
+   - `strings/cached_thunks_x86.asm`
+   - `strings/cached_thunks_arm64.asm`
+   - `strings/cached_thunks_arm64ec.asm`
 
 6. **`bind_out` static_assert** (`base_string.h`)
 
@@ -790,12 +790,12 @@ Phase 1 items completed (uncommitted):
 4. **`strings/base_string.h`** — Added `static_assert(sizeof(T) == sizeof(void*))` in `bind_out`
 
 5. **ASM stubs** — All 4 architecture files created:
-   - `strings/thunk_stubs_x64.asm` — ~80 lines, MASM, 256 stubs + common dispatch + no-op IUnknown
-   - `strings/thunk_stubs_arm64.asm` — ~89 lines, armasm64
-   - `strings/thunk_stubs_arm64ec.asm` — ~85 lines, armasm64
-   - `strings/thunk_stubs_x86.asm` — ~78 lines, MASM .686
+   - `strings/cached_thunks_x64.asm` — ~80 lines, MASM, 256 stubs + common dispatch + no-op IUnknown
+   - `strings/cached_thunks_arm64.asm` — ~89 lines, armasm64
+   - `strings/cached_thunks_arm64ec.asm` — ~85 lines, armasm64
+   - `strings/cached_thunks_x86.asm` — ~78 lines, MASM .686
 
-6. **`strings/winrt_thunk_resolve.cpp`** — Bridge from ASM to C++ `thunk->resolve()`
+6. **`strings/cached_thunk_resolve.cpp`** — Bridge from ASM to C++ `thunk->resolve()`
 
 7. **`cppwinrt/file_writers.h`** — Added `w.write(strings::base_thunked_runtimeclass)` after
    `base_implements` in `write_base_h()`
@@ -874,7 +874,7 @@ overload `detach_abi(T&&)`. Added `!has_thunked_cache_v<T>` exclusion to all val
 ABI overloads.
 
 **Build system:** Created `test/Directory.Build.targets` to compile x64/x86 ASM thunk stubs
-and `winrt_thunk_resolve.cpp` into all test binaries.
+and `cached_thunk_resolve.cpp` into all test binaries.
 
 **Implicit conversions:** Added `operator IUnknown()` and `operator IInspectable()` to
 `thunked_runtimeclass_base` — many APIs expect runtimeclass types to be implicitly
@@ -945,7 +945,7 @@ Add a test function that creates a `PropertySet`, calls `Insert`/`Lookup`/`Size`
 x64 Release, then disassemble with `cdb -logo nul -z test.exe -c "uf test!function ; q"`
 and verify the hot path is `load cache slot → load vtable → call method` with no QI.
 
-**Status:** The thunk infrastructure is linked into test.exe (verified: `winrt_fast_thunk_vtable`,
+**Status:** The thunk infrastructure is linked into test.exe (verified: `winrt_cached_thunk_vtable`,
 stub symbols, IID tables for Uri/Deferral/XmlDocument/etc. all present). However the existing
 test code exercises projected types through raw interfaces (e.g., `IMap<K,V>` directly),
 not through runtimeclass wrappers. Need to add a dedicated test function that uses a
@@ -1057,8 +1057,8 @@ memory (`0xc0c0c0c0` AppVerifier fill).
 
 **Root cause:** `interface_thunk::resolve()` uses `check_hresult()` on the QI result.
 If QueryInterface fails (e.g. `E_NOINTERFACE`), `check_hresult` throws a C++ exception.
-But `resolve()` is called from `winrt_fast_resolve_thunk()`, which is called from the
-x64 ASM `common_thunk_dispatch` stub. That stub has no `.pdata`/`.xdata` unwind
+But `resolve()` is called from `winrt_cached_resolve_thunk()`, which is called from the
+x64 ASM `common_cached_thunk_dispatch` stub. That stub has no `.pdata`/`.xdata` unwind
 metadata — it manually saves registers to `[rsp+10h/18h/20h]` and uses
 `push/sub rsp/call/add rsp/pop/jmp`. An exception thrown through this frame corrupts
 the stack unwinder's state, leading to undefined behavior downstream.
@@ -1076,12 +1076,12 @@ references freed memory.
 
 **Fix options considered:**
 
-- **(A) Return thunk on failure:** Leave cache unresolved. Problem: `common_thunk_dispatch`
+- **(A) Return thunk on failure:** Leave cache unresolved. Problem: `common_cached_thunk_dispatch`
   tail-jumps to `[vtable + slot*8]` which re-enters the same stub, infinite loop.
 
 - **(B) Error sentinel vtable:** Create a static vtable where every slot returns
   `E_NOINTERFACE`. On QI failure, CAS the cache slot from thunk → error sentinel.
-  `common_thunk_dispatch` tail-jumps into the sentinel, which returns `E_NOINTERFACE`.
+  `common_cached_thunk_dispatch` tail-jumps into the sentinel, which returns `E_NOINTERFACE`.
   `consume_general`'s `check_hresult` on the method result throws `hresult_no_interface`
   as expected. No ASM changes needed. Matches the "thunk IS the null-state handler" design.
 
@@ -1091,7 +1091,7 @@ references freed memory.
 **Recommended: Option D** — null return + ASM early-out.
 
 `resolve()` returns `nullptr` without modifying the cache slot when QI fails. The cache
-stays pointing to the thunk (retryable on next call). `common_thunk_dispatch` checks
+stays pointing to the thunk (retryable on next call). `common_cached_thunk_dispatch` checks
 the return value; if null, it does `mov eax, 0x80004002; ret` to return `E_NOINTERFACE`
 directly to the caller. `consume_general`'s `check_hresult` on the method result throws
 `hresult_no_interface` in a proper C++ frame.

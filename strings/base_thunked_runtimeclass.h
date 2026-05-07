@@ -63,8 +63,8 @@ WINRT_EXPORT namespace winrt::impl
     };
     static_assert(sizeof(interface_thunk) == 16);
 
-    extern "C" void* winrt_fast_resolve_thunk(interface_thunk const* thunk);
-    extern "C" const void* winrt_fast_thunk_vtable[];
+    extern "C" void* winrt_cached_resolve_thunk(interface_thunk const* thunk);
+    extern "C" const void* winrt_cached_thunk_vtable[];
 
     struct cache_and_thunk_tagged
     {
@@ -87,14 +87,14 @@ WINRT_EXPORT namespace winrt::impl
     inline void init_pair_tagged(cache_and_thunk_tagged& p, size_t index, thunked_runtimeclass_header* header)
     {
         p.cache.store(&p.thunk, std::memory_order_relaxed);
-        p.thunk.vtable = reinterpret_cast<void const* const*>(winrt_fast_thunk_vtable);
+        p.thunk.vtable = reinterpret_cast<void const* const*>(winrt_cached_thunk_vtable);
         p.thunk.payload = reinterpret_cast<uintptr_t>(header) | (index << 1) | 1;
     }
 
     inline void init_pair_full(cache_and_thunk_full& p, void* default_abi, guid const* iid)
     {
         p.cache.store(&p.thunk, std::memory_order_relaxed);
-        p.thunk.vtable = reinterpret_cast<void const* const*>(winrt_fast_thunk_vtable);
+        p.thunk.vtable = reinterpret_cast<void const* const*>(winrt_cached_thunk_vtable);
         p.thunk.payload = reinterpret_cast<uintptr_t>(default_abi);
         p.iid = iid;
     }
