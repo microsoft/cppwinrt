@@ -140,10 +140,10 @@ The cache holds a pointer to the thunk. The vtable dispatch enters the ASM stub:
 ```asm
 winrt_cached_thunk_stub_N:
     mov  eax, N                ; vtable slot index
-    jmp  common_cached_thunk_dispatch ; save registers, call resolve, tail-jump
+    jmp  CachedResolveAndDispatch ; save registers, call resolve, tail-jump
 ```
 
-`common_cached_thunk_dispatch` calls `winrt_cached_resolve_thunk(thunk*)`, which:
+`CachedResolveAndDispatch` calls `winrt_cached_resolve_thunk(thunk*)`, which:
 
 1. Reads `thunk->payload` to find the default interface pointer and the IID
 2. Calls `QueryInterface(iid, &real)`

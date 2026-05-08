@@ -319,14 +319,15 @@ Each method stub (10 bytes on x64):
 ```asm
 winrt_cached_thunk_stub_N:
     mov eax, N              ; slot index
-    jmp common_cached_thunk_dispatch
+    jmp CachedResolveAndDispatch
 ```
 
-`common_cached_thunk_dispatch` (~60 bytes, shared):
-1. Saves caller's `rdx`/`r8`/`r9` in shadow space
+`CachedResolveAndDispatch` (~80 bytes, shared):
+1. Saves caller's `rdx`/`r8`/`r9` and slot index via `push` (with `NESTED_ENTRY` unwind info)
 2. Calls `winrt_cached_resolve_thunk(rcx)` — rcx is `interface_thunk*`
 3. `resolve()` atomically replaces the cache slot with the real interface via QI
-4. Loads `real_vtable[slot_index]`, tail-jumps to the real method
+4. Loads `real_vtable[slot_index]` into `rax`, validates via `__guard_check_icall_fptr` (CFG)
+5. Restores caller's args, tail-jumps to the real method via `rex_jmp_reg rax`
 
 After resolution, the cache slot holds the real COM pointer directly. All subsequent
 calls dispatch through the real vtable — zero overhead.
@@ -1058,10 +1059,10 @@ memory (`0xc0c0c0c0` AppVerifier fill).
 **Root cause:** `interface_thunk::resolve()` uses `check_hresult()` on the QI result.
 If QueryInterface fails (e.g. `E_NOINTERFACE`), `check_hresult` throws a C++ exception.
 But `resolve()` is called from `winrt_cached_resolve_thunk()`, which is called from the
-x64 ASM `common_cached_thunk_dispatch` stub. That stub has no `.pdata`/`.xdata` unwind
-metadata — it manually saves registers to `[rsp+10h/18h/20h]` and uses
-`push/sub rsp/call/add rsp/pop/jmp`. An exception thrown through this frame corrupts
-the stack unwinder's state, leading to undefined behavior downstream.
+x64 ASM `CachedResolveAndDispatch` stub. Although that stub now uses `NESTED_ENTRY`
+with proper `.pdata`/`.xdata` unwind metadata, the design is still wrong: an exception
+thrown through `resolve()` would unwind through the ASM frame and skip the caller's
+`check_hresult` entirely.
 
 Even if the ASM had proper unwind info, the design is wrong: `consume_general`'s
 thunked branch does `check_hresult((_winrt_abi_type->*mptr)(...))` — it expects the
@@ -1076,12 +1077,12 @@ references freed memory.
 
 **Fix options considered:**
 
-- **(A) Return thunk on failure:** Leave cache unresolved. Problem: `common_cached_thunk_dispatch`
+- **(A) Return thunk on failure:** Leave cache unresolved. Problem: `CachedResolveAndDispatch`
   tail-jumps to `[vtable + slot*8]` which re-enters the same stub, infinite loop.
 
 - **(B) Error sentinel vtable:** Create a static vtable where every slot returns
   `E_NOINTERFACE`. On QI failure, CAS the cache slot from thunk → error sentinel.
-  `common_cached_thunk_dispatch` tail-jumps into the sentinel, which returns `E_NOINTERFACE`.
+  `CachedResolveAndDispatch` tail-jumps into the sentinel, which returns `E_NOINTERFACE`.
   `consume_general`'s `check_hresult` on the method result throws `hresult_no_interface`
   as expected. No ASM changes needed. Matches the "thunk IS the null-state handler" design.
 
@@ -1091,7 +1092,7 @@ references freed memory.
 **Recommended: Option D** — null return + ASM early-out.
 
 `resolve()` returns `nullptr` without modifying the cache slot when QI fails. The cache
-stays pointing to the thunk (retryable on next call). `common_cached_thunk_dispatch` checks
+stays pointing to the thunk (retryable on next call). `CachedResolveAndDispatch` checks
 the return value; if null, it does `mov eax, 0x80004002; ret` to return `E_NOINTERFACE`
 directly to the caller. `consume_general`'s `check_hresult` on the method result throws
 `hresult_no_interface` in a proper C++ frame.

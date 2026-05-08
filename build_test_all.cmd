@@ -16,12 +16,12 @@ call .nuget\nuget.exe restore cppwinrt.sln
 call .nuget\nuget.exe restore natvis\cppwinrtvisualizer.sln
 call .nuget\nuget.exe restore test\nuget\NugetTest.sln
 
-call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
+call msbuild %additional_msbuild_args% /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
 if errorlevel 1 exit /b 1
 
-call msbuild /p:Configuration=%target_configuration%,Platform=%target_platform%,Deployment=Component;CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
+call msbuild %additional_msbuild_args% /p:Configuration=%target_configuration%,Platform=%target_platform%,Deployment=Component;CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
 if errorlevel 1 exit /b 1
-call msbuild /p:Configuration=%target_configuration%,Platform=%target_platform%,Deployment=Standalone;CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
+call msbuild %additional_msbuild_args% /p:Configuration=%target_configuration%,Platform=%target_platform%,Deployment=Standalone;CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
 if errorlevel 1 exit /b 1
 
 if "%target_platform%"=="arm64" goto :eof
@@ -37,10 +37,10 @@ set build_targets=%build_targets%;test\test_module_lock_custom
 set build_targets=%build_targets%;test\test_module_lock_none
 set build_targets=%build_targets%;test\old_tests\test_old
 
-call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln "/t:%build_targets%"
+call msbuild %additional_msbuild_args% /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln "/t:%build_targets%"
 if errorlevel 1 exit /b 1
 
-call msbuild /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% test\nuget\NugetTest.sln
+call msbuild %additional_msbuild_args% /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% test\nuget\NugetTest.sln
 if errorlevel 1 exit /b 1
 
 call run_tests.cmd %target_platform% %target_configuration%

@@ -1,98 +1,122 @@
-; cached_thunks_x64.asm - x64 thunk stubs for interface caching
+; cached_thunks_x64.asm - x64 cached interface dispatch stubs
 ;
-; Each stub is 10 bytes: mov eax, <slot_index> + jmp common_cached_thunk_dispatch
-; The common dispatch saves caller's register args, calls resolve, then
-; tail-jumps to the real vtable method.
+; Calling convention: https://docs.microsoft.com/en-us/cpp/build/calling-convention
+;
+; Each leaf stub loads a slot index into eax and jumps to CachedResolveAndDispatch.
+; CachedResolveAndDispatch calls winrt_cached_resolve_thunk(rcx) which returns
+; the resolved IFoo* (or nullptr). On success, replaces rcx with the resolved
+; pointer and tail-jumps to vtable[slot]. On failure, returns E_NOINTERFACE.
+
+include ksamd64.inc
 
 extern winrt_cached_resolve_thunk:proc
-
-_TEXT segment align(16)
+extern __guard_check_icall_fptr:QWORD
 
 ; ============================================================================
 ; No-op IUnknown slots for thunk objects
+; The thunk is not a real COM object; QI fails, AddRef/Release return 1.
 ; ============================================================================
-winrt_cached_thunk_qi proc
+
+LEAF_ENTRY winrt_cached_thunk_qi, _TEXT, NoPad
     mov     dword ptr [r8], 0       ; *ppv = nullptr
     mov     eax, 80004002h          ; E_NOINTERFACE
     ret
-winrt_cached_thunk_qi endp
+LEAF_END winrt_cached_thunk_qi, _TEXT
 
-winrt_cached_thunk_addref proc
+LEAF_ENTRY winrt_cached_thunk_addref, _TEXT, NoPad
     mov     eax, 1
     ret
-winrt_cached_thunk_addref endp
+LEAF_END winrt_cached_thunk_addref, _TEXT
 
-winrt_cached_thunk_release proc
+LEAF_ENTRY winrt_cached_thunk_release, _TEXT, NoPad
     mov     eax, 1
     ret
-winrt_cached_thunk_release endp
+LEAF_END winrt_cached_thunk_release, _TEXT
 
 ; ============================================================================
-; Common dispatch - entered with eax = vtable slot index, rcx = InterfaceThunk*
+; CachedResolveAndDispatch
+;
+; Entry: eax = vtable slot index, rcx = interface_thunk*
+;        rdx, r8, r9 = caller's args (preserved across resolve)
+;
+; Calls winrt_cached_resolve_thunk(rcx) → rax = resolved IFoo* or nullptr.
+; On success: rcx = rax, tail-jumps to [rcx]->vtable[slot].
+; On failure: returns E_NOINTERFACE (0x80004002).
 ; ============================================================================
-align 16
-common_cached_thunk_dispatch proc
-    mov     [rsp+10h], rdx
-    mov     [rsp+18h], r8
-    mov     [rsp+20h], r9
-    push    rax
-    sub     rsp, 20h
 
-    ; rcx = InterfaceThunk* (already in place)
+NESTED_ENTRY CachedResolveAndDispatch, _TEXT
+
+    ; Save caller's enregistered args and slot index
+    push    r9
+    push    r8
+    push    rdx
+    push    rax                     ; slot index
+
+    END_PROLOGUE
+
+    sub     rsp, 4 * 8             ; shadow space for callee
+
+    ; rcx = interface_thunk* (already in place from caller)
     call    winrt_cached_resolve_thunk
 
-    add     rsp, 20h
-    pop     r10
+    add     rsp, 4 * 8             ; remove shadow space
+
+    pop     r10                     ; r10 = slot index
 
     test    rax, rax
     jz      resolve_failed
 
-    mov     rcx, rax
-    mov     r11, [rax]
-    mov     r11, [r11 + r10*8]
+    ; rax = resolved IFoo*. Load method ptr into rax for CFG validation.
+    mov     rcx, rax                ; rcx = new this (resolved IFoo*)
+    mov     r11, [rax]              ; r11 = resolved vtable
+    mov     rax, [r11 + r10 * 8]   ; rax = method at vtable[slot]
 
-    mov     rdx, [rsp+10h]
-    mov     r8,  [rsp+18h]
-    mov     r9,  [rsp+20h]
+    ; Verify indirect call target (preserves all GPRs except rax/flags)
+    call    [__guard_check_icall_fptr]
 
-    jmp     r11
+    ; Restore caller's args after CFG check
+    pop     rdx
+    pop     r8
+    pop     r9
+
+    rex_jmp_reg rax
 
 resolve_failed:
+    pop     rdx                     ; balance the stack
+    pop     r8
+    pop     r9
     mov     eax, 80004002h          ; E_NOINTERFACE
     ret
-common_cached_thunk_dispatch endp
+
+NESTED_END CachedResolveAndDispatch, _TEXT
 
 ; ============================================================================
-; Thunk stub macro
+; Leaf stub macro — each loads a slot index and jumps to the shared dispatcher
 ; ============================================================================
-thunk_stub macro idx
-    align 2
-    winrt_cached_thunk_stub_&idx& proc
-        mov     eax, idx
-        jmp     common_cached_thunk_dispatch
-    winrt_cached_thunk_stub_&idx& endp
-endm
 
-; ============================================================================
-; Emit 256 thunk stubs
-; ============================================================================
+WINRT_CACHED_THUNK MACRO idx
+LEAF_ENTRY winrt_cached_thunk_stub_&idx, _TEXT, NoPad
+    mov     eax, idx
+    jmp     CachedResolveAndDispatch
+LEAF_END winrt_cached_thunk_stub_&idx, _TEXT
+ENDM
+
+; Emit 256 stubs (slots 0-255)
 counter = 0
-rept 256
-    thunk_stub %counter
+REPT 256
+    WINRT_CACHED_THUNK %counter
     counter = counter + 1
-endm
-
-_TEXT ends
+ENDM
 
 ; ============================================================================
 ; Vtable array: slots 0-2 are no-op IUnknown, slots 3-255 are resolve stubs
 ; ============================================================================
 
-vtable_entry macro idx
-dq winrt_cached_thunk_stub_&idx&
- endm
+vtable_entry MACRO idx
+    dq winrt_cached_thunk_stub_&idx
+ENDM
 
-_DATA segment
+CONST segment
 
     public winrt_cached_thunk_vtable
     winrt_cached_thunk_vtable label qword
@@ -102,11 +126,11 @@ _DATA segment
     dq winrt_cached_thunk_release
 
     counter2 = 3
-    rept 253
+    REPT 253
         vtable_entry %counter2
         counter2 = counter2 + 1
-    endm
+    ENDM
 
-_DATA ends
+CONST ends
 
-end
+END
