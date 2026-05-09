@@ -1,0 +1,7 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.targets','$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets','$(MSBuildThisFileDirectory)../'))" />
+  <!-- Proxy/stub project: remove thunk MASM stubs injected by parent targets -->
+  <ItemGroup>
+    <MASM Remove="@(MASM)" />
+  </ItemGroup>
+</Project>

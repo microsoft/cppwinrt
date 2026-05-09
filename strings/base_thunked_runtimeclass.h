@@ -63,7 +63,12 @@ WINRT_EXPORT namespace winrt::impl
     };
     static_assert(sizeof(interface_thunk) == 16);
 
-    extern "C" void* winrt_cached_resolve_thunk(interface_thunk const* thunk);
+    extern "C" inline void* winrt_cached_resolve_thunk(interface_thunk const* thunk)
+    {
+        return thunk->resolve();
+    }
+    // Force the compiler to emit the inline function body so the ASM thunk stubs can find it.
+    extern "C" __declspec(selectany) void* (*winrt_resolve_thunk_forcelink_)(interface_thunk const*) = winrt_cached_resolve_thunk;
     extern "C" const void* winrt_cached_thunk_vtable[];
 
     struct cache_and_thunk_tagged

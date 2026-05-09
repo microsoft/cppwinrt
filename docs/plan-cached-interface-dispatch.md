@@ -554,12 +554,20 @@ write(strings::base_thunked_runtimeclass);  // NEW
 ### Extern declarations
 
 ```cpp
-extern "C" void* winrt_cached_resolve_thunk(interface_thunk const* thunk);
+extern "C" inline void* winrt_cached_resolve_thunk(interface_thunk const* thunk)
+{
+    return thunk->resolve();
+}
+// Force the compiler to emit the inline function body so the ASM thunk stubs can find it.
+extern "C" __declspec(selectany) void* (*winrt_resolve_thunk_forcelink_)(interface_thunk const*) = winrt_cached_resolve_thunk;
 extern "C" const void* winrt_cached_thunk_vtable[256];
 ```
 
-`winrt_cached_resolve_thunk` is a one-line `extern "C"` function that calls
-`interface_thunk::resolve()`.
+`winrt_cached_resolve_thunk` is defined inline in `base_thunked_runtimeclass.h` (emitted
+into `winrt/base.h`). The `selectany` function-pointer variable forces the compiler to
+emit the inline function body as an externally-visible COMDAT symbol, which the ASM stubs
+reference. Projects that don't include `winrt/base.h` (e.g. C++/CX) must not link the
+ASM stubs.
 
 ### Build integration
 
@@ -796,7 +804,9 @@ Phase 1 items completed (uncommitted):
    - `strings/cached_thunks_arm64ec.asm` — ~85 lines, armasm64
    - `strings/cached_thunks_x86.asm` — ~78 lines, MASM .686
 
-6. **`strings/cached_thunk_resolve.cpp`** — Bridge from ASM to C++ `thunk->resolve()`
+6. **`strings/base_thunked_runtimeclass.h`** — `winrt_cached_resolve_thunk` defined as
+   `extern "C" inline` with a `selectany` function-pointer forcelink, eliminating the
+   need for a separate `.cpp` file
 
 7. **`cppwinrt/file_writers.h`** — Added `w.write(strings::base_thunked_runtimeclass)` after
    `base_implements` in `write_base_h()`
@@ -875,7 +885,10 @@ overload `detach_abi(T&&)`. Added `!has_thunked_cache_v<T>` exclusion to all val
 ABI overloads.
 
 **Build system:** Created `test/Directory.Build.targets` to compile x64/x86 ASM thunk stubs
-and `cached_thunk_resolve.cpp` into all test binaries.
+into all test binaries. The resolve function is defined inline in `base_thunked_runtimeclass.h`
+via `extern "C" inline` with a `selectany` forcelink. C++/CX and proxy/stub nuget test
+projects have per-project `Directory.Build.targets` that remove MASM items to avoid
+unresolved symbol errors (they don't include `winrt/base.h`).
 
 **Implicit conversions:** Added `operator IUnknown()` and `operator IInspectable()` to
 `thunked_runtimeclass_base` — many APIs expect runtimeclass types to be implicitly
