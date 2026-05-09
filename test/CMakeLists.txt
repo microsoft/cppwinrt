@@ -74,7 +74,7 @@ else()
     add_custom_command(
         OUTPUT
             "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt/winrt/base.h"
-        COMMAND cppwinrt -input local -output "${CPPWINRT_PROJECTION_INCLUDE_DIR}" -verbose
+        COMMAND cppwinrt -input local -output "${CPPWINRT_PROJECTION_INCLUDE_DIR}" -verbose -flatten_classes
         DEPENDS
             cppwinrt
         VERBATIM

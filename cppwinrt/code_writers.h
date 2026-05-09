@@ -3525,7 +3525,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             {
                 write_fast_class(w, type, default_interface);
             }
-            else if (get_bases(type).empty() && has_secondary_interfaces(w, type) && !has_async_default_interface(default_interface))
+            else if (settings.flatten_classes && get_bases(type).empty() && has_secondary_interfaces(w, type) && !has_async_default_interface(default_interface))
             {
                 write_thunked_class(w, type, default_interface);
             }

@@ -377,7 +377,7 @@
   <ItemDefinitionGroup>
     <CustomBuildStep>
       <Command>
-      $(CppWinRTDir)cppwinrt -in local -out $(OutputPath) -verbose
+      $(CppWinRTDir)cppwinrt -in local -out $(OutputPath) -verbose -flatten_classes
       $(CppWinRTDir)cppwinrt -input $(OutputPath)test_component.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component -ref sdk -verbose -prefix -opt -lib test -fastabi -overwrite -name test_component
       </Command>
       <Message>Projecting Windows and component metadata into $(OutputPath)</Message>

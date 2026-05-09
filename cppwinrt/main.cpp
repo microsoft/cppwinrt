@@ -37,6 +37,7 @@ namespace cppwinrt
         { "license", 0, 1, "[<path>]", "Generate license comment from template file" },
         { "brackets", 0, 0 }, // Use angle brackets for #includes (defaults to quotes)
         { "fastabi", 0, 0 }, // Enable support for the Fast ABI
+        { "flatten_classes", 0, 0 }, // Emit flattened runtimeclass projections with cached interface dispatch
         { "ignore_velocity", 0, 0 }, // Ignore feature staging metadata and always include implementations
         { "synchronous", 0, 0 }, // Instructs cppwinrt to run on a single thread to avoid file system issues in batch builds
     };
@@ -85,6 +86,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
     {
         settings.verbose = args.exists("verbose");
         settings.fastabi = args.exists("fastabi");
+        settings.flatten_classes = args.exists("flatten_classes");
 
         settings.input = args.files("input", database::is_database);
         settings.reference = args.files("reference", database::is_database);
