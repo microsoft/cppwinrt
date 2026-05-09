@@ -8,6 +8,9 @@ Projected runtimeclass types that have secondary interfaces (e.g., `PropertySet`
 from a single `void*` (the default interface pointer) to a struct containing the
 default pointer plus per-interface cache slots backed by self-resolving ASM thunks.
 
+This feature is opt-in via the `-flatten_classes` flag to cppwinrt.exe, or by setting
+`$(CppWinRTFlattenClasses)` to `true` in MSBuild projects using the C++/WinRT NuGet package.
+
 ## Impact on consumers
 
 **None.** The API surface is identical. Existing code that uses projected runtimeclass
@@ -17,12 +20,14 @@ type layout and internal dispatch mechanism.
 ## Which types are affected
 
 A runtimeclass is cached if all of the following are true:
+- The `-flatten_classes` flag is passed to cppwinrt.exe
 - It has a default interface (not a static-only class)
 - It is not marked `[FastAbi]`
 - It has no base class (not composable)
 - It has at least one secondary interface
+- Its default interface is not an async type (`IAsyncAction`, `IAsyncOperation<T>`, etc.)
 
-Examples: `PropertySet`, `StringMap`, `Uri`, `Deferral`, `XmlDocument`, `Package`.
+Examples: `PropertySet`, `StringMap`, `Uri`, `XmlDocument`, `Package`.
 
 Types that remain unchanged: single-interface runtimeclasses (e.g., `Deferral` if it
 only had `IDeferral`), composable types, `[FastAbi]` types, static classes, all

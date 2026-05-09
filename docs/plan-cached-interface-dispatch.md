@@ -1,5 +1,8 @@
 # Plan: Thunk-Based Interface Caching for Runtimeclasses
 
+**Status: Implementation complete.** All phases done, all tests pass. Gated behind
+`-flatten_classes` CLI flag (MSBuild: `$(CppWinRTFlattenClasses)`).
+
 ## Rules
 
 - **NEVER modify existing test source files.** Fixes go in `strings/` or `cppwinrt/`.
@@ -105,8 +108,8 @@ inline void attach_abi(IUnknown& object, void* value) noexcept { ... }
 
 These take `IUnknown const&`/`IUnknown&`. In the thunk design the runtimeclass no longer
 inherits from `IUnknown` — it inherits from `impl::thunked_runtimeclass<IDefault, I...>`,
-whose first data member is `thunked_runtimeclass_header` (containing `iid_table` then
-`default_cache`). `*(void**)(&object)` would read the `iid_table` pointer, not the COM
+whose first data member is `thunked_runtimeclass_header` (containing `default_cache` then
+`iid_table`). With `default_cache` first, `*(void**)(&object)` correctly reads the COM
 interface pointer.
 
 **Mitigation:** Add SFINAE-guarded template overloads (C++17-compatible) that match any
@@ -266,7 +269,8 @@ winrt_cached_thunk_vtable label qword
 
 ### Cacheable (thunked)
 
-Non-composable, non-fastabi, non-static runtimeclasses with ≥1 secondary interface.
+Non-composable, non-fastabi, non-static runtimeclasses with ≥1 secondary interface
+and a non-async default interface. Enabled by the `-flatten_classes` cppwinrt.exe flag.
 Examples: `PropertySet`, `StringMap`, `StorageFile`, `MediaCapture`.
 
 Includes types with generic default interfaces (`StringMap` defaults to
@@ -281,6 +285,7 @@ code generator returns `coded_index<TypeDefOrRef>` which handles both cases unif
 | Fast ABI runtimeclasses | Already optimized, `[FastAbi]` attribute, separate code path |
 | Static-only runtimeclasses | No instances (`write_static_class`) |
 | Single-interface runtimeclasses | No secondaries to cache (e.g. `Deferral`) |
+| Runtimeclasses with async default interface | Async types have special lifetime semantics (`DataWriterStoreOperation` etc.) |
 | Async types | `IAsyncAction` etc. are interfaces, not runtimeclasses |
 | Component-authored types | Use `implements<>`, not the projected runtimeclass |
 
@@ -296,8 +301,8 @@ The prototype is in `jonwis.github.io/code/cppwinrt-proj/thunk_experiment.h`.
 thunked_runtimeclass<IPropertySet, IMap, IIterable, IObservableMap> layout:
 
 ┌─ thunked_runtimeclass_header (16 bytes) ───────────────────────┐
-│ iid_table:       guid const* const*  → static iids array       │
 │ default_cache:   atomic<void*>       → IPropertySet ABI ptr    │
+│ iid_table:       guid const* const*  → static iids array       │
 ├─ pairs[0]: cache_and_thunk_tagged (24 bytes) ──────────────────┤
 │ cache:  atomic<void*>  → initially &thunk, then real IMap*     │
 │ thunk:  interface_thunk → { vtable → g_thunk_vtable, payload } │
@@ -594,7 +599,7 @@ loads — standard lock-free pattern.
 ### Phase 1: Runtime infrastructure (`strings/`)
 
 1. **`base_thunked_runtimeclass.h`** — new file containing:
-   - `thunked_runtimeclass_header` (iid_table + default_cache)
+   - `thunked_runtimeclass_header` (default_cache + iid_table)
    - `interface_thunk` (16 bytes, `resolve()` logic)
    - `cache_and_thunk_tagged` / `cache_and_thunk_full` pair types
    - `thunked_runtimeclass_base` (clear, attach, copy, move — non-template)
@@ -791,12 +796,12 @@ Phase 1 items completed (uncommitted):
    `consume_noexcept_remove_overload` with three-way `if constexpr` branch
    (same_v → thunked → QI fallback). Added `consume_general_nothrow` variant.
 
-3. **`cppwinrt/code_writers.h`** — Two changes:
-   - `write_abi_args`: `object_type` case now emits `get_abi(param)` instead of `*(void**)(&param)`
-   - 5 `WINRT_IMPL_SHIM` call sites (IMap/IMapView Lookup, IMap Remove) replaced with
-     `consume_general_nothrow` calls
+3. **`cppwinrt/code_writers.h`** — Added `write_thunked_class` function and three-way
+   routing in `write_class` (fastabi → thunked → slow). Thunked path gated on
+   `settings.flatten_classes`. Five `WINRT_IMPL_SHIM` call sites replaced with
+   `consume_general_nothrow` calls.
 
-4. **`strings/base_string.h`** — Added `static_assert(sizeof(T) == sizeof(void*))` in `bind_out`
+4. *(Reverted)* `bind_out` static_assert was removed — `bind_out` is used for structs too.
 
 5. **ASM stubs** — All 4 architecture files created:
    - `strings/cached_thunks_x64.asm` — ~80 lines, MASM, 256 stubs + common dispatch + no-op IUnknown
@@ -813,13 +818,13 @@ Phase 1 items completed (uncommitted):
 
 8. **`cppwinrt/cppwinrt.vcxproj`** — Added `base_thunked_runtimeclass.h` to ClInclude list
 
-**Phase 1 status:** All 8 sub-items appear complete in working tree. Nothing has been committed.
-The prior agent did NOT build or test any of this — there are no build logs, no test results,
-and no evidence of a build attempt.
+**Phase 1 status:** Complete. Committed as `0cb57ec8`.
 
-**Phase 2 not started:** `write_slow_class` in `code_writers.h` has NOT been modified to
-generate thunked runtimeclass inheritance. No runtimeclass types actually use the new
-infrastructure yet.
+**Phase 2 status:** Complete. `write_thunked_class` added to `code_writers.h`,
+committed as `2600e332` + `40dac14b`.
+
+**Phase 3 status:** Complete. All test scenarios covered, committed across
+`59740cef`, `722d83a5`, `63e8c490`, `9edcf17d`.
 
 ### Session 2 (May 4 2026)
 
