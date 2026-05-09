@@ -19,9 +19,9 @@ TEST_CASE("Simple")
     REQUIRE(info.factories[name_of<Simple>()].is_agile);
     REQUIRE(info.factories[name_of<Simple>()].requests == 1);
 
-    // Thunked runtimeclasses resolve secondary interfaces via direct
-    // QueryInterface in the thunk stub, which bypasses the diagnostics
-    // hooks. Only the factory's IAgileObject QI is tracked here.
-    REQUIRE(info.queries.size() == 1);
+    REQUIRE(info.queries.size() == 4);
     REQUIRE(info.queries[L"IAgileObject"] == 1);
+    REQUIRE(info.queries[name_of<Simple>()] == 1);
+    REQUIRE(info.queries[name_of<ISimple2>()] == 1);
+    REQUIRE(info.queries[name_of<ISimple3>()] == 1);
 }
