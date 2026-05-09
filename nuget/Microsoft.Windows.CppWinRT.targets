@@ -893,6 +893,7 @@ $(XamlMetaDataProviderPch)
         <Link>
             <AdditionalDependencies Condition="'$(CppWinRTLibs)' != 'false'">%(AdditionalDependencies);WindowsApp.lib</AdditionalDependencies>
             <AdditionalDependencies Condition="'$(CppWinRTFastAbi)'=='true'">%(AdditionalDependencies);$(CppWinRTPackageDir)build\native\lib\$(Platform)\cppwinrt_fast_forwarder.lib</AdditionalDependencies>
+            <AdditionalDependencies Condition="'$(CppWinRTFlattenClasses)'=='true'">%(AdditionalDependencies);$(CppWinRTPackageDir)build\native\lib\$(Platform)\cppwinrt_cached_thunks.lib</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
 

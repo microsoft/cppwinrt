@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{B3F2B53D-5E38-4B75-9C07-E2B1A5C2E0D7}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>cached_thunks</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Lib>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <PropertyGroup>
+    <Platform_Arm Condition="'$(Platform)'=='ARM64'">true</Platform_Arm>
+    <Platform_Arm Condition="'$(Platform_Arm)'!='true'">false</Platform_Arm>
+    <Platform_Intel>!$(Platform_Arm)</Platform_Intel>
+    <TargetName>cppwinrt_cached_thunks</TargetName>
+  </PropertyGroup>
+  <ImportGroup>
+    <Import Condition="$(Platform_Intel)" Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+    <Import Condition="$(Platform_Arm)" Project="$(VCTargetsPath)\BuildCustomizations\marmasm.props" />
+  </ImportGroup>
+  <!-- ARM64: preprocess with cl.exe to expand #include "ksarm64.h" -->
+  <Target Name="CppWinRTPreprocessArmThunk" Condition="$(Platform_Arm)" BeforeTargets="_MARMASM" Outputs="$(IntDir)cached_thunks_arm64.pp" Inputs="..\strings\cached_thunks_arm64.asm">
+    <Exec Command="cl /E /Tc ..\strings\cached_thunks_arm64.asm &gt; $(IntDir)cached_thunks_arm64.pp" />
+  </Target>
+  <Target Name="CppWinRTPreprocessArmECThunk" Condition="$(Platform_Arm)" BeforeTargets="_MARMASM" Outputs="$(IntDir)cached_thunks_arm64ec.pp" Inputs="..\strings\cached_thunks_arm64ec.asm">
+    <Exec Command="cl /E /Tc ..\strings\cached_thunks_arm64ec.asm &gt; $(IntDir)cached_thunks_arm64ec.pp" />
+  </Target>
+  <ItemGroup Condition="'$(Platform)'=='x64'">
+    <MASM Include="..\strings\cached_thunks_x64.asm">
+      <FileType>Document</FileType>
+    </MASM>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)'=='Win32'">
+    <MASM Include="..\strings\cached_thunks_x86.asm">
+      <FileType>Document</FileType>
+      <UseSafeExceptionHandlers>true</UseSafeExceptionHandlers>
+    </MASM>
+  </ItemGroup>
+  <ItemGroup Condition="$(Platform_Arm)">
+    <MARMASM Include="$(IntDir)cached_thunks_arm64.pp">
+      <PreprocessWithCl Condition="'$(VisualStudioVersion)' &gt;= '17.0'">false</PreprocessWithCl>
+      <FileType>Document</FileType>
+    </MARMASM>
+    <MARMASM Include="$(IntDir)cached_thunks_arm64ec.pp">
+      <PreprocessWithCl Condition="'$(VisualStudioVersion)' &gt;= '17.0'">false</PreprocessWithCl>
+      <FileType>Document</FileType>
+    </MARMASM>
+  </ItemGroup>
+  <ImportGroup>
+    <Import Condition="$(Platform_Intel)" Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+    <Import Condition="$(Platform_Arm)" Project="$(VCTargetsPath)\BuildCustomizations\marmasm.targets" />
+  </ImportGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

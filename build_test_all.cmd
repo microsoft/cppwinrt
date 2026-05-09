@@ -16,7 +16,7 @@ call .nuget\nuget.exe restore cppwinrt.sln
 call .nuget\nuget.exe restore natvis\cppwinrtvisualizer.sln
 call .nuget\nuget.exe restore test\nuget\NugetTest.sln
 
-call msbuild %additional_msbuild_args% /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
+call msbuild %additional_msbuild_args% /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd;cached_thunks
 if errorlevel 1 exit /b 1
 
 call msbuild %additional_msbuild_args% /p:Configuration=%target_configuration%,Platform=%target_platform%,Deployment=Component;CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
