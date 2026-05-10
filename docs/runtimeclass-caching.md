@@ -1,39 +1,147 @@
 # Runtimeclass Interface Caching
 
-## What changed
+Runtimeclass Interface Caching reduces the runtime cost of calling methods of C++/WinRT projected objects that are
+members on a secondary non-default interface, without updating the component metadata or implementation.
 
-Projected runtimeclass types that have secondary interfaces (e.g., `PropertySet`,
-`StringMap`, `Uri`) now cache resolved interface pointers instead of calling
-`QueryInterface` on every method call. The projected type's in-memory layout changed
-from a single `void*` (the default interface pointer) to a struct containing the
-default pointer plus per-interface cache slots backed by self-resolving ASM thunks.
+## Overview
 
-This feature is opt-in via the `-flatten_classes` flag to cppwinrt.exe, or by setting
-`$(CppWinRTFlattenClasses)` to `true` in MSBuild projects using the C++/WinRT NuGet package.
+This is an opt-in projection optimization for projected WinRT runtimeclasses that expose secondary interfaces. Instead
+of resolving a secondary interface with `QueryInterface` on every call, the projection lazily resolves that interface
+once and caches the resulting pointer for subsequent calls.
 
-## Impact on consumers
+The target scenario is a client consuming stable platform runtimeclasses such as `PropertySet`, `StringMap`, `Uri`,
+`XmlDocument`, and `Package`, where repeated calls through secondary interfaces are common and repeated `QI`/`Release`
+traffic is pure overhead.
 
-**None.** The API surface is identical. Existing code that uses projected runtimeclass
-types compiles and runs without modification. The change is purely in the generated
-type layout and internal dispatch mechanism.
+This does not change WinRT metadata, component implementation, or the projected source-level API. It does change the
+generated C++/WinRT runtimeclass representation and the dispatch path used for eligible secondary-interface calls.
 
-## Which types are affected
+## Why This Exists
+
+In the existing projection model, calling a runtimeclass member that lives on a secondary interface pays the full COM
+interface-resolution cost every time:
+
+1. `QueryInterface` for the secondary interface
+2. call through the resolved vtable
+3. `Release` the temporary interface pointer
+
+For many platform runtimeclasses, that resolution is deterministic for the lifetime of the object. Repeating it on every
+call adds refcount traffic, COM apartment checks, and call overhead without adding useful semantics.
+
+Runtimeclass Interface Caching turns that into a first-call penalty and a subsequent-call fast path:
+
+- First secondary-interface call: `QI` once, atomically install the result in a cache slot.
+- Subsequent calls: direct vtable dispatch through the cached pointer.
+
+## How to Enable It
+
+This feature is opt-in via the `-flatten_classes` flag to cppwinrt.exe, or by setting `$(CppWinRTFlattenClasses)` to
+`true` in MSBuild projects using the C++/WinRT NuGet package.
+
+## When It Applies
 
 A runtimeclass is cached if all of the following are true:
+
 - The `-flatten_classes` flag is passed to cppwinrt.exe
-- It has a default interface (not a static-only class)
-- It is not marked `[FastAbi]`
-- It has no base class (not composable)
+- It has a default interface with which to anchor the cache
+- It is not marked `[FastAbi]`, since those types follow the separate Fast ABI projection path
+- It has no base class, so it is not composable
 - It has at least one secondary interface
 - Its default interface is not an async type (`IAsyncAction`, `IAsyncOperation<T>`, etc.)
 
 Examples: `PropertySet`, `StringMap`, `Uri`, `XmlDocument`, `Package`.
 
-Types that remain unchanged: single-interface runtimeclasses (e.g., `Deferral` if it
-only had `IDeferral`), composable types, `[FastAbi]` types, static classes, all
+Types that remain unchanged: single-interface runtimeclasses, composable types, `[FastAbi]` types, static classes, all
 interfaces, delegates, and structs.
 
-## Generated code: before and after
+The composable exclusion is intentional. This design replaces the projected runtimeclass's default-interface-based
+representation with a thunked storage object. Composable hierarchies rely on projected base-class chaining and related
+`impl::base<>` machinery, which this initial design does not preserve.
+
+## What Changes for Clients
+
+At the source level, nothing changes. Existing code that uses projected runtimeclass types should compile and run
+without modification.
+
+What does change is the generated C++ type:
+
+- The projected runtimeclass no longer stores a single `void*` default-interface pointer.
+- It stores the default pointer plus per-interface cache slots.
+- `sizeof(T)` grows with the number of cached secondary interfaces.
+
+This is a projection-only structural change. It is not a WinRT metadata contract change.
+
+The most important compatibility note is ABI helper usage:
+
+> **Note**: Apps that relied on `reinterpret_cast<void**>(&runtimeClass)` direct conversion to/from ABI types must be
+> changed to use the built-in `winrt::get_abi(runtimeClass)` methods instead, or risk runtime corruption.
+
+## Runtime Behavior
+
+Default-interface calls are unchanged. Secondary-interface calls change from repeated resolution to lazy one-time
+resolution plus cached dispatch.
+
+Consider:
+
+```cpp
+auto info = DisplayInformation::GetForCurrentView();
+auto dpi = info.LogicalDpi();               // IDisplayInformation (default)
+auto rawDpi = info.RawDpiX();               // IDisplayInformation (default)
+auto rawHeight = info.ScreenHeightInRawPixels(); // IDisplayInformation4 (secondary)
+auto rawWidth = info.ScreenWidthInRawPixels();   // IDisplayInformation4 (secondary)
+```
+
+`LogicalDpi` and `RawDpiX` are on the default interface `IDisplayInformation`, so they continue to dispatch directly
+through the default pointer in both models.
+
+`ScreenHeightInRawPixels` and `ScreenWidthInRawPixels` are both on `IDisplayInformation4`, so both calls go through
+`consume_general<IDisplayInformation4, DisplayInformation>`.
+
+### Old dispatch
+
+```
+consume_general is called with Derive=DisplayInformation, Base=IDisplayInformation4.
+Derive != Base, so:
+  1. try_as_with_reason<IDisplayInformation4>(info)  →  QueryInterface + AddRef
+  2. *(abi_t<IDisplayInformation4>**)&result          →  load vtable from QI result
+  3. (abi->*mptr)(args...)                            →  call ScreenHeightInRawPixels via vtable
+  4. ~com_ref()                                       →  Release on the QI result
+
+consume_general is called again with Derive=DisplayInformation, Base=IDisplayInformation4.
+Derive != Base, so:
+  1. try_as_with_reason<IDisplayInformation4>(info)  →  QueryInterface + AddRef
+  2. *(abi_t<IDisplayInformation4>**)&result          →  load vtable from QI result
+  3. (abi->*mptr)(args...)                            →  call ScreenWidthInRawPixels via vtable
+  4. ~com_ref()                                       →  Release on the QI result
+```
+
+The two secondary-interface calls each perform their own `QI` + `Release`, even though they are calling through the same
+secondary interface back-to-back.
+
+### New dispatch
+
+```
+consume_general is called with Derive=DisplayInformation, Base=IDisplayInformation4.
+has_thunked_interface_v<DisplayInformation, IDisplayInformation4> is true, so:
+  1. d->thunk_cache_slot<IDisplayInformation4>()   →  address of cache slot (compile-time offset)
+  2. *(abi_t<IDisplayInformation4>**)(&slot)        →  load pointer from cache slot
+  3. (abi->*mptr)(args...)                          →  call ScreenHeightInRawPixels via vtable
+
+consume_general is called again with Derive=DisplayInformation, Base=IDisplayInformation4.
+has_thunked_interface_v<DisplayInformation, IDisplayInformation4> is true, so:
+  1. d->thunk_cache_slot<IDisplayInformation4>()   →  address of cache slot (compile-time offset)
+  2. *(abi_t<IDisplayInformation4>**)(&slot)        →  load pointer from cache slot
+  3. (abi->*mptr)(args...)                          →  call ScreenWidthInRawPixels via vtable
+```
+
+From the client's point of view, both calls follow the same projected code path: load the cached interface pointer and
+call the vtable method. Internally, the cache slot holds a thunk on first use and the resolved interface pointer after
+resolution. That means the first call pays the resolution cost, while the second is a direct call through the already
+resolved `IDisplayInformation4` pointer, with no `QueryInterface` or `Release` on either visible call path.
+
+## Compile-Time Structural Change
+
+The main compile-time change is the projected class representation.
 
 ### Old: `DisplayInformation` (master)
 
@@ -75,58 +183,13 @@ struct DisplayInformation :
 
 `sizeof(DisplayInformation) == 112` (header 16 + 4 × 24 cache/thunk pairs).
 
-## Dispatch comparison
+Cached runtimeclasses are no longer pointer-sized wrappers over the default interface and instead gain structured
+storage objects carrying the default pointer plus lazy caches for selected secondary interfaces.
 
-Consider:
+## Mechanism
 
-```cpp
-auto info = DisplayInformation::GetForCurrentView();
-auto dpi = info.LogicalDpi();               // IDisplayInformation (default)
-auto rawDpi = info.RawDpiX();               // IDisplayInformation (default)
-auto brightness = info.ScreenBrightness();  // IDisplayInformation4 (secondary)
-auto hz = info.RefreshRate();               // IDisplayInformation5 (secondary)
-```
-
-`LogicalDpi` and `RawDpiX` are on the default interface `IDisplayInformation` — these
-dispatch directly through `default_cache` in both old and new code (no QI in either
-case).
-
-`ScreenBrightness` is on `IDisplayInformation4` and `RefreshRate` is on
-`IDisplayInformation5` — secondary interfaces. These go through
-`consume_general<IDisplayInformation4, DisplayInformation>`.
-
-### Old dispatch (per call to a secondary interface)
-
-```
-consume_general is called with Derive=DisplayInformation, Base=IDisplayInformation4.
-Derive != Base, so:
-  1. try_as_with_reason<IDisplayInformation4>(info)  →  QueryInterface + AddRef
-  2. *(abi_t<IDisplayInformation4>**)&result          →  load vtable from QI result
-  3. (abi->*mptr)(args...)                            →  call ScreenBrightness via vtable
-  4. ~com_ref()                                       →  Release on the QI result
-```
-
-Every call does QI + Release — two interlocked refcount operations and a COM
-apartment check, even though the same object always returns the same interface.
-
-### New dispatch (per call to a secondary interface)
-
-```
-consume_general is called with Derive=DisplayInformation, Base=IDisplayInformation4.
-has_thunked_interface_v<DisplayInformation, IDisplayInformation4> is true, so:
-  1. d->thunk_cache_slot<IDisplayInformation4>()   →  address of cache slot (compile-time offset)
-  2. *(abi_t<IDisplayInformation4>**)(&slot)        →  load pointer from cache slot
-  3. (abi->*mptr)(args...)                          →  call ScreenBrightness via vtable
-```
-
-No QI, no Release, no refcount traffic. The cache slot holds either a thunk (first
-call) or the real interface pointer (all subsequent calls).
-
-## The proxy-replacement mechanism
-
-Each cache slot is initialized to point at an `interface_thunk` — a 16-byte struct
-that masquerades as a COM object. Its vtable points to a shared table of 256 ASM
-stubs.
+Each cache slot is initialized to point at an `interface_thunk` — a 16-byte struct that masquerades as a COM object. Its
+vtable points to a shared table of 256 ASM stubs.
 
 ```
 cache_and_thunk layout:
@@ -155,55 +218,61 @@ winrt_cached_thunk_stub_N:
 3. Atomically replaces the cache slot: `cache.compare_exchange(&thunk, real)`
 4. Returns the real interface pointer
 
-The stub then tail-jumps to `real_vtable[slot_index]`, completing the original
-method call with the real COM object.
+The stub then tail-jumps to `real_vtable[slot_index]`, completing the original method call with the real COM object.
 
-### All subsequent calls
+### Subsequent calls
 
-The cache slot now holds the real `IMap*` pointer. The vtable dispatch goes directly
-to the real COM object's vtable — zero overhead vs a raw interface call.
+After updating the cache slot with the real interface pointer, future calls dispatch directly onto that interface's
+vtable. There is no further `QueryInterface` or `Release` on that path.
 
-### Why this is safe
+## Correctness and Safety
 
-**Thread safety.** Two threads racing to resolve the same slot both QI successfully.
-The winner's `compare_exchange` stores the real pointer; the loser's CAS fails, it
-Releases its duplicate result and uses the winner's pointer. All reads after
-resolution are `memory_order_acquire` loads — standard lock-free pattern.
+**Thread safety.** Two threads racing to resolve the same slot both QI successfully. The winner's `compare_exchange`
+stores the real pointer; the loser's CAS fails, it Releases its duplicate result and uses the winner's pointer. All
+reads after resolution are `memory_order_acquire` loads — standard lock-free pattern.
 
-**Lifetime safety.** The thunk's IUnknown slots are no-ops: `QueryInterface` returns
-`E_NOINTERFACE`, `AddRef` and `Release` return 1. This means:
+**Lifetime safety.** The thunk's IUnknown slots are no-ops: `QueryInterface` returns `E_NOINTERFACE`, `AddRef` and
+`Release` return 1. This means:
 
-- **Destructor** can unconditionally Release every cache slot. Thunk → no-op Release.
-  Real pointer → normal Release. No "is it a thunk?" check needed.
-- **Copy** AddRefs the default interface and re-initializes fresh thunks in the
-  destination (lazy re-resolve on first use).
-- **Move** steals the default pointer and all cache slots wholesale, then
-  re-initializes thunks in the source.
+- **Destructor** can unconditionally Release every cache slot. Thunk → no-op Release. Real pointer → normal Release. No
+  "is it a thunk?" check needed.
+- **Copy** AddRefs the default interface and re-initializes fresh thunks in the destination (lazy re-resolve on first
+  use).
+- **Move** steals the default pointer and all cache slots wholesale, then re-initializes thunks in the source.
 
-**ABI compatibility.** The thunk is layout-compatible with a COM object (`void**`
-pointing to a vtable). Any code that reads `*(void**)&cache_slot` gets a valid
-vtable pointer — either the thunk's or the real object's. The `consume_general`
-hot path doesn't distinguish between them.
+**ABI compatibility.** The thunk is layout-compatible with a COM object (`void**` pointing to a vtable). Any code that
+reads `*(void**)&cache_slot` gets a valid vtable pointer — either the thunk's or the real object's. The
+`consume_general` hot path doesn't distinguish between them.
 
-**Produce stubs.** WinRT component produce stubs (server-side ABI implementations)
-receive `void*` parameters and forward them to the C++ implementation as projected
-types. The old code used `*reinterpret_cast<T const*>(&param)` to view the `void*`
-as `T const&` — valid when `sizeof(T) == sizeof(void*)`. With thunked types being
-larger, this overreads the stack. The fix: `produce_borrowed_ref<T>` constructs a
-proper thunked wrapper from the `void*` (via `T{nullptr}` + `attach_abi`) and
-detaches on destruction to prevent Release. This is only emitted for `class_type`
-parameters; interface and delegate types remain pointer-sized and use the zero-cost
-reinterpret pattern.
+**Produce stubs.** WinRT component produce stubs (server-side ABI implementations) receive `void*` parameters and
+forward them to the C++ implementation as projected types. The old code used `*reinterpret_cast<T const*>(&param)` to
+view the `void*` as `T const&` — valid when `sizeof(T) == sizeof(void*)`. With thunked types being larger, this
+overreads the stack. The fix: `produce_borrowed_ref<T>` constructs a proper thunked wrapper from the `void*` (via
+`T{nullptr}` + `attach_abi`) and detaches on destruction to prevent Release. This is only emitted for `class_type`
+parameters; interface and delegate types remain pointer-sized and use the zero-cost reinterpret pattern.
+
+## Limitations and Non-Goals
+
+- Only supports up to 8 non-default interfaces cached at a time; the lower 3 bits of a slot's pointer-to-parent indicate
+  which interface the slot represents before being replaced.
+- No composable runtimeclasses. The current design does not preserve projected base-class chaining and related
+  `impl::base<>` machinery.
+- No `[FastAbi]` runtimeclasses. Those already follow a separate optimized projection path.
+- No static-only classes. There is no instance to cache.
+- No single-interface runtimeclasses. There is no secondary interface to resolve.
+- No async-default-interface runtimeclasses. These have separate semantics and are intentionally excluded.
+- No component-authored implementation types. This feature is about projected runtimeclasses, not `implements<>`
+  producer types.
 
 ## Summary of changes from the prior model
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| Runtimeclass base class | Default interface (e.g., `IDisplayInformation`) | `impl::thunked_runtimeclass<IDefault, I...>` |
-| `sizeof(DisplayInformation)` | 8 bytes | 112 bytes (N=4 secondaries) |
-| Secondary interface call | QI + vtable call + Release (per call) | Cache slot load + vtable call (per call) |
-| First secondary call cost | QI + Release | QI + atomic CAS (one-time) |
-| Subsequent call cost | QI + Release | Direct vtable dispatch (zero overhead) |
-| Refcount operations per call | 2 (AddRef in QI, Release after) | 0 |
-| Thread safety | N/A (stateless) | Lock-free compare-exchange on resolve |
-| Consumer API changes | — | None |
+| Aspect                       | Before                                          | After                                        |
+| ---------------------------- | ----------------------------------------------- | -------------------------------------------- |
+| Runtimeclass base class      | Default interface (e.g., `IDisplayInformation`) | `impl::thunked_runtimeclass<IDefault, I...>` |
+| `sizeof(DisplayInformation)` | 8 bytes                                         | 112 bytes (N=4 secondaries)                  |
+| Secondary interface call     | QI + vtable call + Release (per call)           | Cache slot load + vtable call (per call)     |
+| First secondary call cost    | QI + Release                                    | QI + atomic CAS (one-time)                   |
+| Subsequent call cost         | QI + Release                                    | Direct vtable dispatch (zero overhead)       |
+| Refcount operations per call | 2 (AddRef in QI, Release after)                 | 0                                            |
+| Thread safety                | N/A (stateless)                                 | Lock-free compare-exchange on resolve        |
+| Consumer API changes         | —                                               | None                                         |
