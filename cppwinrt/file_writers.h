@@ -33,7 +33,10 @@ namespace cppwinrt
             w.write(strings::base_events);
             w.write(strings::base_activation);
             w.write(strings::base_implements);
-            w.write(strings::base_thunked_runtimeclass);
+            w.write(strings::base_thunked_runtimeclass,
+                settings.flatten_classes ? 1 : 0,
+                256,
+                256);
             w.write(strings::base_composable);
             w.write(strings::base_foundation);
             w.write(strings::base_chrono);

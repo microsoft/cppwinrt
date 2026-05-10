@@ -1,4 +1,25 @@
 
+// ODR guard: all translation units must agree on whether flattened runtimeclass
+// projections were generated, and on the width of the cached thunk vtable.
+#define WINRT_IMPL_CACHED_STRING_1(expression) #expression
+#define WINRT_IMPL_CACHED_STRING(expression) WINRT_IMPL_CACHED_STRING_1(expression)
+
+#if !defined(WINRT_CACHED_RUNTIMECLASSES)
+#define WINRT_CACHED_RUNTIMECLASSES %
+#endif
+
+#if !defined(WINRT_CACHED_THUNK_VTABLE_SLOTS)
+#define WINRT_CACHED_THUNK_VTABLE_SLOTS %
+#endif
+
+static_assert(WINRT_CACHED_RUNTIMECLASSES == 0 || WINRT_CACHED_RUNTIMECLASSES == 1);
+static_assert(WINRT_CACHED_THUNK_VTABLE_SLOTS == %);
+
+#if defined(_MSC_VER)
+#pragma detect_mismatch("C++/WinRT cached runtimeclasses", WINRT_IMPL_CACHED_STRING(WINRT_CACHED_RUNTIMECLASSES))
+#pragma detect_mismatch("C++/WinRT cached thunk vtable slots", WINRT_IMPL_CACHED_STRING(WINRT_CACHED_THUNK_VTABLE_SLOTS))
+#endif
+
 WINRT_EXPORT namespace winrt::impl
 {
     // ========================================================================
