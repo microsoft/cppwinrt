@@ -3453,8 +3453,43 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             n == "IAsyncOperationWithProgress`2";
     }
 
+    static constexpr std::size_t cached_thunk_vtable_method_count = 256;
+    static constexpr std::size_t cached_thunk_reserved_slots = 6;
+    static constexpr std::size_t cached_thunk_method_limit = cached_thunk_vtable_method_count - cached_thunk_reserved_slots;
+
+    static void validate_thunked_interfaces(writer& w, TypeDef const& type)
+    {
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
+        {
+            if (info.is_default || info.is_protected || info.overridable)
+            {
+                continue;
+            }
+
+            auto const method_count = size(info.type.MethodList());
+            if (method_count > cached_thunk_method_limit)
+            {
+                throw_invalid("Type '",
+                    type.TypeNamespace(),
+                    ".",
+                    type.TypeName(),
+                    "' cannot use cached runtimeclasses because interface '",
+                    info.type.TypeNamespace(),
+                    ".",
+                    info.type.TypeName(),
+                    "' has ",
+                    std::to_string(method_count),
+                    " methods, exceeding the cached thunk limit of ",
+                    std::to_string(cached_thunk_method_limit),
+                    ".");
+            }
+        }
+    }
+
     static void write_thunked_class(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& default_interface)
     {
+        validate_thunked_interfaces(w, type);
+
         auto type_name = type.TypeName();
         auto factories = get_factories(w, type);
 

@@ -1,6 +1,6 @@
 
 // ODR guard: all translation units must agree on whether flattened runtimeclass
-// projections were generated, and on the width of the cached thunk vtable.
+// projections were generated, and on the cached thunk vtable method count.
 #define WINRT_IMPL_CACHED_STRING_1(expression) #expression
 #define WINRT_IMPL_CACHED_STRING(expression) WINRT_IMPL_CACHED_STRING_1(expression)
 
@@ -8,20 +8,22 @@
 #define WINRT_CACHED_RUNTIMECLASSES %
 #endif
 
-#if !defined(WINRT_CACHED_THUNK_VTABLE_SLOTS)
-#define WINRT_CACHED_THUNK_VTABLE_SLOTS %
+#if !defined(WINRT_CACHED_THUNK_VTABLE_METHOD_COUNT)
+#define WINRT_CACHED_THUNK_VTABLE_METHOD_COUNT %
 #endif
 
 static_assert(WINRT_CACHED_RUNTIMECLASSES == 0 || WINRT_CACHED_RUNTIMECLASSES == 1);
-static_assert(WINRT_CACHED_THUNK_VTABLE_SLOTS == %);
+static_assert(WINRT_CACHED_THUNK_VTABLE_METHOD_COUNT == %);
 
 #if defined(_MSC_VER)
 #pragma detect_mismatch("C++/WinRT cached runtimeclasses", WINRT_IMPL_CACHED_STRING(WINRT_CACHED_RUNTIMECLASSES))
-#pragma detect_mismatch("C++/WinRT cached thunk vtable slots", WINRT_IMPL_CACHED_STRING(WINRT_CACHED_THUNK_VTABLE_SLOTS))
+#pragma detect_mismatch("C++/WinRT cached thunk vtable method count", WINRT_IMPL_CACHED_STRING(WINRT_CACHED_THUNK_VTABLE_METHOD_COUNT))
 #endif
 
 WINRT_EXPORT namespace winrt::impl
 {
+    inline constexpr size_t cached_thunk_tagged_slot_count = 8;
+
     // ========================================================================
     // Thunk data structures
     // ========================================================================
@@ -60,7 +62,7 @@ WINRT_EXPORT namespace winrt::impl
             {
                 auto* hdr = reinterpret_cast<thunked_runtimeclass_header*>(payload & ~uintptr_t(0xF));
                 default_abi = hdr->default_cache.load(std::memory_order_relaxed);
-                iid = hdr->iid_table[(payload >> 1) & 7];
+                iid = hdr->iid_table[(payload >> 1) & (cached_thunk_tagged_slot_count - 1)];
             }
             else
             {
@@ -328,7 +330,7 @@ WINRT_EXPORT namespace winrt::impl
     struct thunked_runtimeclass : thunked_runtimeclass_base
     {
         static constexpr size_t N = sizeof...(I);
-        static constexpr bool use_tagged = N <= 8;
+        static constexpr bool use_tagged = N <= cached_thunk_tagged_slot_count;
         using pair_type = cache_and_thunk_t<use_tagged>;
         static constexpr size_t pair_stride = sizeof(pair_type);
 

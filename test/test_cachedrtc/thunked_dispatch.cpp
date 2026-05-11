@@ -9,6 +9,8 @@ using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
+static_assert(winrt::impl::has_thunked_cache_v<PropertySet>);
+
 // These functions exercise thunked runtimeclass consumer-side dispatch.
 // PropertySet inherits from thunked_runtimeclass<IPropertySet, IMap, IIterable, IObservableMap>.
 // Calls to Insert/Lookup/Size go through the thunked cache slots rather than QI.

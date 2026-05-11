@@ -54,12 +54,12 @@ NESTED_ENTRY CachedResolveAndDispatch, _TEXT
 
     END_PROLOGUE
 
-    sub     rsp, 4 * 8             ; shadow space for callee
+    sub     rsp, 5 * 8             ; shadow space plus alignment padding for callee
 
     ; rcx = interface_thunk* (already in place from caller)
     call    winrt_cached_resolve_thunk
 
-    add     rsp, 4 * 8             ; remove shadow space
+    add     rsp, 5 * 8             ; remove shadow space and alignment padding
 
     pop     r10                     ; r10 = slot index
 

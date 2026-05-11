@@ -65,16 +65,30 @@ endif()
 
 if(STANDALONE_TESTING)
     add_custom_target(build-cppwinrt-projection)
+    add_custom_target(build-cppwinrt-cached-projection)
     set(CPPWINRT_PROJECTION_INCLUDE_DIR "" CACHE PATH "Include path for the C++/WinRT projection headers")
+    set(CPPWINRT_CACHED_PROJECTION_INCLUDE_DIR "" CACHE PATH "Include path for the cached-runtimeclass C++/WinRT projection headers")
     if(NOT CPPWINRT_PROJECTION_INCLUDE_DIR)
         message(FATAL_ERROR "CPPWINRT_PROJECTION_INCLUDE_DIR is not specified.")
     endif()
+    if(NOT CPPWINRT_CACHED_PROJECTION_INCLUDE_DIR)
+        set(CPPWINRT_CACHED_PROJECTION_INCLUDE_DIR "${CPPWINRT_PROJECTION_INCLUDE_DIR}")
+    endif()
 else()
     set(CPPWINRT_PROJECTION_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt")
+    set(CPPWINRT_CACHED_PROJECTION_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt_cached")
     add_custom_command(
         OUTPUT
             "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt/winrt/base.h"
-        COMMAND cppwinrt -input local -output "${CPPWINRT_PROJECTION_INCLUDE_DIR}" -verbose -flatten_classes
+        COMMAND cppwinrt -input local -output "${CPPWINRT_PROJECTION_INCLUDE_DIR}" -verbose
+        DEPENDS
+            cppwinrt
+        VERBATIM
+    )
+    add_custom_command(
+        OUTPUT
+            "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt_cached/winrt/base.h"
+        COMMAND cppwinrt -input local -output "${CPPWINRT_CACHED_PROJECTION_INCLUDE_DIR}" -verbose -flatten_classes
         DEPENDS
             cppwinrt
         VERBATIM
@@ -83,8 +97,11 @@ else()
         DEPENDS
             "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt/winrt/base.h"
     )
+    add_custom_target(build-cppwinrt-cached-projection
+        DEPENDS
+            "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt_cached/winrt/base.h"
+    )
 endif()
-include_directories("${CPPWINRT_PROJECTION_INCLUDE_DIR}")
 
 
 set(ENABLE_TEST_SANITIZERS FALSE CACHE BOOL "Enable ASan and UBSan for the tests.")
@@ -105,6 +122,7 @@ set(SKIP_LARGE_PCH FALSE CACHE BOOL "Skip building large precompiled headers.")
 
 
 add_subdirectory(test)
+add_subdirectory(test_cachedrtc)
 add_subdirectory(test_nocoro)
 add_subdirectory(test_cpp20)
 add_subdirectory(test_cpp20_no_sourcelocation)

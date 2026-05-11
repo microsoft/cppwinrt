@@ -28,6 +28,7 @@ if "%target_platform%"=="arm64" goto :eof
 
 set build_targets=cppwinrt
 set build_targets=%build_targets%;test\test
+set build_targets=%build_targets%;test\test_cachedrtc
 set build_targets=%build_targets%;test\test_nocoro
 set build_targets=%build_targets%;test\test_cpp20
 set build_targets=%build_targets%;test\test_cpp20_no_sourcelocation

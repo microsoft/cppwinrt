@@ -28,9 +28,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{D2961EA1-A8CA-4A62-B760-948403DC8494}</ProjectGuid>
+    <ProjectGuid>{7E04307E-1D2D-4B11-B95E-9B430E391E65}</ProjectGuid>
     <RootNamespace>unittests</RootNamespace>
-    <ProjectName>test</ProjectName>
+    <ProjectName>test_cachedrtc</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -89,7 +89,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\..\cppwinrt</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\test;..\..\cppwinrt</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <WarningLevel>Level4</WarningLevel>
@@ -101,7 +101,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi -flatten_classes</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -111,7 +111,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\..\cppwinrt</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\test;..\..\cppwinrt</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <WarningLevel>Level4</WarningLevel>
@@ -121,7 +121,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi -flatten_classes</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -131,7 +131,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\..\cppwinrt</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\test;..\..\cppwinrt</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <WarningLevel>Level4</WarningLevel>
@@ -141,7 +141,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi -flatten_classes</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -151,7 +151,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\..\cppwinrt</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\test;..\..\cppwinrt</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <WarningLevel>Level4</WarningLevel>
@@ -161,7 +161,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi -flatten_classes</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -173,7 +173,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\..\cppwinrt</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\test;..\..\cppwinrt</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <WarningLevel>Level4</WarningLevel>
@@ -185,7 +185,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi -flatten_classes</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -197,7 +197,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\..\cppwinrt</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\test;..\..\cppwinrt</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <WarningLevel>Level4</WarningLevel>
@@ -209,7 +209,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi -flatten_classes</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -217,25 +217,25 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\test\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="abi_args.cpp" />
-    <ClCompile Include="abi_guard.cpp" />
-    <ClCompile Include="agile_ref.cpp" />
-    <ClCompile Include="agility.cpp" />
-    <ClCompile Include="async_auto_cancel.cpp" />
-    <ClCompile Include="async_cancel_callback.cpp" />
-    <ClCompile Include="async_check_cancel.cpp" />
-    <ClCompile Include="async_completed.cpp" />
-    <ClCompile Include="async_propagate_cancel.cpp" />
-    <ClCompile Include="await_completed.cpp" />
-    <ClCompile Include="box_array.cpp" />
-    <ClCompile Include="box_delegate.cpp" />
-    <ClCompile Include="box_guid.cpp" />
-    <ClCompile Include="box_string.cpp" />
-    <ClCompile Include="capture.cpp" />
-    <ClCompile Include="coro_foundation.cpp">
+    <ClCompile Include="..\test\abi_args.cpp" />
+    <ClCompile Include="..\test\abi_guard.cpp" />
+    <ClCompile Include="..\test\agile_ref.cpp" />
+    <ClCompile Include="..\test\agility.cpp" />
+    <ClCompile Include="..\test\async_auto_cancel.cpp" />
+    <ClCompile Include="..\test\async_cancel_callback.cpp" />
+    <ClCompile Include="..\test\async_check_cancel.cpp" />
+    <ClCompile Include="..\test\async_completed.cpp" />
+    <ClCompile Include="..\test\async_propagate_cancel.cpp" />
+    <ClCompile Include="..\test\await_completed.cpp" />
+    <ClCompile Include="..\test\box_array.cpp" />
+    <ClCompile Include="..\test\box_delegate.cpp" />
+    <ClCompile Include="..\test\box_guid.cpp" />
+    <ClCompile Include="..\test\box_string.cpp" />
+    <ClCompile Include="..\test\capture.cpp" />
+    <ClCompile Include="..\test\coro_foundation.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">NotUsing</PrecompiledHeader>
@@ -243,7 +243,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="coro_threadpool.cpp">
+    <ClCompile Include="..\test\coro_threadpool.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">NotUsing</PrecompiledHeader>
@@ -251,7 +251,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="custom_activation.cpp">
+    <ClCompile Include="..\test\custom_activation.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">NotUsing</PrecompiledHeader>
@@ -259,36 +259,34 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="custom_error.cpp" />
-    <ClCompile Include="delegate.cpp" />
-    <ClCompile Include="delegates.cpp" />
-    <ClCompile Include="disconnected.cpp" />
-    <ClCompile Include="enum.cpp" />
-    <ClCompile Include="event_clear.cpp" />
-    <ClCompile Include="guid.cpp" />
-    <ClCompile Include="hresult_class_not_registered.cpp" />
-    <ClCompile Include="error_info.cpp" />
-    <ClCompile Include="event_deferral.cpp" />
-    <ClCompile Include="async_local.cpp" />
-    <ClCompile Include="async_no_suspend.cpp" />
-    <ClCompile Include="async_progress.cpp" />
-    <ClCompile Include="async_result.cpp" />
-    <ClCompile Include="async_return.cpp" />
-    <ClCompile Include="async_suspend.cpp" />
-    <ClCompile Include="async_throw.cpp" />
-    <ClCompile Include="async_wait_for.cpp" />
-    <ClCompile Include="await_adapter.cpp" />
-    <ClCompile Include="cmd_reader.cpp" />
-    <ClCompile Include="coro_system.cpp">
+    <ClCompile Include="..\test\custom_error.cpp" />
+    <ClCompile Include="..\test\delegate.cpp" />
+    <ClCompile Include="..\test\delegates.cpp" />
+    <ClCompile Include="..\test\disconnected.cpp" />
+    <ClCompile Include="..\test\enum.cpp" />
+    <ClCompile Include="..\test\error_info.cpp" />
+    <ClCompile Include="..\test\event_clear.cpp" />
+    <ClCompile Include="..\test\event_deferral.cpp" />
+    <ClCompile Include="..\test\async_local.cpp" />
+    <ClCompile Include="..\test\async_no_suspend.cpp" />
+    <ClCompile Include="..\test\async_progress.cpp" />
+    <ClCompile Include="..\test\async_result.cpp" />
+    <ClCompile Include="..\test\async_return.cpp" />
+    <ClCompile Include="..\test\async_suspend.cpp" />
+    <ClCompile Include="..\test\async_throw.cpp" />
+    <ClCompile Include="..\test\async_wait_for.cpp" />
+    <ClCompile Include="..\test\await_adapter.cpp" />
+    <ClCompile Include="..\test\cmd_reader.cpp" />
+    <ClCompile Include="..\test\coro_system.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="coro_ui_core.cpp">
+    <ClCompile Include="..\test\coro_ui_core.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="fast_iterator.cpp" />
-    <ClCompile Include="final_release.cpp" />
-    <ClCompile Include="generic_types.cpp" />
-    <ClCompile Include="generic_type_names.cpp">
+    <ClCompile Include="..\test\fast_iterator.cpp" />
+    <ClCompile Include="..\test\final_release.cpp" />
+    <ClCompile Include="..\test\generic_types.cpp" />
+    <ClCompile Include="..\test\generic_type_names.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">NotUsing</PrecompiledHeader>
@@ -296,9 +294,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="GetMany.cpp" />
-    <ClCompile Include="get_activation_factory.cpp" />
-    <ClCompile Include="guid_include.cpp">
+    <ClCompile Include="..\test\GetMany.cpp" />
+    <ClCompile Include="..\test\get_activation_factory.cpp" />
+    <ClCompile Include="..\test\guid.cpp" />
+    <ClCompile Include="..\test\guid_include.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">NotUsing</PrecompiledHeader>
@@ -306,10 +305,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="hstring_empty.cpp" />
-    <ClCompile Include="iid_ppv_args.cpp" />
-    <ClCompile Include="initialize.cpp" />
-    <ClCompile Include="inspectable_interop.cpp">
+    <ClCompile Include="..\test\hresult_class_not_registered.cpp" />
+    <ClCompile Include="..\test\hstring_empty.cpp" />
+    <ClCompile Include="..\test\iid_ppv_args.cpp" />
+    <ClCompile Include="..\test\initialize.cpp" />
+    <ClCompile Include="..\test\inspectable_interop.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">NotUsing</PrecompiledHeader>
@@ -317,16 +317,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="interop.cpp" />
-    <ClCompile Include="invalid_events.cpp" />
-    <ClCompile Include="in_params.cpp" />
-    <ClCompile Include="in_params_abi.cpp" />
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="..\test\interop.cpp" />
+    <ClCompile Include="..\test\invalid_events.cpp" />
+    <ClCompile Include="..\test\in_params.cpp" />
+    <ClCompile Include="..\test\in_params_abi.cpp" />
+    <ClCompile Include="..\test\main.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="memory_buffer.cpp" />
-    <ClCompile Include="missing_required_interfaces.cpp" />
-    <ClCompile Include="module_lock_dll.cpp">
+    <ClCompile Include="..\test\memory_buffer.cpp" />
+    <ClCompile Include="..\test\missing_required_interfaces.cpp" />
+    <ClCompile Include="..\test\module_lock_dll.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">NotUsing</PrecompiledHeader>
@@ -334,34 +334,35 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="multi_threaded_map.cpp" />
-    <ClCompile Include="multi_threaded_vector.cpp" />
-    <ClCompile Include="names.cpp" />
-    <ClCompile Include="noexcept.cpp" />
-    <ClCompile Include="no_make_detection.cpp" />
-    <ClCompile Include="numerics.cpp" />
-    <ClCompile Include="observable_index_of.cpp" />
-    <ClCompile Include="optional.cpp" />
-    <ClCompile Include="out_params.cpp" />
-    <ClCompile Include="out_params_abi.cpp" />
-    <ClCompile Include="out_params_bad.cpp" />
-    <ClCompile Include="parent_includes.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="..\test\multi_threaded_map.cpp" />
+    <ClCompile Include="..\test\multi_threaded_vector.cpp" />
+    <ClCompile Include="..\test\names.cpp" />
+    <ClCompile Include="..\test\noexcept.cpp" />
+    <ClCompile Include="..\test\no_make_detection.cpp" />
+    <ClCompile Include="..\test\numerics.cpp" />
+    <ClCompile Include="..\test\observable_index_of.cpp" />
+    <ClCompile Include="..\test\optional.cpp" />
+    <ClCompile Include="..\test\out_params.cpp" />
+    <ClCompile Include="..\test\out_params_abi.cpp" />
+    <ClCompile Include="..\test\out_params_bad.cpp" />
+    <ClCompile Include="..\test\parent_includes.cpp" />
+    <ClCompile Include="..\test\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="rational.cpp" />
-    <ClCompile Include="return_params.cpp" />
-    <ClCompile Include="return_params_abi.cpp" />
-    <ClCompile Include="single_threaded_observable_vector.cpp" />
-    <ClCompile Include="structs.cpp" />
-    <ClCompile Include="struct_delegate.cpp" />
-    <ClCompile Include="suppress_error_info.cpp" />
-    <ClCompile Include="tearoff.cpp" />
-    <ClCompile Include="thread_pool.cpp" />
-    <ClCompile Include="uniform_in_params.cpp" />
-    <ClCompile Include="variadic_delegate.cpp" />
-    <ClCompile Include="velocity.cpp" />
-    <ClCompile Include="when.cpp" />
+    <ClCompile Include="..\test\rational.cpp" />
+    <ClCompile Include="..\test\return_params.cpp" />
+    <ClCompile Include="..\test\return_params_abi.cpp" />
+    <ClCompile Include="..\test\single_threaded_observable_vector.cpp" />
+    <ClCompile Include="..\test\struct_delegate.cpp" />
+    <ClCompile Include="..\test\structs.cpp" />
+    <ClCompile Include="..\test\suppress_error_info.cpp" />
+    <ClCompile Include="..\test\tearoff.cpp" />
+    <ClCompile Include="..\test\thread_pool.cpp" />
+    <ClCompile Include="thunked_dispatch.cpp" />
+    <ClCompile Include="..\test\uniform_in_params.cpp" />
+    <ClCompile Include="..\test\variadic_delegate.cpp" />
+    <ClCompile Include="..\test\velocity.cpp" />
+    <ClCompile Include="..\test\when.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

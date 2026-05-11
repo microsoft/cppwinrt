@@ -33,6 +33,7 @@ endforeach()
 add_executable(test_cpp20_no_sourcelocation main.cpp ${TEST_SRCS})
 
 target_compile_definitions(test_cpp20_no_sourcelocation PRIVATE WINRT_NO_SOURCE_LOCATION)
+target_include_directories(test_cpp20_no_sourcelocation PRIVATE "${CPPWINRT_PROJECTION_INCLUDE_DIR}")
 
 target_precompile_headers(test_cpp20_no_sourcelocation PRIVATE pch.h)
 set_source_files_properties(
