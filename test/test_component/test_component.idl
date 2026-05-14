@@ -381,4 +381,121 @@ namespace test_component
         [overridable] interface test_component.IOverloadClassOverrides;
         [overridable] interface test_component.IOverloadClassOverrides2;
     }
+
+    [deprecated("DeprecatedEnum is deprecated for testing.", deprecate, 1)]
+    enum DeprecatedEnum
+    {
+        First = 0,
+        Second = 1,
+        Third = 2
+    };
+
+    delegate void DeprecatedDelegate();
+
+    runtimeclass DeprecatedClass
+    {
+        DeprecatedClass();
+        void Method();
+        [deprecated("OldMethod is deprecated for testing.", deprecate, 1)]
+        void OldMethod();
+        static void StaticMethod();
+        [deprecated("OldStaticMethod is deprecated for testing.", deprecate, 1)]
+        static void OldStaticMethod();
+
+        // Properties: normal and deprecated
+        String NormalProp{ get; };
+        [deprecated("DeprecatedProp is deprecated.", deprecate, 1)]
+        String DeprecatedProp{ get; };
+
+        // Read-write properties: normal and deprecated
+        String WritableProp;
+        [deprecated("WritableDeprecatedProp is deprecated.", deprecate, 1)]
+        String WritableDeprecatedProp;
+
+        // Events: normal and deprecated
+        event Windows.Foundation.EventHandler<Object> NormalEvent;
+        [deprecated("DeprecatedEvent is deprecated.", deprecate, 1)]
+        event Windows.Foundation.EventHandler<Object> DeprecatedEvent;
+
+        // Static properties: normal and deprecated
+        static String StaticProp{ get; };
+        [deprecated("StaticDeprecatedProp is deprecated.", deprecate, 1)]
+        static String StaticDeprecatedProp{ get; };
+
+        // Constructor overload: deprecated
+        [deprecated("Use default constructor instead.", deprecate, 1)]
+        DeprecatedClass(String name);
+    }
+
+    [deprecated("RemovedEnum has been removed.", remove, 2)]
+    enum RemovedEnum
+    {
+        Alpha = 0,
+        Beta = 1
+    };
+
+    enum PartiallyRemovedEnum
+    {
+        Visible = 0,
+        [deprecated("Hidden value has been removed.", remove, 2)]
+        Hidden = 1,
+        AlsoVisible = 2
+    };
+
+    delegate void RemovedDelegate();
+
+    runtimeclass RemovedClass
+    {
+        RemovedClass();
+        void ActiveMethod();
+        [deprecated("RemovedMethod has been removed.", remove, 2)]
+        void RemovedMethod();
+        static void ActiveStaticMethod();
+        [deprecated("RemovedStaticMethod has been removed.", remove, 2)]
+        static void RemovedStaticMethod();
+
+        // Properties: normal and removed
+        String NormalProp{ get; };
+        [deprecated("RemovedProp has been removed.", remove, 2)]
+        String RemovedProp{ get; };
+
+        // Read-write properties: normal and removed
+        String WritableProp;
+        [deprecated("WritableRemovedProp has been removed.", remove, 2)]
+        String WritableRemovedProp;
+
+        // Events: normal and removed
+        event Windows.Foundation.EventHandler<Object> NormalEvent;
+        [deprecated("RemovedEvent has been removed.", remove, 2)]
+        event Windows.Foundation.EventHandler<Object> RemovedEvent;
+
+        // Static properties: normal and removed
+        static String StaticProp{ get; };
+        [deprecated("StaticRemovedProp has been removed.", remove, 2)]
+        static String StaticRemovedProp{ get; };
+
+        // Constructor overload: removed
+        [deprecated("Removed constructor.", remove, 2)]
+        RemovedClass(String name);
+    }
+
+    // Entirely removed class — component stubs and module.g.cpp should NOT reference this
+    [deprecated("FullyRemovedClass has been removed.", remove, 2)]
+    [default_interface]
+    runtimeclass FullyRemovedClass
+    {
+        FullyRemovedClass();
+        void DoSomething();
+    }
+
+    // Interface with mix of normal, deprecated, and removed methods for vtable testing
+    interface IVtableTest
+    {
+        void NormalMethod();
+        [deprecated("DeprecatedMethod is deprecated.", deprecate, 1)]
+        void DeprecatedMethod();
+        [deprecated("RemovedMethod is gone.", remove, 2)]
+        void RemovedMethod();
+        void AnotherNormalMethod();
+    }
 }

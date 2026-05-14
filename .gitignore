@@ -16,3 +16,5 @@ Release
 Generated Files
 obj
 vsix/LICENSE
+
+_build/

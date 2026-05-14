@@ -387,6 +387,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Class.cpp" />
+    <ClCompile Include="DeprecatedClass.cpp" />
+    <ClCompile Include="RemovedClass.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
     <ClCompile Include="module.cpp" />
     <ClCompile Include="Optional.cpp" />
@@ -404,6 +406,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
+    <ClInclude Include="DeprecatedClass.h" />
+    <ClInclude Include="RemovedClass.h" />
     <ClInclude Include="Optional.h" />
     <ClInclude Include="OverloadClass.h" />
     <ClInclude Include="pch.h" />

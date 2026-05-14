@@ -181,6 +181,11 @@ namespace cppwinrt
         writer w;
         w.type_namespace = ns;
 
+        // Internal projection implementation code.
+        // Deprecation warnings (C4996) are suppressed via #pragma warning(push/disable)
+        // written in the preamble, covering both the included headers and this section.
+        // The [[deprecated]] attributes on forward declarations in .0.h headers trigger
+        // warnings only in user code (after the #pragma warning(pop) below).
         {
             auto wrap_impl = wrap_impl_namespace(w);
             w.write_each<write_consume_definitions>(members.interfaces);
@@ -213,6 +218,9 @@ namespace cppwinrt
             }
         }
 
+        // End deprecation suppression - user code after this gets deprecation warnings.
+        w.write("#pragma warning(pop)\n");
+
         write_namespace_special(w, ns);
 
         write_close_file_guard(w);
@@ -220,6 +228,11 @@ namespace cppwinrt
         write_preamble(w);
         write_open_file_guard(w, ns);
         write_version_assert(w);
+
+        // Suppress C4996 (deprecated) for included headers and internal implementation code.
+        // The pop is written in the body section above.
+        w.write("#pragma warning(push)\n#pragma warning(disable: 4996)\n");
+
         write_parent_depends(w, c, ns);
 
         for (auto&& depends : w.depends)

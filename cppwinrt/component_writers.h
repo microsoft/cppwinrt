@@ -71,7 +71,7 @@ namespace cppwinrt
 
     static void write_component_include(writer& w, TypeDef const& type)
     {
-        if (!has_factory_members(w, type) || is_always_disabled(type))
+        if (!has_factory_members(w, type) || is_always_disabled(type) || is_removed(type))
         {
             return;
         }
@@ -94,7 +94,7 @@ namespace cppwinrt
 
     static void write_component_activation(writer& w, TypeDef const& type)
     {
-        if (!has_factory_members(w, type) || is_always_disabled(type))
+        if (!has_factory_members(w, type) || is_always_disabled(type) || is_removed(type))
         {
             return;
         }
@@ -427,6 +427,11 @@ catch (...) { return winrt::to_hresult(); }
                 {
                     for (auto&& method : factory.type.MethodList())
                     {
+                        if (is_removed(method))
+                        {
+                            continue;
+                        }
+
                         method_signature signature{ method };
 
                         auto format = R"(    %::%(%) :
@@ -450,6 +455,11 @@ catch (...) { return winrt::to_hresult(); }
             {
                 for (auto&& method : factory.type.MethodList())
                 {
+                    if (is_removed(method))
+                    {
+                        continue;
+                    }
+
                     method_signature signature{ method };
                     auto& params = signature.params();
                     params.resize(params.size() - 2);
@@ -474,6 +484,11 @@ catch (...) { return winrt::to_hresult(); }
             {
                 for (auto&& method : factory.type.MethodList())
                 {
+                    if (is_removed(method))
+                    {
+                        continue;
+                    }
+
                     method_signature signature{ method };
                     auto method_name = get_name(method);
                     w.async_types = signature.is_async();
