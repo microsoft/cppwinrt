@@ -98,9 +98,14 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="foundation.cpp" />
+    <ClCompile Include="collections.cpp" />
     <ClCompile Include="coroutines.cpp" />
     <ClCompile Include="source_location.cpp" />
     <ClCompile Include="range_for.cpp" />
+    <ClCompile Include="hash.cpp" />
+    <ClCompile Include="format.cpp" />
+    <ClCompile Include="com_interop.cpp" />
+    <ClCompile Include="natvis.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

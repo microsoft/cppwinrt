@@ -408,6 +408,7 @@ namespace cppwinrt
     {
         write_preamble(w);
         w.write(strings::base_module_ixx_preamble);
+        w.write_root_include("base_macros");
     }
 
     // Emits $(out)/winrt/base_macros.h
