@@ -14,6 +14,8 @@ namespace cppwinrt
             {
                 auto wrap_includes = wrap_module_aware_includes_guard(w, true);
                 w.write(strings::base_includes);
+                w.write(strings::base_detect_numerics);
+                w.write(strings::base_include_numerics);
             }
             w.write_root_include("base_macros");
             w.write(strings::base_source_location);
@@ -428,6 +430,9 @@ namespace cppwinrt
         writer w;
         write_module_preamble(w);
         w.write(strings::base_module_base_ixx);
+        w.write(strings::base_detect_numerics);
+        w.write("\n");
+        w.write_root_include("base");
         w.flush_to_file(settings.output_folder + "winrt/winrt_base.ixx");
     }
 
@@ -435,7 +440,29 @@ namespace cppwinrt
     {
         writer w;
         write_module_preamble(w);
+        // GMF: detect numerics and pre-include directxmath so it's not pulled
+        // into the module purview by windowsnumerics.impl.h
+        w.write(strings::base_detect_numerics);
+        {
+            auto wrap = wrap_ifdef(w, "WINRT_IMPL_NUMERICS");
+            w.write("#include <directxmath.h>\n");
+        }
         w.write(strings::base_module_numerics_ixx);
+        // Module declaration
+        w.write("\nexport module winrt_numerics;\n");
+        // Include windowsnumerics.impl.h in the module purview (exports the types).
+        // directxmath.h is already included in the GMF above, so the #include inside
+        // base_include_numerics is a no-op (header guard).
+        {
+            auto wrap = wrap_ifdef(w, "_MSC_VER");
+            w.write("#pragma warning(push)\n");
+            w.write("#pragma warning(disable : 5244)\n");
+        }
+        w.write(strings::base_include_numerics);
+        {
+            auto wrap = wrap_ifdef(w, "_MSC_VER");
+            w.write("#pragma warning(pop)\n");
+        }
         w.flush_to_file(settings.output_folder + "winrt/winrt_numerics.ixx");
     }
 
