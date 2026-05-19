@@ -73,8 +73,46 @@ CachedResolveAndDispatch PROC
     jmp     eax
 
 resolve_failed:
+    cmp     ecx, 3
+    je      resolve_failed_pop12
+    cmp     ecx, 5
+    jbe     resolve_failed_pop8
+
+    mov     edx, [esp+4]            ; edx = thunk*
+    mov     eax, [edx+4]            ; eax = payload
+    test    eax, 1
+    jz      resolve_failed_full
+
+    mov     edx, eax
+    and     edx, 0FFFFFFF0h         ; edx = thunked_runtimeclass_header*
+    shr     eax, 1
+    and     eax, 7                  ; eax = tagged interface index
+    mov     edx, [edx+4]            ; edx = descriptor_table
+    lea     edx, [edx+eax*8]        ; edx = &descriptor[index]
+    jmp     resolve_failed_stack_table
+
+resolve_failed_full:
+    mov     edx, [edx+8]            ; edx = descriptor*
+
+resolve_failed_stack_table:
+    mov     edx, [edx+4]            ; edx = stack_pop_sizes table
+    sub     ecx, 6
+    movzx   eax, word ptr [edx+ecx*2]
+    jmp     resolve_failed_return
+
+resolve_failed_pop8:
+    mov     eax, 8
+    jmp     resolve_failed_return
+
+resolve_failed_pop12:
+    mov     eax, 12
+
+resolve_failed_return:
+    mov     edx, [esp]              ; edx = return address
+    add     esp, 4                  ; pop return address
+    add     esp, eax                ; pop the original stdcall args
     mov     eax, 80004002h          ; E_NOINTERFACE
-    ret
+    jmp     edx
 CachedResolveAndDispatch ENDP
 
 ; ============================================================================

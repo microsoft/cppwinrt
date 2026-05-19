@@ -91,24 +91,18 @@ resolve_failed
 
 ; ============================================================================
 ; Leaf stub macro — each loads a slot index and branches to the shared dispatcher
-; movz w10, #imm16 = 0x5280000A | (imm16 << 5)
 ; ============================================================================
 
-    MACRO
+    MACRO 
     WINRT_CACHED_THUNK $idx
-    LEAF_ENTRY winrt_cached_thunk_stub_$idx
-    DCD (0x5280000A :OR: ($idx:SHL:5))
+    LEAF_ENTRY winrt_cached_thunk_stub$idx
+    mov     x10, #$idx
     b       CachedResolveAndDispatch
-    LEAF_END winrt_cached_thunk_stub_$idx
+    LEAF_END winrt_cached_thunk_stub$idx
     MEND
 
 ; Emit 256 stubs (slots 0-255)
-    GBLA StubCtr
-StubCtr SETA 0
-    WHILE StubCtr < 256
-    WINRT_CACHED_THUNK $StubCtr
-StubCtr SETA StubCtr + 1
-    WEND
+#include "cached_thunk_stubs.inc"
 
 ; ============================================================================
 ; Vtable array: slots 0-2 are no-op IUnknown, slots 3-255 are resolve stubs
@@ -126,14 +120,9 @@ winrt_cached_thunk_vtable
 
     MACRO
     VtableEntry $idx
-    DCQ winrt_cached_thunk_stub_$idx
+    DCQ winrt_cached_thunk_stub$idx
     MEND
 
-    GBLA VtblCtr
-VtblCtr SETA 3
-    WHILE VtblCtr < 256
-    VtableEntry $VtblCtr
-VtblCtr SETA VtblCtr + 1
-    WEND
+#include "cached_thunk_vtable.inc"
 
     END

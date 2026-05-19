@@ -3,11 +3,15 @@
   <!-- Enable assembler support for the current target architecture -->
   <ImportGroup>
     <Import Condition="'$(Platform)'=='x64' or '$(Platform)'=='Win32'" Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
-    <Import Condition="'$(Platform)'=='ARM64'" Project="$(VCTargetsPath)\BuildCustomizations\marmasm.props" />
+    <Import Condition="'$(Platform)'=='ARM64' or '$(Platform)'=='ARM64EC'" Project="$(VCTargetsPath)\BuildCustomizations\marmasm.props" />
   </ImportGroup>
 
   <Target Name="CppWinRTPreprocessArmThunk" Condition="'$(Platform)'=='ARM64'" BeforeTargets="_MARMASM" Outputs="$(IntDir)cached_thunks_arm64.pp" Inputs="$(MSBuildThisFileDirectory)..\strings\cached_thunks_arm64.asm">
     <Exec Command="cl /E /Tc $(MSBuildThisFileDirectory)..\strings\cached_thunks_arm64.asm &gt; $(IntDir)cached_thunks_arm64.pp" />
+  </Target>
+
+  <Target Name="CppWinRTPreprocessArmECThunk" Condition="'$(Platform)'=='ARM64EC'" BeforeTargets="_MARMASM" Outputs="$(IntDir)cached_thunks_arm64ec.pp" Inputs="$(MSBuildThisFileDirectory)..\strings\cached_thunks_arm64ec.asm">
+    <Exec Command="cl /E /Tc $(MSBuildThisFileDirectory)..\strings\cached_thunks_arm64ec.asm &gt; $(IntDir)cached_thunks_arm64ec.pp" />
   </Target>
 
   <!-- Link thunk stubs into all test binaries that use the cppwinrt projection -->
@@ -22,6 +26,12 @@
     </MARMASM>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(Platform)'=='ARM64EC'">
+    <MARMASM Include="$(IntDir)cached_thunks_arm64ec.pp">
+      <PreprocessWithCl Condition="'$(VisualStudioVersion)' &gt;= '17.0'">false</PreprocessWithCl>
+    </MARMASM>
+  </ItemGroup>
+
   <ItemDefinitionGroup>
     <MASM>
       <UseSafeExceptionHandlers Condition="'$(Platform)'=='Win32'">true</UseSafeExceptionHandlers>
@@ -30,7 +40,7 @@
 
   <ImportGroup>
     <Import Condition="'$(Platform)'=='x64' or '$(Platform)'=='Win32'" Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
-    <Import Condition="'$(Platform)'=='ARM64'" Project="$(VCTargetsPath)\BuildCustomizations\marmasm.targets" />
+    <Import Condition="'$(Platform)'=='ARM64' or '$(Platform)'=='ARM64EC'" Project="$(VCTargetsPath)\BuildCustomizations\marmasm.targets" />
   </ImportGroup>
 
 </Project>

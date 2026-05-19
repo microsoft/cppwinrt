@@ -23,24 +23,68 @@ static_assert(WINRT_CACHED_THUNK_VTABLE_METHOD_COUNT == %);
 WINRT_EXPORT namespace winrt::impl
 {
     inline constexpr size_t cached_thunk_tagged_slot_count = 8;
+    inline constexpr std::uint32_t cached_thunk_reserved_slot_count = 6;
+
+#if defined(_M_IX86)
+    constexpr std::uint16_t cached_thunk_x86_stack_arg_bytes(std::size_t size) noexcept
+    {
+        return static_cast<std::uint16_t>((size + sizeof(void*) - 1) & ~(sizeof(void*) - 1));
+    }
+
+    template <typename Derived, typename Interface, typename Enable = void>
+    struct cached_thunk_x86_stack_pop_sizes
+    {
+        inline static constexpr std::array<std::uint16_t, 0> value{};
+    };
+#endif
+
+    struct cached_thunk_descriptor
+    {
+        guid const* iid{};
+#if defined(_M_IX86)
+        std::uint16_t const* stack_pop_sizes{};
+#endif
+    };
 
     // ========================================================================
     // Thunk data structures
     // ========================================================================
 
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4324) // Intentional 16-byte alignment for tagged thunk payload decoding.
+#endif
     struct alignas(16) thunked_runtimeclass_header
     {
         // default_cache MUST be the first member so that *(void**)&object reads
         // the COM pointer — matching the layout of IUnknown-derived types and
         // ensuring reinterpret_cast<T const*>(&void_ptr) works in produce stubs.
         mutable std::atomic<void*> default_cache{};
-        guid const* const* iid_table{};
+        cached_thunk_descriptor const* descriptor_table{};
     };
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
     struct interface_thunk
     {
         void const* const* vtable;
         uintptr_t payload;
+
+    private:
+        cached_thunk_descriptor const* descriptor() const noexcept
+        {
+            if (payload & 1)
+            {
+                auto* hdr = reinterpret_cast<thunked_runtimeclass_header*>(payload & ~uintptr_t(0xF));
+                return hdr->descriptor_table + ((payload >> 1) & (cached_thunk_tagged_slot_count - 1));
+            }
+
+            return *reinterpret_cast<cached_thunk_descriptor const* const*>(
+                reinterpret_cast<char const*>(this) + sizeof(interface_thunk));
+        }
+
+    public:
 
         std::atomic<void*>* cache_slot() const
         {
@@ -56,23 +100,20 @@ WINRT_EXPORT namespace winrt::impl
                 return current;
 
             void* default_abi;
-            guid const* iid;
+            auto const* desc = descriptor();
 
             if (payload & 1)
             {
                 auto* hdr = reinterpret_cast<thunked_runtimeclass_header*>(payload & ~uintptr_t(0xF));
                 default_abi = hdr->default_cache.load(std::memory_order_relaxed);
-                iid = hdr->iid_table[(payload >> 1) & (cached_thunk_tagged_slot_count - 1)];
             }
             else
             {
                 default_abi = reinterpret_cast<void*>(payload);
-                iid = *reinterpret_cast<guid const* const*>(
-                    reinterpret_cast<char const*>(this) + sizeof(interface_thunk));
             }
 
             void* real = nullptr;
-            if (static_cast<unknown_abi*>(default_abi)->QueryInterface(*iid, &real) < 0)
+            if (static_cast<unknown_abi*>(default_abi)->QueryInterface(*desc->iid, &real) < 0)
                 return nullptr;
 
             void* expected = const_cast<interface_thunk*>(this);
@@ -83,8 +124,9 @@ WINRT_EXPORT namespace winrt::impl
             }
             return real;
         }
+
     };
-    static_assert(sizeof(interface_thunk) == 16);
+    static_assert(sizeof(interface_thunk) == (sizeof(void const* const*) + sizeof(uintptr_t)));
 
     extern "C" inline void* winrt_cached_resolve_thunk(interface_thunk const* thunk)
     {
@@ -99,18 +141,18 @@ WINRT_EXPORT namespace winrt::impl
         mutable std::atomic<void*> cache{};
         mutable interface_thunk thunk{};
     };
-    static_assert(sizeof(cache_and_thunk_tagged) == 24);
+    static_assert(sizeof(cache_and_thunk_tagged) == (sizeof(std::atomic<void*>) + sizeof(interface_thunk)));
     static_assert(offsetof(cache_and_thunk_tagged, thunk) == sizeof(std::atomic<void*>));
 
     struct cache_and_thunk_full
     {
         mutable std::atomic<void*> cache{};
         mutable interface_thunk thunk{};
-        mutable guid const* iid{};
+        mutable cached_thunk_descriptor const* descriptor{};
     };
-    static_assert(sizeof(cache_and_thunk_full) == 32);
+    static_assert(sizeof(cache_and_thunk_full) == (sizeof(std::atomic<void*>) + sizeof(interface_thunk) + sizeof(cached_thunk_descriptor const*)));
     static_assert(offsetof(cache_and_thunk_full, thunk) == sizeof(std::atomic<void*>));
-    static_assert(offsetof(cache_and_thunk_full, iid) == offsetof(cache_and_thunk_full, thunk) + sizeof(interface_thunk));
+    static_assert(offsetof(cache_and_thunk_full, descriptor) == offsetof(cache_and_thunk_full, thunk) + sizeof(interface_thunk));
 
     inline void init_pair_tagged(cache_and_thunk_tagged& p, size_t index, thunked_runtimeclass_header* header)
     {
@@ -119,12 +161,12 @@ WINRT_EXPORT namespace winrt::impl
         p.thunk.payload = reinterpret_cast<uintptr_t>(header) | (index << 1) | 1;
     }
 
-    inline void init_pair_full(cache_and_thunk_full& p, void* default_abi, guid const* iid)
+    inline void init_pair_full(cache_and_thunk_full& p, void* default_abi, cached_thunk_descriptor const* descriptor)
     {
         p.cache.store(&p.thunk, std::memory_order_relaxed);
         p.thunk.vtable = reinterpret_cast<void const* const*>(winrt_cached_thunk_vtable);
         p.thunk.payload = reinterpret_cast<uintptr_t>(default_abi);
-        p.iid = iid;
+        p.descriptor = descriptor;
     }
 
     template <bool Tagged>
@@ -165,7 +207,7 @@ WINRT_EXPORT namespace winrt::impl
             else
             {
                 for (size_t i = 0; i < count; ++i, base += stride)
-                    init_pair_full(*reinterpret_cast<cache_and_thunk_full*>(base), default_abi, iid_table[i]);
+                    init_pair_full(*reinterpret_cast<cache_and_thunk_full*>(base), default_abi, descriptor_table + i);
             }
         }
 
@@ -326,7 +368,7 @@ WINRT_EXPORT namespace winrt::impl
     // Typed template: adds interface accessors, wires up lifecycle
     // ========================================================================
 
-    template <typename IDefault, typename... I>
+    template <typename Derived, typename IDefault, typename... I>
     struct thunked_runtimeclass : thunked_runtimeclass_base
     {
         static constexpr size_t N = sizeof...(I);
@@ -336,24 +378,28 @@ WINRT_EXPORT namespace winrt::impl
 
         using thunked_interfaces = std::tuple<IDefault, I...>;
 
-        inline static const std::array<guid const*, N> iids{ &guid_of<I>()... };
+#if defined(_M_IX86)
+        inline static const std::array<cached_thunk_descriptor, N> descriptors{ cached_thunk_descriptor{ &guid_of<I>(), cached_thunk_x86_stack_pop_sizes<Derived, I>::value.data() }... };
+#else
+        inline static const std::array<cached_thunk_descriptor, N> descriptors{ cached_thunk_descriptor{ &guid_of<I>() }... };
+#endif
         mutable std::array<pair_type, N> pairs{};
 
     protected:
         thunked_runtimeclass(std::nullptr_t) noexcept
         {
-            iid_table = iids.data();
+            descriptor_table = descriptors.data();
         }
 
         thunked_runtimeclass(void* default_abi, take_ownership_from_abi_t) noexcept
         {
-            iid_table = iids.data();
+            descriptor_table = descriptors.data();
             attach_impl(default_abi, pairs.data(), N, pair_stride, use_tagged);
         }
 
         thunked_runtimeclass() noexcept
         {
-            iid_table = iids.data();
+            descriptor_table = descriptors.data();
         }
 
     public:
@@ -364,13 +410,13 @@ WINRT_EXPORT namespace winrt::impl
 
         thunked_runtimeclass(thunked_runtimeclass const& other)
         {
-            iid_table = iids.data();
+            descriptor_table = descriptors.data();
             copy_from(other, pairs.data(), N, pair_stride, use_tagged);
         }
 
         thunked_runtimeclass(thunked_runtimeclass&& other) noexcept
         {
-            iid_table = iids.data();
+            descriptor_table = descriptors.data();
             move_from(other, pairs.data(), other.pairs.data(), N, pair_stride, use_tagged);
         }
 

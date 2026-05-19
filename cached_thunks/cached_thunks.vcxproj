@@ -21,9 +21,17 @@
       <Configuration>Debug</Configuration>
       <Platform>ARM64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64EC">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64EC</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|ARM64">
       <Configuration>Release</Configuration>
       <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64EC">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64EC</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -65,9 +73,14 @@
     </Lib>
   </ItemDefinitionGroup>
   <PropertyGroup>
-    <Platform_Arm Condition="'$(Platform)'=='ARM64'">true</Platform_Arm>
+    <Platform_Arm64 Condition="'$(Platform)'=='ARM64'">true</Platform_Arm64>
+    <Platform_Arm64 Condition="'$(Platform_Arm64)'!='true'">false</Platform_Arm64>
+    <Platform_Arm64EC Condition="'$(Platform)'=='ARM64EC'">true</Platform_Arm64EC>
+    <Platform_Arm64EC Condition="'$(Platform_Arm64EC)'!='true'">false</Platform_Arm64EC>
+    <Platform_Arm Condition="'$(Platform_Arm64)'=='true' or '$(Platform_Arm64EC)'=='true'">true</Platform_Arm>
     <Platform_Arm Condition="'$(Platform_Arm)'!='true'">false</Platform_Arm>
-    <Platform_Intel>!$(Platform_Arm)</Platform_Intel>
+    <Platform_Intel Condition="'$(Platform_Arm)'!='true'">true</Platform_Intel>
+    <Platform_Intel Condition="'$(Platform_Intel)'!='true'">false</Platform_Intel>
     <TargetName>cppwinrt_cached_thunks</TargetName>
   </PropertyGroup>
   <ImportGroup>
@@ -75,10 +88,10 @@
     <Import Condition="$(Platform_Arm)" Project="$(VCTargetsPath)\BuildCustomizations\marmasm.props" />
   </ImportGroup>
   <!-- ARM64: preprocess with cl.exe to expand #include "ksarm64.h" -->
-  <Target Name="CppWinRTPreprocessArmThunk" Condition="$(Platform_Arm)" BeforeTargets="_MARMASM" Outputs="$(IntDir)cached_thunks_arm64.pp" Inputs="..\strings\cached_thunks_arm64.asm">
+  <Target Name="CppWinRTPreprocessArmThunk" Condition="'$(Platform_Arm64)'=='true'" BeforeTargets="_MARMASM" Outputs="$(IntDir)cached_thunks_arm64.pp" Inputs="..\strings\cached_thunks_arm64.asm">
     <Exec Command="cl /E /Tc ..\strings\cached_thunks_arm64.asm &gt; $(IntDir)cached_thunks_arm64.pp" />
   </Target>
-  <Target Name="CppWinRTPreprocessArmECThunk" Condition="$(Platform_Arm)" BeforeTargets="_MARMASM" Outputs="$(IntDir)cached_thunks_arm64ec.pp" Inputs="..\strings\cached_thunks_arm64ec.asm">
+  <Target Name="CppWinRTPreprocessArmECThunk" Condition="'$(Platform_Arm64EC)'=='true'" BeforeTargets="_MARMASM" Outputs="$(IntDir)cached_thunks_arm64ec.pp" Inputs="..\strings\cached_thunks_arm64ec.asm">
     <Exec Command="cl /E /Tc ..\strings\cached_thunks_arm64ec.asm &gt; $(IntDir)cached_thunks_arm64ec.pp" />
   </Target>
   <ItemGroup Condition="'$(Platform)'=='x64'">
@@ -92,11 +105,13 @@
       <UseSafeExceptionHandlers>true</UseSafeExceptionHandlers>
     </MASM>
   </ItemGroup>
-  <ItemGroup Condition="$(Platform_Arm)">
+  <ItemGroup Condition="'$(Platform_Arm64)'=='true'">
     <MARMASM Include="$(IntDir)cached_thunks_arm64.pp">
       <PreprocessWithCl Condition="'$(VisualStudioVersion)' &gt;= '17.0'">false</PreprocessWithCl>
       <FileType>Document</FileType>
     </MARMASM>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform_Arm64EC)'=='true'">
     <MARMASM Include="$(IntDir)cached_thunks_arm64ec.pp">
       <PreprocessWithCl Condition="'$(VisualStudioVersion)' &gt;= '17.0'">false</PreprocessWithCl>
       <FileType>Document</FileType>

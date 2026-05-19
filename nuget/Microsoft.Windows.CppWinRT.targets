@@ -25,6 +25,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTHasHashTask Condition="'$(CppWinRTHasHashTask)' != 'true'">false</CppWinRTHasHashTask>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))..\..\</CppWinRTPackageDir>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))</CppWinRTPackageDir>
+        <CppWinRTCachedThunkPlatform Condition="'$(CppWinRTCachedThunkPlatform)' == '' and '$(Platform)' == 'ARM64EC'">arm64ec</CppWinRTCachedThunkPlatform>
+        <CppWinRTCachedThunkPlatform Condition="'$(CppWinRTCachedThunkPlatform)' == ''">$(Platform)</CppWinRTCachedThunkPlatform>
         <CppWinRTParameters Condition="'$(CppWinRTFastAbi)'=='true'">$(CppWinRTParameters) -fastabi</CppWinRTParameters>
         <CppWinRTParameters Condition="'$(CppWinRTFlattenClasses)'=='true'">$(CppWinRTParameters) -flatten_classes</CppWinRTParameters>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)bin\"</CppWinRTPath>
@@ -893,7 +895,7 @@ $(XamlMetaDataProviderPch)
         <Link>
             <AdditionalDependencies Condition="'$(CppWinRTLibs)' != 'false'">%(AdditionalDependencies);WindowsApp.lib</AdditionalDependencies>
             <AdditionalDependencies Condition="'$(CppWinRTFastAbi)'=='true'">%(AdditionalDependencies);$(CppWinRTPackageDir)build\native\lib\$(Platform)\cppwinrt_fast_forwarder.lib</AdditionalDependencies>
-            <AdditionalDependencies Condition="'$(CppWinRTFlattenClasses)'=='true'">%(AdditionalDependencies);$(CppWinRTPackageDir)build\native\lib\$(Platform)\cppwinrt_cached_thunks.lib</AdditionalDependencies>
+            <AdditionalDependencies Condition="'$(CppWinRTFlattenClasses)'=='true'">%(AdditionalDependencies);$(CppWinRTPackageDir)build\native\lib\$(CppWinRTCachedThunkPlatform)\cppwinrt_cached_thunks.lib</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
 
