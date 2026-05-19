@@ -358,6 +358,7 @@
     <ClCompile Include="..\test\suppress_error_info.cpp" />
     <ClCompile Include="..\test\tearoff.cpp" />
     <ClCompile Include="..\test\thread_pool.cpp" />
+    <ClCompile Include="composable_thunked.cpp" />
     <ClCompile Include="thunked_dispatch.cpp" />
     <ClCompile Include="..\test\uniform_in_params.cpp" />
     <ClCompile Include="..\test\variadic_delegate.cpp" />

@@ -269,9 +269,9 @@ winrt_cached_thunk_vtable label qword
 
 ### Cacheable (thunked)
 
-Non-composable, non-fastabi, non-static runtimeclasses with ≥1 secondary interface
+Non-fastabi, non-static runtimeclasses with ≥1 secondary interface
 and a non-async default interface. Enabled by the `-flatten_classes` cppwinrt.exe flag.
-Examples: `PropertySet`, `StringMap`, `StorageFile`, `MediaCapture`.
+Examples: `PropertySet`, `StringMap`, `StorageFile`, `MediaCapture`, `Windows.UI.Xaml.Shapes::Path`.
 
 Includes types with generic default interfaces (`StringMap` defaults to
 `IMap<hstring, hstring>`, not a named interface). The `get_default_interface()` in the
@@ -281,7 +281,6 @@ code generator returns `coded_index<TypeDefOrRef>` which handles both cases unif
 
 | Category | Reason |
 |----------|--------|
-| Composable runtimeclasses | Complex base class chains, `impl::base<>`, override machinery |
 | Fast ABI runtimeclasses | Already optimized, `[FastAbi]` attribute, separate code path |
 | Static-only runtimeclasses | No instances (`write_static_class`) |
 | Single-interface runtimeclasses | No secondaries to cache (e.g. `Deferral`) |

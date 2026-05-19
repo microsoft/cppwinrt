@@ -45,18 +45,17 @@ A runtimeclass is cached if all of the following are true:
 - The `-flatten_classes` flag is passed to cppwinrt.exe
 - It has a default interface with which to anchor the cache
 - It is not marked `[FastAbi]`, since those types follow the separate Fast ABI projection path
-- It has no base class, so it is not composable
 - It has at least one secondary interface
 - Its default interface is not an async type (`IAsyncAction`, `IAsyncOperation<T>`, etc.)
 
-Examples: `PropertySet`, `StringMap`, `Uri`, `XmlDocument`, `Package`.
+Examples: `PropertySet`, `StringMap`, `Uri`, `XmlDocument`, `Package`, `Windows.UI.Xaml.Shapes::Path`.
 
-Types that remain unchanged: single-interface runtimeclasses, composable types, `[FastAbi]` types, static classes, all
+Types that remain unchanged: single-interface runtimeclasses, `[FastAbi]` types, static classes, all
 interfaces, delegates, and structs.
 
-The composable exclusion is intentional. This design replaces the projected runtimeclass's default-interface-based
-representation with a thunked storage object. Composable hierarchies rely on projected base-class chaining and related
-`impl::base<>` machinery, which this initial design does not preserve.
+Composable runtimeclasses are now supported. The projected type still uses thunked storage, but it also preserves the
+projected base-class chaining surface via `impl::base<>`, so client code can continue converting to base runtimeclasses
+while base/default interface dispatch participates in the thunk cache.
 
 ## What Changes for Clients
 
@@ -255,8 +254,6 @@ parameters; interface and delegate types remain pointer-sized and use the zero-c
 
 - Only supports up to 8 non-default interfaces cached at a time; the lower 3 bits of a slot's pointer-to-parent indicate
   which interface the slot represents before being replaced.
-- No composable runtimeclasses. The current design does not preserve projected base-class chaining and related
-  `impl::base<>` machinery.
 - No `[FastAbi]` runtimeclasses. Those already follow a separate optimized projection path.
 - No static-only classes. There is no instance to cache.
 - No single-interface runtimeclasses. There is no secondary interface to resolve.

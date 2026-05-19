@@ -6,7 +6,7 @@ namespace cppwinrt
     {
         writer& w;
         void (*finisher)(writer&);
-
+ 
         finish_with(writer& w, void (*finisher)(writer&)) : w(w), finisher(finisher) {}
         finish_with(finish_with const&)= delete;
         void operator=(finish_with const&) = delete;
@@ -3346,7 +3346,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
-            if (!info.is_default && !info.is_protected && !info.overridable)
+            if ((!info.is_default || info.base) && !info.is_protected && !info.overridable)
             {
                 w.write(", %", interface_name);
             }
@@ -3416,7 +3416,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
-            if (info.is_default || info.is_protected || info.overridable)
+            if ((info.is_default && !info.base) || info.is_protected || info.overridable)
             {
                 continue;
             }
@@ -3514,7 +3514,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
     {
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
-            if (!info.is_default && !info.is_protected && !info.overridable)
+            if ((!info.is_default || info.base) && !info.is_protected && !info.overridable)
             {
                 return true;
             }
@@ -3559,7 +3559,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
     {
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
-            if (info.is_default || info.is_protected || info.overridable)
+            if ((info.is_default && !info.base) || info.is_protected || info.overridable)
             {
                 continue;
             }
@@ -3594,7 +3594,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         auto format = R"(    struct %;
 #if defined(_M_IX86)
 %#endif
-    struct WINRT_IMPL_EMPTY_BASES % : %%
+    struct WINRT_IMPL_EMPTY_BASES % : %%%
     {
         %(std::nullptr_t) noexcept : thunked_runtimeclass(nullptr) {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : thunked_runtimeclass(ptr, take_ownership_from_abi) {}
@@ -3607,6 +3607,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             type_name,
             bind<write_thunked_class_base>(type, default_interface),
             bind<write_thunked_class_requires>(type),
+            bind<write_class_base>(type),
             type_name,
             type_name,
             bind<write_constructor_declarations>(type, factories),
@@ -3663,7 +3664,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             {
                 write_fast_class(w, type, default_interface);
             }
-            else if (settings.flatten_classes && get_bases(type).empty() && has_secondary_interfaces(w, type) && !has_async_default_interface(default_interface))
+            else if (settings.flatten_classes && has_secondary_interfaces(w, type) && !has_async_default_interface(default_interface))
             {
                 write_thunked_class(w, type, default_interface);
             }

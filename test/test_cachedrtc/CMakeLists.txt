@@ -44,7 +44,11 @@ foreach(TEST_SRCS_EXCLUDE_ITEM IN LISTS BROKEN_TESTS)
     list(FILTER TEST_SRCS EXCLUDE REGEX "/${TEST_SRCS_EXCLUDE_ITEM}\\.cpp")
 endforeach()
 
-add_executable(test_cachedrtc "${CMAKE_CURRENT_SOURCE_DIR}/../test/main.cpp" ${TEST_SRCS} thunked_dispatch.cpp)
+add_executable(test_cachedrtc 
+    "${CMAKE_CURRENT_SOURCE_DIR}/../test/main.cpp"
+    ${TEST_SRCS}
+    thunked_dispatch.cpp
+    composable_thunked.cpp)
 target_link_libraries(test_cachedrtc runtimeobject synchronization)
 target_include_directories(test_cachedrtc PRIVATE "${CPPWINRT_CACHED_PROJECTION_INCLUDE_DIR}")
 
