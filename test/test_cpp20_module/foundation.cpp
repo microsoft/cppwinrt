@@ -43,3 +43,26 @@ TEST_CASE("module_events")
     REQUIRE(received == 42);
     my_event.remove(token);
 }
+
+TEST_CASE("module_foundation_point")
+{
+    Point p{ 5.0f, 10.0f };
+    REQUIRE(p.X == 5.0f);
+    REQUIRE(p.Y == 10.0f);
+}
+
+TEST_CASE("module_foundation_size")
+{
+    Size s{ 800.0f, 600.0f };
+    REQUIRE(s.Width == 800.0f);
+    REQUIRE(s.Height == 600.0f);
+}
+
+TEST_CASE("module_foundation_rect")
+{
+    Point origin{ 0.0f, 0.0f };
+    Size extent{ 100.0f, 200.0f };
+    Rect r(origin, extent);
+    REQUIRE(r.X == 0.0f);
+    REQUIRE(r.Width == 100.0f);
+}

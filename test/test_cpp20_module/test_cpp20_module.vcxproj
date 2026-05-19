@@ -106,6 +106,7 @@
     <ClCompile Include="format.cpp" />
     <ClCompile Include="com_interop.cpp" />
     <ClCompile Include="natvis.cpp" />
+    <ClCompile Include="numerics.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

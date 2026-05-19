@@ -34,6 +34,13 @@
 #if __has_include(<windowsnumerics.impl.h>)
 #define WINRT_IMPL_NUMERICS
 #include <directxmath.h>
+#define _WINDOWS_NUMERICS_NAMESPACE_ winrt::Windows::Foundation::Numerics
+#define _WINDOWS_NUMERICS_BEGIN_NAMESPACE_ namespace winrt::Windows::Foundation::Numerics
+#define _WINDOWS_NUMERICS_END_NAMESPACE_
+#include <windowsnumerics.impl.h>
+#undef _WINDOWS_NUMERICS_NAMESPACE_
+#undef _WINDOWS_NUMERICS_BEGIN_NAMESPACE_
+#undef _WINDOWS_NUMERICS_END_NAMESPACE_
 #endif
 
 #ifndef WINRT_LEAN_AND_MEAN

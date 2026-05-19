@@ -53,22 +53,6 @@
 #endif // WINRT_IMPL_BUILD_MODULE
 #endif // WINRT_IMPL_STD_EXPORT
 
-// <windowsnumerics.impl.h> pulls in large, hard-to-control legacy headers. In header builds we keep the
-// existing behavior, but in module builds it's provided by the winrt_numerics module.
-#if !(defined(WINRT_IMPL_BUILD_MODULE) || defined(WINRT_IMPORT_MODULE))
-
-#ifdef WINRT_IMPL_NUMERICS
-#define _WINDOWS_NUMERICS_NAMESPACE_ winrt::Windows::Foundation::Numerics
-#define _WINDOWS_NUMERICS_BEGIN_NAMESPACE_ WINRT_EXPORT namespace winrt::Windows::Foundation::Numerics
-#define _WINDOWS_NUMERICS_END_NAMESPACE_
-#include <windowsnumerics.impl.h>
-#undef _WINDOWS_NUMERICS_NAMESPACE_
-#undef _WINDOWS_NUMERICS_BEGIN_NAMESPACE_
-#undef _WINDOWS_NUMERICS_END_NAMESPACE_
-#endif // WINRT_IMPL_NUMERICS
-
-#endif // !(WINRT_IMPL_BUILD_MODULE || WINRT_IMPORT_MODULE)
-
 #if defined(_MSC_VER)
 #define WINRT_IMPL_NOINLINE __declspec(noinline)
 #elif defined(__GNUC__)

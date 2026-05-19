@@ -7,10 +7,6 @@
 #include <inspectable.h>
 #endif
 
-#ifdef GetCurrentTime
-#undef GetCurrentTime
-#endif
-
 export module winrt_base;
 
 import std;
