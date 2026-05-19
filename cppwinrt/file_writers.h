@@ -240,6 +240,10 @@ namespace cppwinrt
         write_namespace_special(w, ns);
 
         write_close_file_guard(w);
+        // The #ifndef WINRT_IMPORT_MODULE / #endif pair spans across w.swap().
+        // The body is written first (above), then swap() prepends the header prefix (below).
+        // In the final output, #ifndef opens before the includes and #endif closes after
+        // the file guard, mirroring the write_open_file_guard / write_close_file_guard pair.
         w.write("#endif // WINRT_IMPORT_MODULE\n");
         w.swap();
         write_preamble(w);
@@ -302,20 +306,20 @@ namespace cppwinrt
         write_preamble(w);
         write_include_guard(w);
 
-        w.write("#ifdef WINRT_IMPORT_MODULE\n");
-        w.write_root_include("base_macros");
-        for (auto&& depends : w.depends)
         {
-            w.write("import winrt.%;\n", depends.first);
-        }
-        w.write("#else // WINRT_IMPORT_MODULE\n");
+            auto wrap = wrap_ifdef(w, "WINRT_IMPORT_MODULE");
+            w.write_root_include("base_macros");
+            for (auto&& depends : w.depends)
+            {
+                w.write("import winrt.%;\n", depends.first);
+            }
+            w.write("#else // WINRT_IMPORT_MODULE\n");
 
-        for (auto&& depends : w.depends)
-        {
-            w.write_depends(depends.first);
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first);
+            }
         }
-
-        w.write("#endif // WINRT_IMPORT_MODULE\n");
 
         auto filename = settings.output_folder + get_generated_component_filename(type) + ".g.h";
         path folder = filename;
