@@ -759,6 +759,37 @@ namespace cppwinrt
         }
     }
 
+    static void write_cached_thunk_x86_stack_pop_size(writer& w, method_signature const& signature);
+
+    static void write_interface_abi_method_pops(writer& w, TypeDef const& type)
+    {
+        auto generics = type.GenericParam();
+        auto guard{ w.push_generic_params(generics) };
+        auto const method_count = size(type.MethodList());
+        auto const array_bound = (std::max)(std::size_t{ 1 }, method_count);
+
+        if (empty(generics))
+        {
+            w.write("    template <> struct abi_method_pops<%>\n    {\n", type);
+        }
+        else
+        {
+            w.write("    template <%> struct abi_method_pops<%>\n    {\n",
+                bind<write_generic_typenames>(generics),
+                type);
+        }
+
+        w.write("        inline static constexpr std::uint16_t pops[%] = { ", array_bound);
+        separator s{ w };
+        for (auto&& method : type.MethodList())
+        {
+            s();
+            write_cached_thunk_x86_stack_pop_size(w, method_signature{ method });
+        }
+        w.write(" };\n");
+        w.write("    };\n");
+    }
+
     static void write_interface_abi(writer& w, TypeDef const& type)
     {
         auto generics = type.GenericParam();
@@ -791,20 +822,22 @@ namespace cppwinrt
         auto format = R"(            virtual std::int32_t __stdcall %(%) noexcept = 0;
 )";
 
-        auto abi_guard = w.push_abi_types(true);
-        for (auto&& method : type.MethodList())
         {
-            try
+            auto abi_guard = w.push_abi_types(true);
+            for (auto&& method : type.MethodList())
             {
-                method_signature signature{ method };
-                w.write(format, get_abi_name(method), bind<write_abi_params>(signature));
-            }
-            catch (std::exception const& e)
-            {
-                throw_invalid(e.what(),
-                    "\n method: ", get_name(method),
-                    "\n type: ", type.TypeNamespace(), ".", type.TypeName(),
-                    "\n database: ", type.get_database().path());
+                try
+                {
+                    method_signature signature{ method };
+                    w.write(format, get_abi_name(method), bind<write_abi_params>(signature));
+                }
+                catch (std::exception const& e)
+                {
+                    throw_invalid(e.what(),
+                        "\n method: ", get_name(method),
+                        "\n type: ", type.TypeNamespace(), ".", type.TypeName(),
+                        "\n database: ", type.get_database().path());
+                }
             }
         }
 
@@ -3355,11 +3388,96 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         w.write('>');
     }
 
-    static void write_cached_thunk_x86_stack_pop_bytes(writer& w, method_signature const& signature)
+    static std::size_t align_cached_thunk_x86_size(std::size_t value, std::size_t alignment)
     {
-        auto abi_guard = w.push_abi_types(true);
+        return (value + alignment - 1) & ~(alignment - 1);
+    }
 
-        w.write("static_cast<std::uint16_t>(impl::cached_thunk_x86_stack_arg_bytes(sizeof(void*))");
+    static constexpr std::size_t cached_thunk_x86_pointer_size = 4;
+
+    static std::pair<std::size_t, std::size_t> get_cached_thunk_x86_type_layout(TypeSig const& type)
+    {
+        TypeDef signature_type;
+
+        switch (get_category(type, &signature_type))
+        {
+        case param_category::fundamental_type:
+            return call(type.Type(),
+                [](ElementType element) -> std::pair<std::size_t, std::size_t>
+                {
+                    switch (element)
+                    {
+                    case ElementType::Boolean:
+                    case ElementType::I1:
+                    case ElementType::U1:
+                        return { 1, 1 };
+                    case ElementType::Char:
+                    case ElementType::I2:
+                    case ElementType::U2:
+                        return { 2, 2 };
+                    case ElementType::I4:
+                    case ElementType::U4:
+                    case ElementType::R4:
+                        return { 4, 4 };
+                    case ElementType::I8:
+                    case ElementType::U8:
+                    case ElementType::R8:
+                        return { 8, 8 };
+                    case ElementType::I:
+                    case ElementType::U:
+                        return { cached_thunk_x86_pointer_size, cached_thunk_x86_pointer_size };
+                    default:
+                        throw_invalid("Unsupported x86 cached thunk fundamental element type.");
+                    }
+                },
+                [](auto&&) -> std::pair<std::size_t, std::size_t>
+                {
+                    throw_invalid("Unexpected non-fundamental type in x86 cached thunk layout computation.");
+                });
+
+        case param_category::enum_type:
+            return get_cached_thunk_x86_type_layout(signature_type.FieldList().first.Signature().Type());
+
+        case param_category::struct_type:
+        {
+            if (!signature_type)
+            {
+                return { 16, 4 };
+            }
+
+            std::size_t size = 0;
+            std::size_t alignment = 1;
+
+            for (auto&& field : signature_type.FieldList())
+            {
+                auto [field_size, field_alignment] = get_cached_thunk_x86_type_layout(field.Signature().Type());
+                size = align_cached_thunk_x86_size(size, field_alignment);
+                size += field_size;
+                alignment = (std::max)(alignment, field_alignment);
+            }
+
+            size = align_cached_thunk_x86_size(size, alignment);
+            return { size, alignment };
+        }
+
+        case param_category::object_type:
+        case param_category::string_type:
+        case param_category::generic_type:
+        case param_category::array_type:
+            return { cached_thunk_x86_pointer_size, cached_thunk_x86_pointer_size };
+        }
+
+        throw_invalid("Unsupported x86 cached thunk parameter category.");
+    }
+
+    static std::uint16_t get_cached_thunk_x86_stack_arg_bytes(std::size_t size)
+    {
+        return static_cast<std::uint16_t>(align_cached_thunk_x86_size(size, cached_thunk_x86_pointer_size));
+    }
+
+    static std::uint16_t get_cached_thunk_x86_stack_pop_size(method_signature const& signature)
+    {
+        std::uint16_t result = static_cast<std::uint16_t>(cached_thunk_x86_pointer_size);
 
         for (auto&& [param, param_signature] : signature.params())
         {
@@ -3367,90 +3485,38 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
             if (param_signature->Type().is_szarray())
             {
-                w.write(" + impl::cached_thunk_x86_stack_arg_bytes(sizeof(std::uint32_t)) + impl::cached_thunk_x86_stack_arg_bytes(sizeof(void*))");
+                result = static_cast<std::uint16_t>(result + 8);
             }
             else if (param.Flags().In())
             {
-                if (is_const(*param_signature))
+                if (is_const(*param_signature) || category == param_category::object_type || category == param_category::string_type || category == param_category::generic_type)
                 {
-                    w.write(" + impl::cached_thunk_x86_stack_arg_bytes(sizeof(void*))");
-                }
-                else if (category == param_category::object_type || category == param_category::string_type || category == param_category::generic_type)
-                {
-                    w.write(" + impl::cached_thunk_x86_stack_arg_bytes(sizeof(void*))");
+                    result = static_cast<std::uint16_t>(result + cached_thunk_x86_pointer_size);
                 }
                 else
                 {
-                    w.write(" + impl::cached_thunk_x86_stack_arg_bytes(sizeof(");
-                    w.write("%", param_signature->Type());
-                    w.write("))");
+                    auto [size, alignment] = get_cached_thunk_x86_type_layout(param_signature->Type());
+                    (void)alignment;
+                    result = static_cast<std::uint16_t>(result + get_cached_thunk_x86_stack_arg_bytes(size));
                 }
             }
             else
             {
-                w.write(" + impl::cached_thunk_x86_stack_arg_bytes(sizeof(void*))");
+                result = static_cast<std::uint16_t>(result + cached_thunk_x86_pointer_size);
             }
         }
 
         if (signature.return_signature())
         {
-            auto const& type = signature.return_signature().Type();
-
-            if (type.is_szarray())
-            {
-                w.write(" + impl::cached_thunk_x86_stack_arg_bytes(sizeof(std::uint32_t*)) + impl::cached_thunk_x86_stack_arg_bytes(sizeof(void*))");
-            }
-            else
-            {
-                w.write(" + impl::cached_thunk_x86_stack_arg_bytes(sizeof(void*))");
-            }
+            result = static_cast<std::uint16_t>(result + (signature.return_signature().Type().is_szarray() ? 8 : cached_thunk_x86_pointer_size));
         }
 
-        w.write(')');
+        return result;
     }
 
-    static void write_thunked_class_x86_stack_pop_sizes(writer& w, TypeDef const& type)
+    static void write_cached_thunk_x86_stack_pop_size(writer& w, method_signature const& signature)
     {
-        auto type_name = type.TypeName();
-        bool emitted = false;
-
-        for (auto&& [interface_name, info] : get_interfaces(w, type))
-        {
-            if ((info.is_default && !info.base) || info.is_protected || info.overridable)
-            {
-                continue;
-            }
-
-            if (!emitted)
-            {
-                emitted = true;
-                w.write("    }\n\n    namespace winrt::impl\n    {\n");
-            }
-
-            auto stack_size = w.generic_param_stack.size();
-            w.generic_param_stack.insert(w.generic_param_stack.end(), info.generic_param_stack.begin(), info.generic_param_stack.end());
-
-            w.write("        template <> struct cached_thunk_x86_stack_pop_sizes<winrt::@::%, %>\n        {\n            inline static constexpr std::array<std::uint16_t, %> value{ ",
-                type.TypeNamespace(),
-                type_name,
-                interface_name,
-                size(info.type.MethodList()));
-
-            separator s{ w };
-            for (auto&& method : info.type.MethodList())
-            {
-                s();
-                write_cached_thunk_x86_stack_pop_bytes(w, method_signature{ method });
-            }
-
-            w.write(" };\n        };\n");
-            w.generic_param_stack.resize(stack_size);
-        }
-
-        if (emitted)
-        {
-            w.write("    }\n\n    namespace winrt::@\n    {\n", type.TypeNamespace());
-        }
+        w.write("%", get_cached_thunk_x86_stack_pop_size(signature));
     }
 
     static void write_thunked_class_requires(writer& w, TypeDef const& type)
@@ -3592,8 +3658,6 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         auto factories = get_factories(w, type);
 
         auto format = R"(    struct %;
-#if defined(_M_IX86)
-%#endif
     struct WINRT_IMPL_EMPTY_BASES % : %%%
     {
         %(std::nullptr_t) noexcept : thunked_runtimeclass(nullptr) {}
@@ -3603,7 +3667,6 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
         w.write(format,
             type_name,
-            bind<write_thunked_class_x86_stack_pop_sizes>(type),
             type_name,
             bind<write_thunked_class_base>(type, default_interface),
             bind<write_thunked_class_requires>(type),

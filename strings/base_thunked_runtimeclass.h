@@ -25,24 +25,19 @@ WINRT_EXPORT namespace winrt::impl
     inline constexpr size_t cached_thunk_tagged_slot_count = 8;
     inline constexpr std::uint32_t cached_thunk_reserved_slot_count = 6;
 
-#if defined(_M_IX86)
-    constexpr std::uint16_t cached_thunk_x86_stack_arg_bytes(std::size_t size) noexcept
-    {
-        return static_cast<std::uint16_t>((size + sizeof(void*) - 1) & ~(sizeof(void*) - 1));
-    }
-
-    template <typename Derived, typename Interface, typename Enable = void>
-    struct cached_thunk_x86_stack_pop_sizes
-    {
-        inline static constexpr std::array<std::uint16_t, 0> value{};
-    };
-#endif
-
     struct cached_thunk_descriptor
     {
         guid const* iid{};
 #if defined(_M_IX86)
         std::uint16_t const* stack_pop_sizes{};
+#endif
+    };
+
+    template <typename Interface>
+    struct abi_method_pops
+    {
+#if defined(_M_IX86)
+        inline static constexpr std::uint16_t pops[1] = {};
 #endif
     };
 
@@ -379,7 +374,7 @@ WINRT_EXPORT namespace winrt::impl
         using thunked_interfaces = std::tuple<IDefault, I...>;
 
 #if defined(_M_IX86)
-        inline static const std::array<cached_thunk_descriptor, N> descriptors{ cached_thunk_descriptor{ &guid_of<I>(), cached_thunk_x86_stack_pop_sizes<Derived, I>::value.data() }... };
+        inline static const std::array<cached_thunk_descriptor, N> descriptors{ cached_thunk_descriptor{ &guid_of<I>(), abi_method_pops<I>::pops }... };
 #else
         inline static const std::array<cached_thunk_descriptor, N> descriptors{ cached_thunk_descriptor{ &guid_of<I>() }... };
 #endif

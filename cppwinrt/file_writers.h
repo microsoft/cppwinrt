@@ -109,6 +109,13 @@ namespace cppwinrt
             w.write_each<write_delegate_abi>(members.delegates);
             w.write_each<write_consume>(members.interfaces);
             w.write_each<write_struct_abi>(members.structs);
+
+            if (!empty(members.interfaces))
+            {
+                w.write("\n#if defined(_M_IX86)\n");
+                w.write_each<write_interface_abi_method_pops>(members.interfaces);
+                w.write("#endif\n");
+            }
         }
 
         write_close_file_guard(w);
