@@ -379,6 +379,15 @@ jobs:
           $target_platform = "${{ matrix.arch }}"
           & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose
       
+      - name: Remove module test projects on v143
+        if: matrix.toolchain.platform_toolset == 'v143'
+        run: |
+          # Module test projects require v145 toolset
+          mv test\nuget\NugetTest.sln test\nuget\NugetTest.sln.orig
+          Get-Content test\nuget\NugetTest.sln.orig |
+            Where-Object { -not ($_ -match 'TestModule') } |
+            Set-Content test\nuget\NugetTest.sln
+
       - name: Run nuget test
         run: |
           cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" test\nuget\NugetTest.sln

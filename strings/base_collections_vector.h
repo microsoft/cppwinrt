@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename T, typename Container>
     using multi_threaded_vector = vector_impl<T, Container, multi_threaded_collection_base>;

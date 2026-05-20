@@ -136,7 +136,10 @@ namespace cppwinrt
 
     static void write_module_g_cpp(writer& w, std::vector<TypeDef> const& classes)
     {
-        w.write_root_include("base");
+        if (!settings.modules)
+        {
+            w.write_root_include("base");
+        }
         auto format = R"(%
 bool __stdcall %_can_unload_now() noexcept
 {

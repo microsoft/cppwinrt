@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     struct library_traits
     {
@@ -125,7 +125,7 @@ WINRT_EXPORT namespace winrt
 #define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER (__dmb(_ARM64_BARRIER_ISH));
 #endif
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     inline std::int32_t interlocked_read_32(std::int32_t const volatile* target) noexcept
     {
@@ -548,7 +548,7 @@ WINRT_EXPORT namespace winrt
     }
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename T>
     T fast_activate(Windows::Foundation::IActivationFactory const& factory)

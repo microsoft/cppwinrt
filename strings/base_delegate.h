@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
 #if defined(_MSC_VER)
 #pragma warning(push)
