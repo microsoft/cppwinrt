@@ -525,10 +525,10 @@ namespace cppwinrt
         w.write("\nstatic_assert(winrt::check_version(winrt::cppwinrt_version, CPPWINRT_VERSION), \"Mismatched C++/WinRT headers.\");\n\n");
 
         // Include namespace headers in module purview
-        w.write("#include \"winrt/impl/%.0.h\"\n", ns);
-        w.write("#include \"winrt/impl/%.1.h\"\n", ns);
-        w.write("#include \"winrt/impl/%.2.h\"\n", ns);
-        w.write("#include \"winrt/%.h\"\n", ns);
+        w.write_depends(ns, '0');
+        w.write_depends(ns, '1');
+        w.write_depends(ns, '2');
+        w.write_root_include(ns);
 
         w.flush_to_file(settings.output_folder + "winrt/winrt." + std::string(ns) + ".ixx");
     }
@@ -612,19 +612,19 @@ namespace cppwinrt
         // This preserves the original header layering while keeping compilation deterministic.
         for (auto& ns : scc_members)
         {
-            w.write("#include \"winrt/impl/%.0.h\"\n", ns);
+            w.write_depends(ns, '0');
         }
         for (auto& ns : scc_members)
         {
-            w.write("#include \"winrt/impl/%.1.h\"\n", ns);
+            w.write_depends(ns, '1');
         }
         for (auto& ns : scc_members)
         {
-            w.write("#include \"winrt/impl/%.2.h\"\n", ns);
+            w.write_depends(ns, '2');
         }
         for (auto& ns : scc_members)
         {
-            w.write("#include \"winrt/%.h\"\n", ns);
+            w.write_root_include(ns);
         }
 
         w.flush_to_file(settings.output_folder + "winrt/winrt." + std::string(owner) + ".ixx");
