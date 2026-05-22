@@ -294,9 +294,9 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
     };
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
-    template<typename T>
+    template <typename T, typename = std::enable_if_t<!std::is_pointer_v<T>>>
     void** abi_cast(T const& object) noexcept
     {
         return reinterpret_cast<void**>(const_cast<T*>(&object));
@@ -476,7 +476,7 @@ WINRT_EXPORT namespace winrt::impl
         }
         else
         {
-            auto const winrt_abi_type = *abi_t_abi_cast(static_cast<Base const*>(d));
+            auto const winrt_abi_type = *abi_t_abi_cast(*static_cast<Base const*>(d));
             (winrt_abi_type->*mptr)(std::forward<Args>(args)...);
         }
     }
@@ -494,7 +494,7 @@ WINRT_EXPORT namespace winrt::impl
         }
         else
         {
-            auto const winrt_abi_type = *abi_t_abi_cast(static_cast<Base const*>(d));
+            auto const winrt_abi_type = *abi_t_abi_cast(*static_cast<Base const*>(d));
             WINRT_VERIFY_(0, (winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
     }
@@ -512,7 +512,7 @@ WINRT_EXPORT namespace winrt::impl
         }
         else
         {
-            auto const winrt_abi_type = *abi_t_abi_cast(static_cast<Base const*>(d));
+            auto const winrt_abi_type = *abi_t_abi_cast(*static_cast<Base const*>(d));
             check_hresult((winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
     }

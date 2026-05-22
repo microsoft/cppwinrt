@@ -76,7 +76,7 @@ WINRT_EXPORT namespace winrt::impl
     template <typename T>
     using abi_t = typename abi<T>::type;
 
-    template <typename T>
+    template <typename T, typename = std::enable_if_t<!std::is_pointer_v<T>>>
     auto abi_t_abi_cast(T const& value) noexcept
     {
         return reinterpret_cast<abi_t<T>**>(const_cast<T*>(&value));

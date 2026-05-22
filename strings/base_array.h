@@ -446,7 +446,7 @@ WINRT_EXPORT namespace winrt
 
         if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, T>)
         {
-            return impl::abi_cast(*data);
+            return reinterpret_cast<void**>(data);
         }
         else
         {

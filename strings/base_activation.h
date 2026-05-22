@@ -509,7 +509,7 @@ WINRT_EXPORT namespace winrt
             T ActivateInstance() const
             {
                 IInspectable instance;
-                check_hresult((*impl::abi_t_abi_cast(this))->ActivateInstance(put_abi(instance)));
+                check_hresult((*impl::abi_t_abi_cast(*this))->ActivateInstance(put_abi(instance)));
                 return instance.try_as<T>();
             }
         };
