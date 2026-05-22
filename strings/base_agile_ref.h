@@ -47,7 +47,7 @@ WINRT_EXPORT namespace winrt
 #endif
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template<bool UseModuleLock>
     struct module_lock_updater;

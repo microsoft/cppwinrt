@@ -70,6 +70,9 @@ C++/WinRT behavior can be customized with these project properties:
 | CppWinRTOptimized | true \| *false | Enables component projection [optimization features](https://kennykerr.ca/2019/06/07/cppwinrt-optimizing-components/) |
 | CppWinRTGenerateWindowsMetadata | true \| *false | Indicates whether this project produces Windows Metadata |
 | CppWinRTEnableDefaultPrivateFalse | true \| *false | Indicates whether this project uses C++/WinRT optimized default for copying binaries to the output directory |
+| CppWinRTBuildModule | true \| *false | Generates per-namespace C++20 module interface units (.ixx) alongside projection headers |
+| CppWinRTModuleInclude | namespace list | Semicolon-delimited namespaces to include in module generation (default: all) |
+| CppWinRTModuleExclude | namespace list | Semicolon-delimited namespaces to exclude from module generation |
 \*Default value
 
 To customize common C++/WinRT project properties: 
@@ -131,6 +134,15 @@ void DerivedPage::InitializeComponent()
     MyBaseButton().Content(box_value(L"Click"));
 }
 ```
+
+## C++20 Modules
+
+C++/WinRT supports C++20 named modules as an alternative to `#include`-based consumption. Instead of `#include <winrt/Windows.Foundation.h>`, you can write `import winrt.Windows.Foundation;`. See [modules.md](modules.md) for the full guide.
+
+| ProjectReference metadata | Description |
+|-|-|
+| CppWinRTConsumeModule | true \| *false | When set on a ProjectReference, consumes pre-built platform module IFCs from the referenced project |
+\*Default value
 
 ## Troubleshooting
 

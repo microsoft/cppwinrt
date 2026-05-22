@@ -1,4 +1,4 @@
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     struct nop_lock_guard {};
 

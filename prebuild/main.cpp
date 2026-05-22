@@ -77,12 +77,19 @@ namespace cppwinrt::strings {
 
     writer version_rc;
 
+    // Extract major.minor substrings from CPPWINRT_VERSION_STRING (e.g. "3.0.250316.1")
+    std::string_view const full_version{ CPPWINRT_VERSION_STRING };
+    auto const first_dot = full_version.find('.');
+    auto const second_dot = full_version.find('.', first_dot + 1);
+    auto const ver_major = full_version.substr(0, first_dot);
+    auto const ver_minor = full_version.substr(first_dot + 1, second_dot - first_dot - 1);
+
     version_rc.write(R"(
 #include "winres.h"
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,0
- PRODUCTVERSION 2,0,0,0
+ FILEVERSION %,%,0,0
+ PRODUCTVERSION %,%,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -99,7 +106,7 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Microsoft Corporation"
             VALUE "FileDescription", "C++/WinRT"
-            VALUE "FileVersion", "2.0.0.0"
+            VALUE "FileVersion", "%.%.0.0"
             VALUE "LegalCopyright", "Microsoft Corporation. All rights reserved."
             VALUE "OriginalFilename", "cppwinrt.exe"
             VALUE "ProductName", "C++/WinRT"
@@ -112,7 +119,10 @@ BEGIN
     END
 END
 )",
-    CPPWINRT_VERSION_STRING);
+    ver_major, ver_minor,     // FILEVERSION
+    ver_major, ver_minor,     // PRODUCTVERSION
+    ver_major, ver_minor,     // FileVersion string
+    CPPWINRT_VERSION_STRING); // ProductVersion string
 
     std::filesystem::create_directories(argv[2]);
     auto const output = std::filesystem::canonical(argv[2]);

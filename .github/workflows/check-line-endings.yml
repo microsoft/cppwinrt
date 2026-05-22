@@ -1,0 +1,32 @@
+name: Check Line Endings
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  check-line-endings:
+    name: Enforce .gitattributes line endings
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check for line ending violations
+        run: |
+          # Re-normalize all files according to .gitattributes
+          git add --renormalize .
+
+          # Check if renormalization changed anything
+          if git diff --cached --name-only | grep -q .; then
+            echo "::error::The following files have line endings that don't match .gitattributes settings:"
+            git diff --cached --name-only
+            echo ""
+            echo "To fix, run:"
+            echo "  git add --renormalize ."
+            echo "  git commit -m 'Normalize line endings'"
+            exit 1
+          fi
+
+          echo "All files have correct line endings."

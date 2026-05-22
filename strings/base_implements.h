@@ -6,7 +6,7 @@
 #endif
 #endif
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     struct marker
     {
@@ -30,7 +30,7 @@ WINRT_EXPORT namespace winrt
     struct implements;
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template<typename...T>
     using tuple_cat_t = decltype(std::tuple_cat(std::declval<T>()...));
@@ -267,7 +267,7 @@ WINRT_EXPORT namespace winrt
     }
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename...> struct interface_list;
 

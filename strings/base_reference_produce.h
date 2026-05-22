@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename T>
     struct reference : implements<reference<T>, Windows::Foundation::IReference<T>, Windows::Foundation::IPropertyValue>
@@ -420,7 +420,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
     }
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename T, typename From>
     T unbox_value_type(From&& value)
@@ -509,12 +509,13 @@ namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
-    inline Windows::Foundation::IInspectable box_value(param::hstring const& value)
+    template <typename T, std::enable_if_t<std::is_constructible_v<hstring, T>, int> = 0>
+    Windows::Foundation::IInspectable box_value(T&& value)
     {
-        return Windows::Foundation::IReference<hstring>(*(hstring*)(&value));
+        return Windows::Foundation::IReference<hstring>(hstring(std::forward<T>(value)));
     }
 
-    template <typename T, std::enable_if_t<!std::is_convertible_v<T, param::hstring>, int> = 0>
+    template <typename T, std::enable_if_t<!std::is_constructible_v<hstring, T>, int> = 0>
     Windows::Foundation::IInspectable box_value(T const& value)
     {
         if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>)
