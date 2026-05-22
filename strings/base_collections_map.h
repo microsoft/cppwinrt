@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename K, typename V, typename Container>
     using multi_threaded_map = map_impl<K, V, Container, multi_threaded_collection_base>;
@@ -116,7 +116,7 @@ WINRT_EXPORT namespace winrt
     }
 }
 
-namespace std
+WINRT_EXPORT namespace std
 {
     template<typename K, typename V>
     struct tuple_size<winrt::Windows::Foundation::Collections::IKeyValuePair<K, V>>
@@ -132,7 +132,7 @@ namespace std
     };
 }
 
-namespace winrt::Windows::Foundation::Collections
+WINRT_EXPORT namespace winrt::Windows::Foundation::Collections
 {
     template<std::size_t Idx, typename K, typename V>
     std::tuple_element_t<Idx, IKeyValuePair<K, V>> get(IKeyValuePair<K, V> const& kvp)

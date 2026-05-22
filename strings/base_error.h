@@ -7,7 +7,7 @@
 #define WINRT_IMPL_RETURNADDRESS() nullptr
 #endif
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     struct heap_traits
     {
@@ -536,7 +536,7 @@ WINRT_EXPORT namespace winrt
     }
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     inline hresult check_hresult_allow_bounds(hresult const result, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
     {
