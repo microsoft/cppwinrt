@@ -3,5 +3,6 @@
   <!-- Proxy/stub project: remove thunk MASM stubs injected by parent targets -->
   <ItemGroup>
     <MASM Remove="@(MASM)" />
+    <MARMASM Remove="@(MARMASM)" />
   </ItemGroup>
 </Project>

@@ -641,6 +641,11 @@ namespace cppwinrt
                 switch (category)
                 {
                 case param_category::object_type:
+                    if (settings.flatten_classes && is_object_class(param_signature->Type()))
+                        w.write("%.abi", param_name);
+                    else
+                        w.write("*(void**)(&%)", param_name);
+                    break;
                 case param_category::string_type:
                     w.write("*(void**)(&%)", param_name);
                     break;
@@ -759,7 +764,7 @@ namespace cppwinrt
         }
     }
 
-    static void write_cached_thunk_x86_stack_pop_size(writer& w, method_signature const& signature);
+    static void write_flat_x86_stack_pop_size(writer& w, method_signature const& signature);
 
     static void write_interface_abi_method_pops(writer& w, TypeDef const& type)
     {
@@ -784,7 +789,7 @@ namespace cppwinrt
         for (auto&& method : type.MethodList())
         {
             s();
-            write_cached_thunk_x86_stack_pop_size(w, method_signature{ method });
+            write_flat_x86_stack_pop_size(w, method_signature{ method });
         }
         w.write(" };\n");
         w.write("    };\n");
@@ -942,6 +947,10 @@ namespace cppwinrt
                     else if (std::holds_alternative<GenericTypeIndex>(param_signature->Type().Type()))
                     {
                         w.write("impl::param_type<%> const&", param_signature->Type());
+                    }
+                    else if (settings.flatten_classes && get_category(param_signature->Type()) == param_category::object_type && is_object_class(param_signature->Type()))
+                    {
+                        w.write("impl::param_ref<%>", param_signature->Type());
                     }
                     else
                     {
@@ -3373,9 +3382,9 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             bind_each<write_static_declaration>(factories, type));
     }
 
-    static void write_thunked_class_base(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& default_interface)
+    static void write_flat_class_base(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& default_interface)
     {
-        w.write("impl::thunked_runtimeclass<%, %", type.TypeName(), default_interface);
+        w.write("impl::flat_runtimeclass<%, %", type.TypeName(), default_interface);
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
@@ -3388,14 +3397,14 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         w.write('>');
     }
 
-    static std::size_t align_cached_thunk_x86_size(std::size_t value, std::size_t alignment)
+    static std::size_t align_flat_x86_size(std::size_t value, std::size_t alignment)
     {
         return (value + alignment - 1) & ~(alignment - 1);
     }
 
-    static constexpr std::size_t cached_thunk_x86_pointer_size = 4;
+    static constexpr std::size_t flat_x86_pointer_size = 4;
 
-    static std::pair<std::size_t, std::size_t> get_cached_thunk_x86_type_layout(TypeSig const& type)
+    static std::pair<std::size_t, std::size_t> get_flat_x86_type_layout(TypeSig const& type)
     {
         TypeDef signature_type;
 
@@ -3425,7 +3434,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                         return { 8, 8 };
                     case ElementType::I:
                     case ElementType::U:
-                        return { cached_thunk_x86_pointer_size, cached_thunk_x86_pointer_size };
+                        return { flat_x86_pointer_size, flat_x86_pointer_size };
                     default:
                         throw_invalid("Unsupported x86 cached thunk fundamental element type.");
                     }
@@ -3436,7 +3445,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 });
 
         case param_category::enum_type:
-            return get_cached_thunk_x86_type_layout(signature_type.FieldList().first.Signature().Type());
+            return get_flat_x86_type_layout(signature_type.FieldList().first.Signature().Type());
 
         case param_category::struct_type:
         {
@@ -3450,13 +3459,13 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
             for (auto&& field : signature_type.FieldList())
             {
-                auto [field_size, field_alignment] = get_cached_thunk_x86_type_layout(field.Signature().Type());
-                size = align_cached_thunk_x86_size(size, field_alignment);
+                auto [field_size, field_alignment] = get_flat_x86_type_layout(field.Signature().Type());
+                size = align_flat_x86_size(size, field_alignment);
                 size += field_size;
                 alignment = (std::max)(alignment, field_alignment);
             }
 
-            size = align_cached_thunk_x86_size(size, alignment);
+            size = align_flat_x86_size(size, alignment);
             return { size, alignment };
         }
 
@@ -3464,20 +3473,20 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         case param_category::string_type:
         case param_category::generic_type:
         case param_category::array_type:
-            return { cached_thunk_x86_pointer_size, cached_thunk_x86_pointer_size };
+            return { flat_x86_pointer_size, flat_x86_pointer_size };
         }
 
         throw_invalid("Unsupported x86 cached thunk parameter category.");
     }
 
-    static std::uint16_t get_cached_thunk_x86_stack_arg_bytes(std::size_t size)
+    static std::uint16_t get_flat_x86_stack_arg_bytes(std::size_t size)
     {
-        return static_cast<std::uint16_t>(align_cached_thunk_x86_size(size, cached_thunk_x86_pointer_size));
+        return static_cast<std::uint16_t>(align_flat_x86_size(size, flat_x86_pointer_size));
     }
 
-    static std::uint16_t get_cached_thunk_x86_stack_pop_size(method_signature const& signature)
+    static std::uint16_t get_flat_x86_stack_pop_size(method_signature const& signature)
     {
-        std::uint16_t result = static_cast<std::uint16_t>(cached_thunk_x86_pointer_size);
+        std::uint16_t result = static_cast<std::uint16_t>(flat_x86_pointer_size);
 
         for (auto&& [param, param_signature] : signature.params())
         {
@@ -3491,35 +3500,35 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             {
                 if (is_const(*param_signature) || category == param_category::object_type || category == param_category::string_type || category == param_category::generic_type)
                 {
-                    result = static_cast<std::uint16_t>(result + cached_thunk_x86_pointer_size);
+                    result = static_cast<std::uint16_t>(result + flat_x86_pointer_size);
                 }
                 else
                 {
-                    auto [size, alignment] = get_cached_thunk_x86_type_layout(param_signature->Type());
+                    auto [size, alignment] = get_flat_x86_type_layout(param_signature->Type());
                     (void)alignment;
-                    result = static_cast<std::uint16_t>(result + get_cached_thunk_x86_stack_arg_bytes(size));
+                    result = static_cast<std::uint16_t>(result + get_flat_x86_stack_arg_bytes(size));
                 }
             }
             else
             {
-                result = static_cast<std::uint16_t>(result + cached_thunk_x86_pointer_size);
+                result = static_cast<std::uint16_t>(result + flat_x86_pointer_size);
             }
         }
 
         if (signature.return_signature())
         {
-            result = static_cast<std::uint16_t>(result + (signature.return_signature().Type().is_szarray() ? 8 : cached_thunk_x86_pointer_size));
+            result = static_cast<std::uint16_t>(result + (signature.return_signature().Type().is_szarray() ? 8 : flat_x86_pointer_size));
         }
 
         return result;
     }
 
-    static void write_cached_thunk_x86_stack_pop_size(writer& w, method_signature const& signature)
+    static void write_flat_x86_stack_pop_size(writer& w, method_signature const& signature)
     {
-        w.write("%", get_cached_thunk_x86_stack_pop_size(signature));
+        w.write("%", get_flat_x86_stack_pop_size(signature));
     }
 
-    static void write_thunked_class_requires(writer& w, TypeDef const& type)
+    static void write_flat_class_requires(writer& w, TypeDef const& type)
     {
         bool first = true;
 
@@ -3543,7 +3552,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         }
     }
 
-    static void write_thunked_class_usings(writer& w, TypeDef const& type)
+    static void write_flat_class_usings(writer& w, TypeDef const& type)
     {
         auto type_name = type.TypeName();
         std::map<std::string_view, std::set<std::string>> method_usage;
@@ -3617,11 +3626,11 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             n == "IAsyncOperationWithProgress`2";
     }
 
-    static constexpr std::size_t cached_thunk_vtable_method_count = 256;
-    static constexpr std::size_t cached_thunk_reserved_slots = 6;
-    static constexpr std::size_t cached_thunk_method_limit = cached_thunk_vtable_method_count - cached_thunk_reserved_slots;
+    static constexpr std::size_t flat_vtable_method_count = 256;
+    static constexpr std::size_t flat_reserved_slots = 6;
+    static constexpr std::size_t flat_method_limit = flat_vtable_method_count - flat_reserved_slots;
 
-    static void validate_thunked_interfaces(writer& w, TypeDef const& type)
+    static void validate_flat_interfaces(writer& w, TypeDef const& type)
     {
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
@@ -3631,28 +3640,28 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             }
 
             auto const method_count = size(info.type.MethodList());
-            if (method_count > cached_thunk_method_limit)
+            if (method_count > flat_method_limit)
             {
                 throw_invalid("Type '",
                     type.TypeNamespace(),
                     ".",
                     type.TypeName(),
-                    "' cannot use cached runtimeclasses because interface '",
+                    "' cannot use flat runtimeclasses because interface '",
                     info.type.TypeNamespace(),
                     ".",
                     info.type.TypeName(),
                     "' has ",
                     std::to_string(method_count),
-                    " methods, exceeding the cached thunk limit of ",
-                    std::to_string(cached_thunk_method_limit),
+                    " methods, exceeding the flat method limit of ",
+                    std::to_string(flat_method_limit),
                     ".");
             }
         }
     }
 
-    static void write_thunked_class(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& default_interface)
+    static void write_flat_class(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& default_interface)
     {
-        validate_thunked_interfaces(w, type);
+        validate_flat_interfaces(w, type);
 
         auto type_name = type.TypeName();
         auto factories = get_factories(w, type);
@@ -3660,21 +3669,21 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         auto format = R"(    struct %;
     struct WINRT_IMPL_EMPTY_BASES % : %%%
     {
-        %(std::nullptr_t) noexcept : thunked_runtimeclass(nullptr) {}
-        %(void* ptr, take_ownership_from_abi_t) noexcept : thunked_runtimeclass(ptr, take_ownership_from_abi) {}
+        %(std::nullptr_t) noexcept : flat_runtimeclass(nullptr) {}
+        %(void* ptr, take_ownership_from_abi_t) noexcept : flat_runtimeclass(ptr, take_ownership_from_abi) {}
 %%%    };
 )";
 
         w.write(format,
             type_name,
             type_name,
-            bind<write_thunked_class_base>(type, default_interface),
-            bind<write_thunked_class_requires>(type),
+            bind<write_flat_class_base>(type, default_interface),
+            bind<write_flat_class_requires>(type),
             bind<write_class_base>(type),
             type_name,
             type_name,
             bind<write_constructor_declarations>(type, factories),
-            bind<write_thunked_class_usings>(type),
+            bind<write_flat_class_usings>(type),
             bind_each<write_static_declaration>(factories, type));
     }
 
@@ -3729,7 +3738,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             }
             else if (settings.flatten_classes && has_secondary_interfaces(w, type) && !has_async_default_interface(default_interface))
             {
-                write_thunked_class(w, type, default_interface);
+                write_flat_class(w, type, default_interface);
             }
             else
             {

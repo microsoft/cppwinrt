@@ -1,3 +1,6 @@
+    VtableEntry 0
+    VtableEntry 1
+    VtableEntry 2
     VtableEntry 3
     VtableEntry 4
     VtableEntry 5

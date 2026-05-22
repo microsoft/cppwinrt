@@ -2,49 +2,29 @@
 ;
 ; ARM64EC uses ARM64 instructions with x64-compatible calling convention.
 ; Logic is identical to ARM64. Fast Forward Sequences handle transitions.
+; All slots including IUnknown (QI/AddRef/Release) resolve and forward,
+; so an unresolved thunk behaves as a proper COM object.
 
 #include "ksarm64.h"
 
-    IMPORT  winrt_cached_resolve_thunk
+    IMPORT  winrt_flat_resolve_thunk
     IMPORT  __guard_check_icall_fptr
 
     TEXTAREA
 
 ; ============================================================================
-; No-op IUnknown slots for thunk objects
-; The thunk is not a real COM object; QI fails, AddRef/Release return 1.
-; ============================================================================
-
-    LEAF_ENTRY winrt_cached_thunk_qi
-    str     xzr, [x2]              ; *ppv = nullptr
-    mov     w0, #0x4002
-    movk    w0, #0x8000, lsl #16   ; E_NOINTERFACE
-    ret
-    LEAF_END winrt_cached_thunk_qi
-
-    LEAF_ENTRY winrt_cached_thunk_addref
-    mov     w0, #1
-    ret
-    LEAF_END winrt_cached_thunk_addref
-
-    LEAF_ENTRY winrt_cached_thunk_release
-    mov     w0, #1
-    ret
-    LEAF_END winrt_cached_thunk_release
-
-; ============================================================================
-; CachedResolveAndDispatch
+; FlatResolveAndDispatch
 ;
 ; Entry: w10 = vtable slot index, x0 = interface_thunk*
 ;        x1-x7 = caller's args (preserved across resolve)
 ;
-; Calls winrt_cached_resolve_thunk(x0) -> x0 = resolved IFoo* or nullptr.
+; Calls winrt_flat_resolve_thunk(x0) -> x0 = resolved IFoo* or nullptr.
 ; On success: validates target via CFG, tail-jumps to vtable[slot].
 ; On failure: returns E_NOINTERFACE (0x80004002).
 ; ============================================================================
 
     CFG_ALIGN
-    NESTED_ENTRY CachedResolveAndDispatch
+    NESTED_ENTRY FlatResolveAndDispatch
 
     ; Save frame, link, caller's args, and slot index
     PROLOG_SAVE_REG_PAIR fp, lr, #-80!
@@ -54,7 +34,7 @@
     PROLOG_NOP stp x7, x10, [sp, #64]
 
     ; x0 = interface_thunk* (already in place)
-    bl      winrt_cached_resolve_thunk
+    bl      winrt_flat_resolve_thunk
 
     ; Restore slot index (x10) and caller's args
     ldp     x7, x10, [sp, #64]
@@ -83,7 +63,7 @@ resolve_failed
     EPILOG_RESTORE_REG_PAIR fp, lr, #80!
     EPILOG_RETURN
 
-    NESTED_END CachedResolveAndDispatch
+    NESTED_END FlatResolveAndDispatch
 
 ; ============================================================================
 ; Leaf stub macro — each loads a slot index and branches to the shared dispatcher
@@ -91,32 +71,28 @@ resolve_failed
 
     MACRO 
     WINRT_CACHED_THUNK $idx
-    LEAF_ENTRY winrt_cached_thunk_stub$idx
+    LEAF_ENTRY winrt_flat_thunk_stub$idx
     mov     x10, #$idx
-    b       CachedResolveAndDispatch
-    LEAF_END winrt_cached_thunk_stub$idx
+    b       FlatResolveAndDispatch
+    LEAF_END winrt_flat_thunk_stub$idx
     MEND
 
 ; Emit 256 stubs (slots 0-255)
 #include "cached_thunk_stubs.inc"
 
 ; ============================================================================
-; Vtable array: slots 0-2 are no-op IUnknown, slots 3-255 are resolve stubs
+; Vtable array: all slots (including IUnknown 0-2) resolve and dispatch.
 ; Read-only data.
 ; ============================================================================
 
     AREA |.rdata|, DATA, READONLY, ALIGN=3
 
-    EXPORT winrt_cached_thunk_vtable
-winrt_cached_thunk_vtable
-
-    DCQ winrt_cached_thunk_qi
-    DCQ winrt_cached_thunk_addref
-    DCQ winrt_cached_thunk_release
+    EXPORT winrt_flat_thunk_vtable
+winrt_flat_thunk_vtable
 
     MACRO
     VtableEntry $idx
-    DCQ winrt_cached_thunk_stub$idx
+    DCQ winrt_flat_thunk_stub$idx
     MEND
 
 #include "cached_thunk_vtable.inc"

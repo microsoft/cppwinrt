@@ -1,31 +1,28 @@
 
 // ODR guard: all translation units must agree on whether flattened runtimeclass
-// projections were generated, and on the cached thunk vtable method count.
+// projections were generated, and on the flat vtable method count.
 #define WINRT_IMPL_CACHED_STRING_1(expression) #expression
 #define WINRT_IMPL_CACHED_STRING(expression) WINRT_IMPL_CACHED_STRING_1(expression)
 
-#if !defined(WINRT_CACHED_RUNTIMECLASSES)
-#define WINRT_CACHED_RUNTIMECLASSES %
+#if !defined(WINRT_FLAT_RUNTIMECLASSES)
+#define WINRT_FLAT_RUNTIMECLASSES %
 #endif
 
-#if !defined(WINRT_CACHED_THUNK_VTABLE_METHOD_COUNT)
-#define WINRT_CACHED_THUNK_VTABLE_METHOD_COUNT %
+#if !defined(WINRT_FLAT_VTABLE_METHOD_COUNT)
+#define WINRT_FLAT_VTABLE_METHOD_COUNT %
 #endif
 
-static_assert(WINRT_CACHED_RUNTIMECLASSES == 0 || WINRT_CACHED_RUNTIMECLASSES == 1);
-static_assert(WINRT_CACHED_THUNK_VTABLE_METHOD_COUNT == %);
+static_assert(WINRT_FLAT_RUNTIMECLASSES == 0 || WINRT_FLAT_RUNTIMECLASSES == 1);
+static_assert(WINRT_FLAT_VTABLE_METHOD_COUNT == %);
 
 #if defined(_MSC_VER)
-#pragma detect_mismatch("C++/WinRT cached runtimeclasses", WINRT_IMPL_CACHED_STRING(WINRT_CACHED_RUNTIMECLASSES))
-#pragma detect_mismatch("C++/WinRT cached thunk vtable method count", WINRT_IMPL_CACHED_STRING(WINRT_CACHED_THUNK_VTABLE_METHOD_COUNT))
+#pragma detect_mismatch("C++/WinRT flat runtimeclasses", WINRT_IMPL_CACHED_STRING(WINRT_FLAT_RUNTIMECLASSES))
+#pragma detect_mismatch("C++/WinRT flat vtable method count", WINRT_IMPL_CACHED_STRING(WINRT_FLAT_VTABLE_METHOD_COUNT))
 #endif
 
 WINRT_EXPORT namespace winrt::impl
 {
-    inline constexpr size_t cached_thunk_tagged_slot_count = 8;
-    inline constexpr std::uint32_t cached_thunk_reserved_slot_count = 6;
-
-    struct cached_thunk_descriptor
+    struct flat_cache_descriptor
     {
         guid const* iid{};
 #if defined(_M_IX86)
@@ -49,17 +46,17 @@ WINRT_EXPORT namespace winrt::impl
 #pragma warning(push)
 #pragma warning(disable: 4324) // Intentional 16-byte alignment for tagged thunk payload decoding.
 #endif
-    struct alignas(16) thunked_runtimeclass_header
+    struct alignas(16) flat_runtimeclass_header
     {
-        // default_cache MUST be the first member so that *(void**)&object reads
-        // the COM pointer — matching the layout of IUnknown-derived types and
-        // ensuring reinterpret_cast<T const*>(&void_ptr) works in produce stubs.
         mutable std::atomic<void*> default_cache{};
-        cached_thunk_descriptor const* descriptor_table{};
+        flat_cache_descriptor const* descriptor_table{};
     };
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif
+
+    inline constexpr size_t flat_pair_offset = sizeof(std::atomic<void*>);  // 8
+    inline constexpr size_t flat_pair_stride = flat_pair_offset + 2 * sizeof(void*);  // 24
 
     struct interface_thunk
     {
@@ -67,16 +64,13 @@ WINRT_EXPORT namespace winrt::impl
         uintptr_t payload;
 
     private:
-        cached_thunk_descriptor const* descriptor() const noexcept
+        flat_cache_descriptor const* descriptor() const noexcept
         {
-            if (payload & 1)
-            {
-                auto* hdr = reinterpret_cast<thunked_runtimeclass_header*>(payload & ~uintptr_t(0xF));
-                return hdr->descriptor_table + ((payload >> 1) & (cached_thunk_tagged_slot_count - 1));
-            }
-
-            return *reinterpret_cast<cached_thunk_descriptor const* const*>(
-                reinterpret_cast<char const*>(this) + sizeof(interface_thunk));
+            auto* hdr = reinterpret_cast<flat_runtimeclass_header*>(payload & ~uintptr_t(0xF));
+            auto offset = reinterpret_cast<char const*>(this) - reinterpret_cast<char const*>(hdr);
+            auto index = static_cast<size_t>(offset - sizeof(flat_runtimeclass_header) - flat_pair_offset)
+                         / flat_pair_stride;
+            return hdr->descriptor_table + index;
         }
 
     public:
@@ -94,18 +88,9 @@ WINRT_EXPORT namespace winrt::impl
             if (current != static_cast<void const*>(this))
                 return current;
 
-            void* default_abi;
             auto const* desc = descriptor();
-
-            if (payload & 1)
-            {
-                auto* hdr = reinterpret_cast<thunked_runtimeclass_header*>(payload & ~uintptr_t(0xF));
-                default_abi = hdr->default_cache.load(std::memory_order_relaxed);
-            }
-            else
-            {
-                default_abi = reinterpret_cast<void*>(payload);
-            }
+            auto* hdr = reinterpret_cast<flat_runtimeclass_header*>(payload & ~uintptr_t(0xF));
+            void* default_abi = hdr->default_cache.load(std::memory_order_relaxed);
 
             void* real = nullptr;
             if (static_cast<unknown_abi*>(default_abi)->QueryInterface(*desc->iid, &real) < 0)
@@ -123,13 +108,13 @@ WINRT_EXPORT namespace winrt::impl
     };
     static_assert(sizeof(interface_thunk) == (sizeof(void const* const*) + sizeof(uintptr_t)));
 
-    extern "C" inline void* winrt_cached_resolve_thunk(interface_thunk const* thunk)
+    extern "C" inline void* winrt_flat_resolve_thunk(interface_thunk const* thunk)
     {
         return thunk->resolve();
     }
     // Force the compiler to emit the inline function body so the ASM thunk stubs can find it.
-    extern "C" __declspec(selectany) void* (*winrt_resolve_thunk_forcelink_)(interface_thunk const*) = winrt_cached_resolve_thunk;
-    extern "C" const void* winrt_cached_thunk_vtable[];
+    extern "C" __declspec(selectany) void* (*winrt_flat_resolve_forcelink_)(interface_thunk const*) = winrt_flat_resolve_thunk;
+    extern "C" const void* winrt_flat_thunk_vtable[];
 
     struct cache_and_thunk_tagged
     {
@@ -138,40 +123,21 @@ WINRT_EXPORT namespace winrt::impl
     };
     static_assert(sizeof(cache_and_thunk_tagged) == (sizeof(std::atomic<void*>) + sizeof(interface_thunk)));
     static_assert(offsetof(cache_and_thunk_tagged, thunk) == sizeof(std::atomic<void*>));
+    static_assert(sizeof(cache_and_thunk_tagged) == flat_pair_stride);
+    static_assert(offsetof(cache_and_thunk_tagged, thunk) == flat_pair_offset);
 
-    struct cache_and_thunk_full
-    {
-        mutable std::atomic<void*> cache{};
-        mutable interface_thunk thunk{};
-        mutable cached_thunk_descriptor const* descriptor{};
-    };
-    static_assert(sizeof(cache_and_thunk_full) == (sizeof(std::atomic<void*>) + sizeof(interface_thunk) + sizeof(cached_thunk_descriptor const*)));
-    static_assert(offsetof(cache_and_thunk_full, thunk) == sizeof(std::atomic<void*>));
-    static_assert(offsetof(cache_and_thunk_full, descriptor) == offsetof(cache_and_thunk_full, thunk) + sizeof(interface_thunk));
-
-    inline void init_pair_tagged(cache_and_thunk_tagged& p, size_t index, thunked_runtimeclass_header* header)
+    inline void init_pair_tagged(cache_and_thunk_tagged& p, flat_runtimeclass_header* header)
     {
         p.cache.store(&p.thunk, std::memory_order_relaxed);
-        p.thunk.vtable = reinterpret_cast<void const* const*>(winrt_cached_thunk_vtable);
-        p.thunk.payload = reinterpret_cast<uintptr_t>(header) | (index << 1) | 1;
+        p.thunk.vtable = reinterpret_cast<void const* const*>(winrt_flat_thunk_vtable);
+        p.thunk.payload = reinterpret_cast<uintptr_t>(header) | 1;
     }
-
-    inline void init_pair_full(cache_and_thunk_full& p, void* default_abi, cached_thunk_descriptor const* descriptor)
-    {
-        p.cache.store(&p.thunk, std::memory_order_relaxed);
-        p.thunk.vtable = reinterpret_cast<void const* const*>(winrt_cached_thunk_vtable);
-        p.thunk.payload = reinterpret_cast<uintptr_t>(default_abi);
-        p.descriptor = descriptor;
-    }
-
-    template <bool Tagged>
-    using cache_and_thunk_t = std::conditional_t<Tagged, cache_and_thunk_tagged, cache_and_thunk_full>;
 
     // ========================================================================
     // Non-template base: all COM lifecycle operations via (pointer, count, stride)
     // ========================================================================
 
-    struct thunked_runtimeclass_base : thunked_runtimeclass_header
+    struct flat_runtimeclass_base : flat_runtimeclass_header
     {
     protected:
         __declspec(noinline) void clear_impl(void* pairs_begin, size_t count, size_t stride)
@@ -190,53 +156,45 @@ WINRT_EXPORT namespace winrt::impl
             }
         }
 
-        __declspec(noinline) void attach_impl(void* default_abi, void* pairs_begin, size_t count, size_t stride, bool tagged)
+        __declspec(noinline) void attach_impl(void* default_abi, void* pairs_begin, size_t count, size_t stride)
         {
             default_cache.store(default_abi, std::memory_order_relaxed);
             auto* base = static_cast<char*>(pairs_begin);
-            if (tagged)
-            {
-                for (size_t i = 0; i < count; ++i, base += stride)
-                    init_pair_tagged(*reinterpret_cast<cache_and_thunk_tagged*>(base), i, this);
-            }
-            else
-            {
-                for (size_t i = 0; i < count; ++i, base += stride)
-                    init_pair_full(*reinterpret_cast<cache_and_thunk_full*>(base), default_abi, descriptor_table + i);
-            }
+            for (size_t i = 0; i < count; ++i, base += stride)
+                init_pair_tagged(*reinterpret_cast<cache_and_thunk_tagged*>(base), this);
         }
 
-        __declspec(noinline) void copy_from(thunked_runtimeclass_base const& other, void* pairs_begin, size_t count, size_t stride, bool tagged)
+        __declspec(noinline) void copy_from(flat_runtimeclass_base const& other, void* pairs_begin, size_t count, size_t stride)
         {
             if (auto p = other.default_cache.load(std::memory_order_relaxed))
             {
                 static_cast<unknown_abi*>(p)->AddRef();
-                attach_impl(p, pairs_begin, count, stride, tagged);
+                attach_impl(p, pairs_begin, count, stride);
             }
         }
 
-        __declspec(noinline) void move_from(thunked_runtimeclass_base& other, void* my_pairs, void* other_pairs, size_t count, size_t stride, bool tagged)
+        __declspec(noinline) void move_from(flat_runtimeclass_base& other, void* my_pairs, void* other_pairs, size_t count, size_t stride)
         {
             auto p = other.default_cache.exchange(nullptr, std::memory_order_acquire);
-            if (p) attach_impl(p, my_pairs, count, stride, tagged);
+            if (p) attach_impl(p, my_pairs, count, stride);
             other.clear_impl(other_pairs, count, stride);
         }
 
-        __declspec(noinline) void assign_copy_impl(thunked_runtimeclass_base const& other, void* pairs_begin, size_t count, size_t stride, bool tagged)
+        __declspec(noinline) void assign_copy_impl(flat_runtimeclass_base const& other, void* pairs_begin, size_t count, size_t stride)
         {
             if (this != &other)
             {
                 clear_impl(pairs_begin, count, stride);
-                copy_from(other, pairs_begin, count, stride, tagged);
+                copy_from(other, pairs_begin, count, stride);
             }
         }
 
-        __declspec(noinline) void assign_move_impl(thunked_runtimeclass_base& other, void* my_pairs, void* other_pairs, size_t count, size_t stride, bool tagged)
+        __declspec(noinline) void assign_move_impl(flat_runtimeclass_base& other, void* my_pairs, void* other_pairs, size_t count, size_t stride)
         {
             if (this != &other)
             {
                 clear_impl(my_pairs, count, stride);
-                move_from(other, my_pairs, other_pairs, count, stride, tagged);
+                move_from(other, my_pairs, other_pairs, count, stride);
             }
         }
 
@@ -275,7 +233,7 @@ WINRT_EXPORT namespace winrt::impl
             return result;
         }
 
-        friend bool operator==(thunked_runtimeclass_base const& left, thunked_runtimeclass_base const& right) noexcept
+        friend bool operator==(flat_runtimeclass_base const& left, flat_runtimeclass_base const& right) noexcept
         {
             if (&left == &right)
             {
@@ -294,27 +252,27 @@ WINRT_EXPORT namespace winrt::impl
             return get_abi(left.try_as<Windows::Foundation::IUnknown>()) == get_abi(right.try_as<Windows::Foundation::IUnknown>());
         }
 
-        friend bool operator!=(thunked_runtimeclass_base const& left, thunked_runtimeclass_base const& right) noexcept
+        friend bool operator!=(flat_runtimeclass_base const& left, flat_runtimeclass_base const& right) noexcept
         {
             return !(left == right);
         }
 
-        friend bool operator==(thunked_runtimeclass_base const& left, std::nullptr_t) noexcept
+        friend bool operator==(flat_runtimeclass_base const& left, std::nullptr_t) noexcept
         {
             return left.default_cache.load(std::memory_order_relaxed) == nullptr;
         }
 
-        friend bool operator!=(thunked_runtimeclass_base const& left, std::nullptr_t) noexcept
+        friend bool operator!=(flat_runtimeclass_base const& left, std::nullptr_t) noexcept
         {
             return left.default_cache.load(std::memory_order_relaxed) != nullptr;
         }
 
-        friend bool operator==(std::nullptr_t, thunked_runtimeclass_base const& right) noexcept
+        friend bool operator==(std::nullptr_t, flat_runtimeclass_base const& right) noexcept
         {
             return right.default_cache.load(std::memory_order_relaxed) == nullptr;
         }
 
-        friend bool operator!=(std::nullptr_t, thunked_runtimeclass_base const& right) noexcept
+        friend bool operator!=(std::nullptr_t, flat_runtimeclass_base const& right) noexcept
         {
             return right.default_cache.load(std::memory_order_relaxed) != nullptr;
         }
@@ -364,84 +322,83 @@ WINRT_EXPORT namespace winrt::impl
     // ========================================================================
 
     template <typename Derived, typename IDefault, typename... I>
-    struct thunked_runtimeclass : thunked_runtimeclass_base
+    struct flat_runtimeclass : flat_runtimeclass_base
     {
         static constexpr size_t N = sizeof...(I);
-        static constexpr bool use_tagged = N <= cached_thunk_tagged_slot_count;
-        using pair_type = cache_and_thunk_t<use_tagged>;
+        using pair_type = cache_and_thunk_tagged;
         static constexpr size_t pair_stride = sizeof(pair_type);
 
-        using thunked_interfaces = std::tuple<IDefault, I...>;
+        using flat_interfaces = std::tuple<IDefault, I...>;
 
 #if defined(_M_IX86)
-        inline static const std::array<cached_thunk_descriptor, N> descriptors{ cached_thunk_descriptor{ &guid_of<I>(), abi_method_pops<I>::pops }... };
+        inline static const std::array<flat_cache_descriptor, N> descriptors{ flat_cache_descriptor{ &guid_of<I>(), abi_method_pops<I>::pops }... };
 #else
-        inline static const std::array<cached_thunk_descriptor, N> descriptors{ cached_thunk_descriptor{ &guid_of<I>() }... };
+        inline static const std::array<flat_cache_descriptor, N> descriptors{ flat_cache_descriptor{ &guid_of<I>() }... };
 #endif
         mutable std::array<pair_type, N> pairs{};
 
     protected:
-        thunked_runtimeclass(std::nullptr_t) noexcept
+        flat_runtimeclass(std::nullptr_t) noexcept
         {
             descriptor_table = descriptors.data();
         }
 
-        thunked_runtimeclass(void* default_abi, take_ownership_from_abi_t) noexcept
+        flat_runtimeclass(void* default_abi, take_ownership_from_abi_t) noexcept
         {
             descriptor_table = descriptors.data();
-            attach_impl(default_abi, pairs.data(), N, pair_stride, use_tagged);
+            attach_impl(default_abi, pairs.data(), N, pair_stride);
         }
 
-        thunked_runtimeclass() noexcept
+        flat_runtimeclass() noexcept
         {
             descriptor_table = descriptors.data();
         }
 
     public:
-        ~thunked_runtimeclass()
+        ~flat_runtimeclass()
         {
             clear_impl(pairs.data(), N, pair_stride);
         }
 
-        thunked_runtimeclass(thunked_runtimeclass const& other)
+        flat_runtimeclass(flat_runtimeclass const& other)
         {
             descriptor_table = descriptors.data();
-            copy_from(other, pairs.data(), N, pair_stride, use_tagged);
+            copy_from(other, pairs.data(), N, pair_stride);
         }
 
-        thunked_runtimeclass(thunked_runtimeclass&& other) noexcept
+        flat_runtimeclass(flat_runtimeclass&& other) noexcept
         {
             descriptor_table = descriptors.data();
-            move_from(other, pairs.data(), other.pairs.data(), N, pair_stride, use_tagged);
+            move_from(other, pairs.data(), other.pairs.data(), N, pair_stride);
         }
 
-        thunked_runtimeclass& operator=(thunked_runtimeclass const& other)
+        flat_runtimeclass& operator=(flat_runtimeclass const& other)
         {
-            assign_copy_impl(other, pairs.data(), N, pair_stride, use_tagged);
+            assign_copy_impl(other, pairs.data(), N, pair_stride);
             return *this;
         }
 
-        thunked_runtimeclass& operator=(thunked_runtimeclass&& other) noexcept
+        flat_runtimeclass& operator=(flat_runtimeclass&& other) noexcept
         {
-            assign_move_impl(other, pairs.data(), other.pairs.data(), N, pair_stride, use_tagged);
+            assign_move_impl(other, pairs.data(), other.pairs.data(), N, pair_stride);
             return *this;
         }
 
-        thunked_runtimeclass& operator=(std::nullptr_t) noexcept
+        flat_runtimeclass& operator=(std::nullptr_t) noexcept
         {
             clear_impl(pairs.data(), N, pair_stride);
             return *this;
         }
 
-        using thunked_runtimeclass_base::operator bool;
-        using thunked_runtimeclass_base::as;
-        using thunked_runtimeclass_base::try_as;
-        using thunked_runtimeclass_base::get_default_abi;
-        using thunked_runtimeclass_base::put_default_abi;
-        using thunked_runtimeclass_base::detach_default_abi;
-        using thunked_runtimeclass_base::attach_default_abi;
-        using thunked_runtimeclass_base::copy_from_default_abi;
-        using thunked_runtimeclass_base::copy_to_default_abi;
+        using flat_runtimeclass_base::operator bool;
+        using flat_runtimeclass_base::as;
+        using flat_runtimeclass_base::try_as;
+        using flat_runtimeclass_base::get_default_abi;
+        using flat_runtimeclass_base::put_default_abi;
+        using flat_runtimeclass_base::detach_default_abi;
+        using flat_runtimeclass_base::attach_default_abi;
+        using flat_runtimeclass_base::copy_from_default_abi;
+        using flat_runtimeclass_base::copy_to_default_abi;
 
         template <typename Q>
         std::atomic<void*> const& thunk_cache_slot() const noexcept
@@ -458,17 +415,17 @@ WINRT_EXPORT namespace winrt::impl
             }
         }
 
-        void clear_thunked() noexcept
+        void clear_flat() noexcept
         {
             clear_impl(pairs.data(), N, pair_stride);
         }
 
-        void reset_thunked(void* new_default_abi) noexcept
+        void reset_flat(void* new_default_abi) noexcept
         {
             clear_impl(pairs.data(), N, pair_stride);
             if (new_default_abi)
             {
-                attach_impl(new_default_abi, pairs.data(), N, pair_stride, use_tagged);
+                attach_impl(new_default_abi, pairs.data(), N, pair_stride);
             }
         }
     };
@@ -496,5 +453,40 @@ WINRT_EXPORT namespace winrt::impl
         produce_borrowed_ref& operator=(produce_borrowed_ref const&) = delete;
 
         operator T const&() const noexcept { return value; }
+    };
+
+    // Lightweight parameter wrapper for IN runtimeclass parameters in consume_ methods.
+    // Avoids constructing a full thunked runtimeclass temporary (with cache slot
+    // initialization + teardown) when a derived type is passed to a method expecting
+    // a base type. Instead, just QIs for the target's default interface.
+    template <typename T>
+    struct param_ref
+    {
+        void* abi{};
+
+        // From same type — borrow the ABI pointer (caller keeps it alive).
+        param_ref(T const& value) noexcept : abi(get_abi(value)) {}
+
+        // From produce_borrowed_ref<T> — borrow its ABI pointer.
+        param_ref(produce_borrowed_ref<T> const& value) noexcept : abi(get_abi(static_cast<T const&>(value))) {}
+
+        // From a derived thunked type — read T's default interface directly from
+        // the source's thunk cache slot. No QI needed; the slot contains either
+        // the resolved ABI pointer or a self-resolving thunk, both valid for ABI calls.
+        // The source object stays alive for the call duration, keeping the slot valid.
+        template <typename U, std::enable_if_t<
+            has_flat_cache_v<U> &&
+            !std::is_same_v<U, T> &&
+            has_flat_interface_v<U, typename default_interface<T>::type>, int> = 0>
+        param_ref(U const& value) noexcept
+            : abi(value.template thunk_cache_slot<typename default_interface<T>::type>().load(std::memory_order_acquire))
+        {
+        }
+
+        param_ref(std::nullptr_t) noexcept {}
+
+        // Copyable — copies borrow, only original releases.
+        param_ref(param_ref const& other) noexcept : abi(other.abi) {}
+        param_ref& operator=(param_ref const&) = delete;
     };
 }

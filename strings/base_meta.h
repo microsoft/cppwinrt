@@ -189,10 +189,10 @@ namespace winrt::impl
     // ========================================================================
 
     template <typename T, typename = void>
-    inline constexpr bool has_thunked_cache_v = false;
+    inline constexpr bool has_flat_cache_v = false;
 
     template <typename T>
-    inline constexpr bool has_thunked_cache_v<T, std::void_t<typename T::thunked_interfaces>> = true;
+    inline constexpr bool has_flat_cache_v<T, std::void_t<typename T::flat_interfaces>> = true;
 
     template <typename T, typename... Ts>
     struct tuple_contains : std::disjunction<std::is_same<T, Ts>...> {};
@@ -204,11 +204,11 @@ namespace winrt::impl
     struct tuple_contains_tuple<T, std::tuple<Ts...>> : tuple_contains<T, Ts...> {};
 
     template <typename T, typename I, typename = void>
-    inline constexpr bool has_thunked_interface_v = false;
+    inline constexpr bool has_flat_interface_v = false;
 
     template <typename T, typename I>
-    inline constexpr bool has_thunked_interface_v<T, I, std::void_t<typename T::thunked_interfaces>> =
-        tuple_contains_tuple<I, typename T::thunked_interfaces>::value;
+    inline constexpr bool has_flat_interface_v<T, I, std::void_t<typename T::flat_interfaces>> =
+        tuple_contains_tuple<I, typename T::flat_interfaces>::value;
 
     // ========================================================================
     // Compile-time type index helper
@@ -227,7 +227,7 @@ namespace winrt::impl
     template <typename T>
     T empty_value() noexcept
     {
-        if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, T> || has_thunked_cache_v<T>)
+        if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, T> || has_flat_cache_v<T>)
         {
             return nullptr;
         }
@@ -263,7 +263,7 @@ namespace winrt::impl
     };
 
     template <typename T>
-    struct arg<T, std::enable_if_t<std::is_base_of_v<Windows::Foundation::IUnknown, T> || has_thunked_cache_v<T>>>
+    struct arg<T, std::enable_if_t<std::is_base_of_v<Windows::Foundation::IUnknown, T> || has_flat_cache_v<T>>>
     {
         using in = void*;
     };

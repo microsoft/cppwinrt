@@ -26,807 +26,112 @@ once per interface per object, with zero per-call overhead afterward.
 
 Keep detailed notes on your progress in this file, in the section "Detailed Notes".
 
-## Approach: Three-way branch in `consume_general`
+## Obstacle 1 - Not enough thunk-storage slots
 
-The runtimeclass **does not inherit from its default interface**. Instead it inherits from
-`impl::thunked_runtimeclass<IDefault, I...>`, which holds:
+Large types like `Windows.UI.Composition.ScalarKeyFrameAnimation` derive from many bases,
+each of which may have been serviced multiple times, leading to a VERY large set of interfaces
+to cache. The current implementation has a maximum count of 8 slots, due to reusing the lower
+3 bits of the "parent pointer" address to know which index to use.
 
-- An `atomic<void*> default_cache` (the default interface pointer)
-- Per-secondary-interface `cache_and_thunk` pairs (cache slot + `interface_thunk`)
+### Option 1 - Exclude some types from caches
 
-Each `interface_thunk` is 16 bytes with a vtable pointer into a shared table of 256
-architecture-specific ASM stubs. On first method call through any interface, the stub
-calls `winrt_cached_resolve_thunk()` which QIs the default interface, atomically replaces
-the cache slot with the real pointer, and tail-jumps to the real method. All subsequent
-calls dispatch directly — the thunk is never touched again.
+Some interfaces are uncommonly used and thus don't need cache entries. Things like:
 
-The hot path is `consume_general`, which gets a three-way `if constexpr` branch:
+* `IStringable`
+* `IClosable`
 
-```cpp
-template <typename Base, typename Derive, typename MemberPointer, typename ...Args>
-void consume_general(Derive const* d, MemberPointer mptr, Args&&... args)
-{
-    if constexpr (std::is_same_v<Derive, Base>)
-    {
-        // D is the interface itself — direct dispatch
-        auto const abi = *(abi_t<Base>**)d;
-        check_hresult((abi->*mptr)(std::forward<Args>(args)...));
-    }
-    else if constexpr (has_thunked_interface_v<Derive, Base>)
-    {
-        // D has a thunked cache slot for Base. Read the cache slot directly.
-        // If still a thunk, the vtable dispatch self-resolves via ASM stub.
-        // If already resolved, direct vtable call. Zero refcount overhead.
-        auto const abi = *(abi_t<Base>**)(&d->template thunk_cache_slot<Base>());
-        check_hresult((abi->*mptr)(std::forward<Args>(args)...));
-    }
-    else
-    {
-        // No cache — full QI fallback (same as today).
-        hresult code;
-        auto const result = try_as_with_reason<Base>(d, code);
-        check_hresult(code);
-        auto const abi = *(abi_t<Base>**)&result;
-        check_hresult((abi->*mptr)(std::forward<Args>(args)...));
-    }
-}
+Those can be excluded from cache lists when producing them.
+
+### Option 2 - Increase cache slot count
+
+Currently, `interface_thunk::resolve` uses the `payload` field in the cached thunk instance
+to contain both a pointer to its parent object and its index, in the lower 3 bits.
+
+Instead, `::resolve` can use `this` to compute the offset in the parent thunk, using pointer
+math. All cached thunks are structured in memory like:
+
+* thunked_runtimeclass_header
+    * default cache element content (pointer)
+    * descriptor_table (pointer)
+* thunked_runtimeclass_base (empty)
+* thunked_runtimeclass
+    * pairs (array of...)
+        * cache_and_thunk_full [or] cache_and_thunk_tagged
+
+... so if you know which thunk (the thunk's 'this' ptr) is being used, we could compute
+the index into thunked_runtimeclass_header::pairs using a little math; the 'this' should
+be within that range.  And since all the sizes and layouts are similar, there's no need
+to store another pointer in the header!
+
+## Obstacle 2 - Automatic downcasting of types
+
+When calling a method like `XamlLight.CompositionLight(Composition.CompositionLight const& o)`
+with a `Composition.SpotLight`, there is a "normal" C++ conversion from one to the other, but
+is implemented as a full conversion from the cached SpotLight object to a cached CompositionLight,
+only to be discarded immediately after the call.
+
+### Option 1 - Define "param types" for references.
+
+Define a `winrt::param::ref<>` template, and have projection methods be generated like:
+`XamlLight.CompositionLight(winrt::param::ref<Composition::CompositionLight> light)`. That
+`winrt::param::ref<Q>` knows that it _only_ needs to fetch the `SpotLight` for the default
+interface of `ICompositionLight` for use in the call down to the ABI. The callsites in headers
+still look like they're accepting CompositionLight, and the conversion is hidden.
+
+## Detailed Notes
+
+### Obstacle 2 Implementation: Pointer-Math Slot Index (Completed)
+
+**Problem:** The tagged payload encoded `header_ptr | (index << 1) | 1` which limited
+the index to 3 bits (0-7). Types with >8 secondary interfaces fell back to "full mode"
+(`cache_and_thunk_full`, 32 bytes per slot instead of 24), wasting 8 bytes per slot and
+adding a branch in `resolve()`.
+
+**Solution chosen:** Option 2 — compute index from pointer math. Since all `cache_and_thunk_tagged`
+elements are in a contiguous array at a known offset from the header, `resolve()` computes:
 ```
-
-Same three-way split for `consume_noexcept` and `consume_noexcept_remove_overload`.
-
-The thunk branch reads the cache slot (an `atomic<void*>`) as an ABI pointer. If the
-slot still holds the thunk, the vtable dispatch goes through the ASM stub which resolves
-it. If already resolved, it's a direct vtable call. **No `if(null)` check at the call
-site** — the thunk IS the null-state handler, encoded in the ASM.
-
-### Why NOT `require_one::operator I()` as the intercept point
-
-`require_one::operator I()` returns by value. Returning a copy of the cache slot pointer
-would cause the `I` destructor to Release it — either a no-op (thunk) or incorrectly
-releasing the cached real interface. To fix that you'd need to AddRef before returning,
-adding per-call interlocked overhead. The `consume_general` three-way branch avoids this
-entirely — it reads the cache slot as a raw pointer with zero refcount traffic.
-
-`require_one::operator I()` is only used for explicit conversion (`IMap<K,V> map = ps`).
-For thunked types it can AddRef the cache slot value (or resolve the thunk first), which
-is acceptable for the uncommon conversion path. The hot method-call path never touches it.
-
----
-
-## Hazard Audit
-
-### P0: `get_abi(IUnknown const&)` and friends — `*(void**)(&object)`
-
-**Location:** `strings/base_windows.h` lines 338–375
-
-```cpp
-inline void* get_abi(IUnknown const& object) noexcept { return *(void**)(&object); }
-inline void** put_abi(IUnknown& object) noexcept { ... reinterpret_cast<void**>(&object); }
-inline void* detach_abi(IUnknown& object) noexcept { ... *(void**)(&object); ... }
-inline void attach_abi(IUnknown& object, void* value) noexcept { ... }
+index = (this - header - sizeof(header) - thunk_offset_in_pair) / pair_stride
 ```
-
-These take `IUnknown const&`/`IUnknown&`. In the thunk design the runtimeclass no longer
-inherits from `IUnknown` — it inherits from `impl::thunked_runtimeclass<IDefault, I...>`,
-whose first data member is `thunked_runtimeclass_header` (containing `default_cache` then
-`iid_table`). With `default_cache` first, `*(void**)(&object)` correctly reads the COM
-interface pointer.
-
-**Mitigation:** Add SFINAE-guarded template overloads (C++17-compatible) that match any
-thunked type and delegate to member accessors:
-
-```cpp
-template <typename T, std::enable_if_t<has_thunked_cache_v<T>, int> = 0>
-void* get_abi(T const& object) noexcept
-{
-    return object.get_default_abi();
-}
-```
-
-These are more constrained than `get_abi(IUnknown const&)` and win overload resolution.
-Same pattern for `put_abi`, `detach_abi`, `attach_abi`, `copy_from_abi`, `copy_to_abi`.
-**One definition covers all thunked runtimeclasses — no per-class generation.**
-
-Note: `has_thunked_cache_v` is detected via `std::void_t<typename T::thunked_interfaces>`
-— no C++20 `requires` needed. cppwinrt's language floor is C++17.
-
-### P0: `copy_from_abi` / `copy_to_abi`
-
-**Location:** `strings/base_windows.h` lines 370–385
-
-Same `*(void**)(&object)` aliasing hazard as `get_abi`. Need the same SFINAE-guarded
-template overloads:
-
-```cpp
-template <typename T, std::enable_if_t<has_thunked_cache_v<T>, int> = 0>
-void copy_from_abi(T& object, void* value) noexcept { object.copy_from_default_abi(value); }
-
-template <typename T, std::enable_if_t<has_thunked_cache_v<T>, int> = 0>
-void copy_to_abi(T const& object, void*& value) noexcept { object.copy_to_default_abi(value); }
-```
-
-### P0: `write_abi_args` — `*(void**)(&param)` for `object_type` IN params
-
-**Location:** `cppwinrt/code_writers.h` line 645
-
-```cpp
-case param_category::object_type:
-case param_category::string_type:
-    w.write("*(void**)(&%)", param_name);
-    break;
-```
-
-`param_category::object_type` includes `class_type` (runtimeclasses), `interface_type`,
-and `delegate_type`. WinRT metadata **can** have method parameters typed as runtimeclasses.
-
-**Recommendation:** Replace `*(void**)(&param)` with `get_abi(param)` for `object_type`.
-The SFINAE-guarded template overload handles thunked runtimeclasses; the existing
-`IUnknown const&` overload handles interfaces and delegates.
-
-### P0: `bind_out<T>::operator void**()` — `(void**)(&object)`
-
-**Location:** `strings/base_string.h` lines 511–544
-
-**Analysis:** OUT params in WinRT ABI are always interface-typed. `T` in `bind_out<T>`
-is always an interface type for COM out-params. **Safe**, but add a `static_assert`:
-
-```cpp
-static_assert(sizeof(T) == sizeof(void*),
-    "bind_out requires sizeof(T) == sizeof(void*); use put_abi() for larger types");
-```
-
-### P0: `WINRT_IMPL_SHIM` macro
-
-**Location:** `strings/base_macros.h` line 16
-
-```cpp
-(*(abi_t<__VA_ARGS__>**)&static_cast<__VA_ARGS__ const&>(static_cast<D const&>(*this)))
-```
-
-**BREAKS for thunked types.** `static_cast<IMap const&>(*this)` requires `*this` to
-inherit from `IMap`. Thunked types don't — they inherit from `thunked_runtimeclass`.
-The `static_cast` would fail to compile.
-
-`WINRT_IMPL_SHIM` is only used in hand-written `IMap`/`IMapView` `Lookup`/`Remove`
-overloads in `code_writers.h` (5 call sites). **Fix:** Change these call sites to use
-`consume_general` (which handles the thunked path) instead of bypassing it via the macro.
-The `check_hresult_allow_bounds` behavior can be preserved by adding a variant of
-`consume_general` that returns the HRESULT instead of throwing:
-
-```cpp
-template <typename Base, typename Derive, typename MemberPointer, typename ...Args>
-hresult consume_general_nothrow(Derive const* d, MemberPointer mptr, Args&&... args) noexcept
-{
-    // same three-way branch, but returns (abi->*mptr)(...) instead of check_hresult
-}
-```
-
-Then the hand-written map overloads call `consume_general_nothrow` and apply
-`check_hresult_allow_bounds` on the result.
-
-### P1: Coroutine `when_any` — `*(unknown_abi**)&sender`
-
-**Location:** `strings/base_coroutine_foundation.h` lines 863–865
-
-`T` is constrained to async interface types. **SAFE — no change needed.**
-
-### P1: `consume_general` `D == Base` branch
-
-`*(abi_t<Base>**)d` where `d` is `Derive const*` with `Derive == Base` — always an
-interface type. **SAFE.**
-
----
-
-## Thunk vtable: no-op IUnknown slots
-
-The thunk vtable's first 3 entries (slots 0/1/2 = QI/AddRef/Release) use dedicated
-no-op functions instead of the generic resolve stubs:
-
-```asm
-winrt_cached_thunk_qi proc
-    mov     dword ptr [r8], 0       ; *ppv = nullptr
-    mov     eax, 80004002h          ; E_NOINTERFACE
-    ret
-winrt_cached_thunk_qi endp
-
-winrt_cached_thunk_addref proc
-    mov     eax, 1
-    ret
-winrt_cached_thunk_addref endp
-
-winrt_cached_thunk_release proc
-    mov     eax, 1
-    ret
-winrt_cached_thunk_release endp
-```
-
-The vtable array uses these for slots 0–2, regular stubs for slots 3–255:
-
-```asm
-winrt_cached_thunk_vtable label qword
-    dq winrt_cached_thunk_qi           ; slot 0
-    dq winrt_cached_thunk_addref       ; slot 1
-    dq winrt_cached_thunk_release      ; slot 2
-    vtable_entry %3             ; slot 3+
-    ...
-```
-
-**Why this matters:** With no-op Release on the thunk, lifecycle code becomes simpler:
-
-- **Destructor:** Unconditionally Release every cache slot. If the slot holds a thunk,
-  Release is a no-op. If it holds a real interface, Release decrements the refcount.
-  No "is it a thunk?" check needed.
-- **Copy:** Cannot blindly AddRef all slots — thunk pointers are embedded in the *source*
-  object's storage. Copying a thunk pointer would create a dangling reference to the
-  source. Copy must: for resolved slots, AddRef + copy the real pointer; for unresolved
-  slots, initialize a fresh thunk in the destination.
-- **Move:** Steal all cache slots wholesale (thunk or real, doesn't matter), then
-  reinitialize thunks in the destination pointing to the destination's header.
-
----
-
-## Runtimeclass Categories
-
-### Cacheable (thunked)
-
-Non-fastabi, non-static runtimeclasses with ≥1 secondary interface
-and a non-async default interface. Enabled by the `-flatten_classes` cppwinrt.exe flag.
-Examples: `PropertySet`, `StringMap`, `StorageFile`, `MediaCapture`, `Windows.UI.Xaml.Shapes::Path`.
-
-Includes types with generic default interfaces (`StringMap` defaults to
-`IMap<hstring, hstring>`, not a named interface). The `get_default_interface()` in the
-code generator returns `coded_index<TypeDefOrRef>` which handles both cases uniformly.
-
-### Excluded (initial implementation)
-
-| Category | Reason |
-|----------|--------|
-| Fast ABI runtimeclasses | Already optimized, `[FastAbi]` attribute, separate code path |
-| Static-only runtimeclasses | No instances (`write_static_class`) |
-| Single-interface runtimeclasses | No secondaries to cache (e.g. `Deferral`) |
-| Runtimeclasses with async default interface | Async types have special lifetime semantics (`DataWriterStoreOperation` etc.) |
-| Async types | `IAsyncAction` etc. are interfaces, not runtimeclasses |
-| Component-authored types | Use `implements<>`, not the projected runtimeclass |
-
----
-
-## Thunk-Based Design
-
-### Architecture overview
-
-The prototype is in `jonwis.github.io/code/cppwinrt-proj/thunk_experiment.h`.
-
-```
-thunked_runtimeclass<IPropertySet, IMap, IIterable, IObservableMap> layout:
-
-┌─ thunked_runtimeclass_header (16 bytes) ───────────────────────┐
-│ default_cache:   atomic<void*>       → IPropertySet ABI ptr    │
-│ iid_table:       guid const* const*  → static iids array       │
-├─ pairs[0]: cache_and_thunk_tagged (24 bytes) ──────────────────┤
-│ cache:  atomic<void*>  → initially &thunk, then real IMap*     │
-│ thunk:  interface_thunk → { vtable → g_thunk_vtable, payload } │
-├─ pairs[1]: cache_and_thunk_tagged (24 bytes) ──────────────────┤
-│ cache:  atomic<void*>  → initially &thunk, then real IIterable*│
-│ thunk:  interface_thunk → { vtable → g_thunk_vtable, payload } │
-├─ pairs[2]: cache_and_thunk_tagged (24 bytes) ──────────────────┤
-│ cache:  atomic<void*>  → IObservableMap*                       │
-│ thunk:  interface_thunk → { vtable → g_thunk_vtable, payload } │
-└────────────────────────────────────────────────────────────────┘
-
-Total: 16 + 3×24 = 88 bytes (N=3, tagged mode)
-```
-
-Each `interface_thunk` (16 bytes) masquerades as a COM object. Its vtable points to a
-shared table of 256 ASM stubs. Slots 0–2 are no-op QI/AddRef/Release (see above).
-Each method stub (10 bytes on x64):
-
-```asm
-winrt_cached_thunk_stub_N:
-    mov eax, N              ; slot index
-    jmp CachedResolveAndDispatch
-```
-
-`CachedResolveAndDispatch` (~80 bytes, shared):
-1. Saves caller's `rdx`/`r8`/`r9` and slot index via `push` (with `NESTED_ENTRY` unwind info)
-2. Calls `winrt_cached_resolve_thunk(rcx)` — rcx is `interface_thunk*`
-3. `resolve()` atomically replaces the cache slot with the real interface via QI
-4. Loads `real_vtable[slot_index]` into `rax`, validates via `__guard_check_icall_fptr` (CFG)
-5. Restores caller's args, tail-jumps to the real method via `rex_jmp_reg rax`
-
-After resolution, the cache slot holds the real COM pointer directly. All subsequent
-calls dispatch through the real vtable — zero overhead.
-
-### `as<T>()` / `try_as<T>()` on thunked types
-
-Since the thunked runtimeclass does not inherit from `IUnknown`, it provides its own
-`as<T>()` and `try_as<T>()` that QI through the default interface:
-
-```cpp
-// In thunked_runtimeclass_base:
-template<typename Q> auto as() const
-{
-    return reinterpret_cast<IInspectable const*>(&default_cache)->as<Q>();
-}
-
-template<typename Q> auto try_as() const noexcept
-{
-    return reinterpret_cast<IInspectable const*>(&default_cache)->try_as<Q>();
-}
-
-template<typename Q> auto try_as_with_reason(hresult& code) const noexcept
-{
-    return reinterpret_cast<IInspectable const*>(&default_cache)->try_as_with_reason<Q>(code);
-}
-```
-
-`default_cache` is `sizeof(void*)` — reinterpreting it as `IInspectable const*` is valid
-(same aliasing as projected interfaces). This provides `ps.as<IClosable>()` etc.
-
-These are found by unqualified lookup because `PropertySet` inherits from
-`thunked_runtimeclass_base` which defines them.
-
-### Trait: `has_thunked_interface_v<D, I>`
-
-Uses a `thunked_interfaces` type alias inherited from the base class:
-
-```cpp
-// In thunked_runtimeclass<IDefault, I...>:
-using thunked_interfaces = std::tuple<I...>;
-```
-
-Detected via `std::void_t` (C++17-compatible):
-
-```cpp
-template <typename T, typename = void>
-inline constexpr bool has_thunked_cache_v = false;
-
-template <typename T>
-inline constexpr bool has_thunked_cache_v<T,
-    std::void_t<typename T::thunked_interfaces>> = true;
-
-template <typename T, typename I, typename = void>
-inline constexpr bool has_thunked_interface_v = false;
-
-template <typename T, typename I>
-inline constexpr bool has_thunked_interface_v<T, I,
-    std::void_t<typename T::thunked_interfaces>> =
-    tuple_contains_v<I, typename T::thunked_interfaces>;
-```
-
-No per-class specializations needed. The trait is derived from the base class template.
-
-### `thunk_cache_slot<I>()` accessor
-
-```cpp
-// In thunked_runtimeclass<IDefault, I...>:
-template<typename Q>
-std::atomic<void*> const& thunk_cache_slot() const
-{
-    constexpr size_t idx = type_index<Q, I...>::value;
-    static_assert(idx < sizeof...(I), "Interface not in thunked list");
-    return pairs[idx].cache;
-}
-```
-
-### ABI overloads via SFINAE template (C++17)
-
-```cpp
-// In winrt namespace (or winrt::impl):
-template <typename T, std::enable_if_t<has_thunked_cache_v<T>, int> = 0>
-void* get_abi(T const& object) noexcept { return object.get_default_abi(); }
-
-template <typename T, std::enable_if_t<has_thunked_cache_v<T>, int> = 0>
-void** put_abi(T& object) noexcept { object.clear_thunked(); return object.put_default_abi(); }
-
-template <typename T, std::enable_if_t<has_thunked_cache_v<T>, int> = 0>
-void* detach_abi(T& object) noexcept { return object.detach_default_abi(); }
-
-template <typename T, std::enable_if_t<has_thunked_cache_v<T>, int> = 0>
-void attach_abi(T& object, void* value) noexcept { object.attach_default_abi(value); }
-
-template <typename T, std::enable_if_t<has_thunked_cache_v<T>, int> = 0>
-void copy_from_abi(T& object, void* value) noexcept { object.copy_from_default_abi(value); }
-
-template <typename T, std::enable_if_t<has_thunked_cache_v<T>, int> = 0>
-void copy_to_abi(T const& object, void*& value) noexcept { object.copy_to_default_abi(value); }
-```
-
-One definition per function covers all thunked types. The `get_default_abi()`,
-`put_default_abi()`, etc. are members of `thunked_runtimeclass_base`.
-
-### `write_abi_args` change
-
-Replace `*(void**)(&param)` with `get_abi(param)` for `object_type` IN params:
-
-```cpp
-case param_category::object_type:
-    w.write("get_abi(%)", param_name);
-    break;
-case param_category::string_type:
-    w.write("*(void**)(&%)", param_name);  // hstring unchanged
-    break;
-```
-
----
-
-## Runtimeclass generated shape
-
-### Before (current):
-
-```cpp
-struct WINRT_IMPL_EMPTY_BASES PropertySet : IPropertySet,
-    impl::require<PropertySet, IMap<hstring, IInspectable>,
-        IIterable<IKeyValuePair<hstring, IInspectable>>,
-        IObservableMap<hstring, IInspectable>>
-{
-    PropertySet(std::nullptr_t) noexcept {}
-    PropertySet(void* ptr, take_ownership_from_abi_t) noexcept
-        : IPropertySet(ptr, take_ownership_from_abi) {}
-    PropertySet();
-};
-```
-
-`sizeof(PropertySet) == sizeof(void*)`. Secondary interfaces QI'd on every method call.
-
-### After (thunked):
-
-```cpp
-struct WINRT_IMPL_EMPTY_BASES PropertySet :
-    impl::thunked_runtimeclass<IPropertySet,
-        IMap<hstring, IInspectable>,
-        IIterable<IKeyValuePair<hstring, IInspectable>>,
-        IObservableMap<hstring, IInspectable>>,
-    impl::require<PropertySet,
-        IMap<hstring, IInspectable>,
-        IIterable<IKeyValuePair<hstring, IInspectable>>,
-        IObservableMap<hstring, IInspectable>>
-{
-    PropertySet(std::nullptr_t) noexcept : thunked_runtimeclass(nullptr) {}
-    PropertySet(void* ptr, take_ownership_from_abi_t) noexcept
-        : thunked_runtimeclass(ptr) {}
-    PropertySet();  // calls factory, delegates to take_ownership_from_abi ctor
-};
-```
-
-`sizeof(PropertySet) == 88 bytes` (header 16 + 3×24 pairs, tagged mode).
-The `require<>` CRTP still provides `consume_t` methods. `consume_general` uses the
-thunk branch for known interfaces, QI fallback for unknown ones.
-
-### Factory constructor wiring
-
-The default constructor calls through the factory machinery:
-
-```cpp
-inline PropertySet::PropertySet() :
-    PropertySet(impl::call_factory_cast<PropertySet(*)(IActivationFactory const&), PropertySet>(
-        [](IActivationFactory const& f) { return f.template ActivateInstance<PropertySet>(); }))
-{ }
-```
-
-`ActivateInstance<PropertySet>()` returns `PropertySet(void*, take_ownership_from_abi)`,
-which passes the raw ABI pointer to `thunked_runtimeclass(ptr)`. The base class stores
-it in `default_cache` and initializes all thunk pairs. **No change to factory machinery.**
-
-### StringMap (generic default interface):
-
-```cpp
-struct WINRT_IMPL_EMPTY_BASES StringMap :
-    impl::thunked_runtimeclass<IMap<hstring, hstring>,
-        IIterable<IKeyValuePair<hstring, hstring>>,
-        IObservableMap<hstring, hstring>>,
-    impl::require<StringMap,
-        IIterable<IKeyValuePair<hstring, hstring>>,
-        IObservableMap<hstring, hstring>>
-{ ... };
-```
-
-### Header file placement
-
-The thunked class is generated in the same `.2.h` file as today. `write_slow_class`
-in `code_writers.h` changes the base class for cacheable types; the output file path
-is unchanged.
-
-### Include ordering for `base_thunked_runtimeclass.h`
-
-Include in `write_base_h()` (`file_writers.h`) after `base_implements.h` and before
-the generated projection headers. This ensures `thunked_runtimeclass` is defined
-before any runtimeclass type that inherits from it.
-
-```cpp
-// In write_base_h():
-// ... existing includes ...
-write(strings::base_implements);
-write(strings::base_thunked_runtimeclass);  // NEW
-// ... then generated headers ...
-```
-
----
-
-## ASM stubs
-
-### Shared across all thunked types
-
-| File | Architecture | Size |
-|------|-------------|------|
-| `strings/cached_thunks_x64.asm` | x64 (MASM) | ~4.7 KB |
-| `strings/cached_thunks_x86.asm` | x86 (MASM) | ~2.9 KB |
-| `strings/cached_thunks_arm64.asm` | ARM64 (armasm64) | ~4.2 KB |
-| `strings/cached_thunks_arm64ec.asm` | ARM64EC (armasm64) | ~4.2 KB |
-
-256 stubs × 10 bytes each + common dispatch + no-op IUnknown slots + vtable array.
-
-### Extern declarations
-
-```cpp
-extern "C" inline void* winrt_cached_resolve_thunk(interface_thunk const* thunk)
-{
-    return thunk->resolve();
-}
-// Force the compiler to emit the inline function body so the ASM thunk stubs can find it.
-extern "C" __declspec(selectany) void* (*winrt_resolve_thunk_forcelink_)(interface_thunk const*) = winrt_cached_resolve_thunk;
-extern "C" const void* winrt_cached_thunk_vtable[256];
-```
-
-`winrt_cached_resolve_thunk` is defined inline in `base_thunked_runtimeclass.h` (emitted
-into `winrt/base.h`). The `selectany` function-pointer variable forces the compiler to
-emit the inline function body as an externally-visible COMDAT symbol, which the ASM stubs
-reference. Projects that don't include `winrt/base.h` (e.g. C++/CX) must not link the
-ASM stubs.
-
-### Build integration
-
-The ASM files compile into a static library (`cppwinrt_thunks` or similar) that links
-into any binary using thunked runtimeclasses. The NuGet package includes pre-compiled
-`.obj` files per architecture.
-
----
-
-## Thread safety
-
-`interface_thunk::resolve()` uses `compare_exchange_strong` on the cache slot:
-- Two threads racing to resolve the same interface both QI successfully
-- The loser's `compare_exchange` fails; it releases its result and uses the winner's pointer
-- No locks, no spinwaits
-
-After resolution, the cache slot holds a raw pointer and all reads are `memory_order_acquire`
-loads — standard lock-free pattern.
-
----
-
-## Implementation Plan
-
-### Phase 1: Runtime infrastructure (`strings/`)
-
-1. **`base_thunked_runtimeclass.h`** — new file containing:
-   - `thunked_runtimeclass_header` (default_cache + iid_table)
-   - `interface_thunk` (16 bytes, `resolve()` logic)
-   - `cache_and_thunk_tagged` / `cache_and_thunk_full` pair types
-   - `thunked_runtimeclass_base` (clear, attach, copy, move — non-template)
-   - `thunked_runtimeclass<IDefault, I...>` typed template
-   - `type_index<T, Types...>` compile-time helper
-   - `has_thunked_cache_v` / `has_thunked_interface_v` traits via `thunked_interfaces`
-   - `get_default_abi()`, `put_default_abi()`, `detach_default_abi()`, `attach_default_abi()`
-   - `copy_from_default_abi()`, `copy_to_default_abi()`
-   - `as<T>()`, `try_as<T>()`, `try_as_with_reason<T>()` members
-
-2. **SFINAE-guarded ABI overloads** (`base_thunked_runtimeclass.h`):
-   - `get_abi`, `put_abi`, `detach_abi`, `attach_abi`
-   - `copy_from_abi`, `copy_to_abi`
-   - All use `std::enable_if_t<has_thunked_cache_v<T>>` (C++17)
-
-3. **Modify `consume_general`** (`base_windows.h`):
-   - Add `has_thunked_interface_v<Derive, Base>` branch
-   - Same for `consume_noexcept` and `consume_noexcept_remove_overload`
-   - Add `consume_general_nothrow` variant for map Lookup/Remove overloads
-
-4. **Fix `WINRT_IMPL_SHIM` call sites** (`code_writers.h`):
-   - Replace 5 hand-written `WINRT_IMPL_SHIM` calls with `consume_general_nothrow`
-   - Or keep `WINRT_IMPL_SHIM` for the `D == Base` case and add a thunked alternative
-
-5. **ASM stubs** — copy from prototype, add no-op QI/AddRef/Release:
-   - `strings/cached_thunks_x64.asm`
-   - `strings/cached_thunks_x86.asm`
-   - `strings/cached_thunks_arm64.asm`
-   - `strings/cached_thunks_arm64ec.asm`
-
-6. **`bind_out` static_assert** (`base_string.h`)
-
-7. **Include in `write_base_h()`** (`file_writers.h`): after `base_implements.h`
-
-8. **`write_abi_args`** (`code_writers.h`):
-   - `*(void**)(&param)` → `get_abi(param)` for `object_type` IN params
-   - Safe before Phase 2: for non-thunked types, `get_abi(param)` resolves to the
-     existing `get_abi(IUnknown const&)` which does the same `*(void**)(&object)`
-
-### Phase 2: Code generator (`cppwinrt/`)
-
-9. **`write_slow_class`** (`code_writers.h`):
-   - For cacheable types: inherit from `impl::thunked_runtimeclass<IDefault, I...>`
-     instead of the default interface directly
-   - Keep `impl::require<>` inheritance for consume CRTP methods
-   - Generate constructors that delegate to `thunked_runtimeclass`
-   - Class goes in the same `.2.h` file as today
-
-10. **`write_default_interface`** / `default_interface` trait:
-    - Must still work — `thunked_runtimeclass<IDefault, ...>` stores `IDefault` in
-      the template args; the trait maps `PropertySet → IPropertySet`
-
-11. **Build system** (`CMakeLists.txt`):
-    - New `cppwinrt_thunks` static library target for ASM stubs
-    - Per-architecture assembly rules
-
-### Phase 3: Validation
-
-12. **All existing tests must pass unchanged.** No test file modifications allowed.
-
-13. **New tests:**
-    - Thunk resolution correctness (first call QIs, subsequent calls skip)
-    - Copy semantics (fresh thunks, lazy re-resolve)
-    - Move semantics (steal default + reinit thunks)
-    - Thread safety (8+ threads racing to resolve same interface)
-    - `get_abi`/`put_abi`/`detach_abi`/`attach_abi` on thunked types
-    - `copy_from_abi`/`copy_to_abi` on thunked types
-    - `as<T>()`/`try_as<T>()` on thunked types
-    - Types with generic default interface (StringMap)
-    - Types with many secondaries (>8 → full mode with explicit IID storage)
-
----
-
-## Risks
-
-| Risk | Mitigation |
-|------|-----------|
-| Per-instance size (88 bytes for N=3 vs 8) | QI elimination justifies it for hot types |
-| ASM stubs per architecture | 4 files, ~4 KB each, shared across all types |
-| MinGW/Clang: no MASM | GAS equivalents needed; or C trampoline fallback |
-| C++17 floor | Use `std::enable_if_t` / `std::void_t` instead of `requires` |
-| 256-slot vtable limit | WinRT interfaces rarely exceed ~30 methods; `static_assert` |
-| `consume_general` branch prediction | `if constexpr` — resolved at compile time |
-
----
-
-## Open questions
-
-1. **NuGet packaging:** ASM stubs need compilation. Options: pre-compiled `.obj` per arch,
-   or MSBuild targets that assemble from source.
-
-2. **`operator=(nullptr)`:** Must clear default + all cache slots, release resolved ones.
-
-3. **Interaction with `base<>` / composable types:** Deferred to a future phase.
-
----
-
-## Tooling: Build & Validate
-
-### Scripts
-
-| Script | Purpose |
-|--------|---------|
-| `scripts/build_and_test.ps1` | Parallel build + test runner |
-| `scripts/run_cppwinrt.ps1` | Run `cppwinrt.exe` with output under `build/` |
-
-### `scripts/build_and_test.ps1`
-
-Default: builds only `test\test` (the main test target and its dependencies). This is
-the fastest feedback loop for iterating on `strings/` and `cppwinrt/` changes.
-
-```
-.\scripts\build_and_test.ps1                        # build test\test only (x64 Release)
-.\scripts\build_and_test.ps1 -Test                  # build test\test + run it
-.\scripts\build_and_test.ps1 -BuildAll              # build ALL test targets
-.\scripts\build_and_test.ps1 -BuildAll -Test        # build all + run all
-.\scripts\build_and_test.ps1 -BinLog                # produce binary log
-.\scripts\build_and_test.ps1 -Clean                 # git clean -dfx . then build
-```
-
-- Default (no flags) — build-only for `test\test` and its deps (prebuild, cppwinrt,
-  test_component, test_component_no_pch).
-- **`-BuildAll`** — builds all 9 test targets in a single `msbuild /m /v:m` invocation.
-- **`-Test`** — after building, runs whichever test executables were built.
-- **`-BinLog`** — produces `_build\build.binlog` for structured error analysis.
-- **`-Clean`** — runs `git clean -dfx .` before building. Wipes all build artifacts.
-
-### `scripts/run_cppwinrt.ps1`
-
-Runs locally-built `cppwinrt.exe`. Output goes under `build/` (gitignored).
-
-```
-.\scripts\run_cppwinrt.ps1                                    # build\projection\x64\Release
-.\scripts\run_cppwinrt.ps1 -OutputDir build\projection\custom  # custom output
-```
-
-### Agent workflow for build-fix iterations
-
-1. **Make the code change** (edit `strings/*.h`, `cppwinrt/code_writers.h`, etc.)
-
-2. **Run the build** via terminal in async mode:
-   ```
-   .\scripts\build_and_test.ps1 -BinLog
-   ```
-   Do **NOT** poll or sleep. Wait for terminal completion notification.
-
-3. **On build failure**, dispatch a sub-agent (e.g. `Explore` with GPT-5.3-Codex) to read
-   `_build\build_output.log`, extract `error C####` lines, group by file, return a report.
-   If `-BinLog` was used, the agent can use `binlog_lm_errors` instead.
-
-4. **Review the report** and fix. Repeat from step 1.
-
-5. **On build success**, run tests:
-   ```
-   .\scripts\build_and_test.ps1 -Test
-   ```
-
-6. **On test failure**, read `_build\x64\Release\<test>_results.txt`.
-
-7. **To inspect generated headers**:
-   ```
-   .\scripts\run_cppwinrt.ps1
-   ```
-
-## Development Notes
-
-### Key architectural decisions
-
-1. **`default_cache` is the first member** of `thunked_runtimeclass_header`, so
-   `*(void**)(&object)` reads the COM pointer — matching the `IUnknown` layout that
-   `get_abi`, `bind_in`, and other `reinterpret_cast` patterns rely on.
-
-2. **Thunked traits in `base_meta.h`**, not `base_thunked_runtimeclass.h`. The traits
-   (`has_thunked_cache_v`, `has_thunked_interface_v`) must be visible before
-   `consume_general` in `base_windows.h`.
-
-3. **ABI overloads in `base_windows.h`**, not the thunked header. `detach_from` in
-   `base_activation.h` couldn't see them when they were in the later-included header.
-
-4. **`resolve()` returns nullptr on QI failure** — no exceptions through ASM frames.
-   The ASM stub checks the return value; if null, returns `E_NOINTERFACE` directly.
-   `consume_general`'s `check_hresult` on the method result throws in a proper C++ frame.
-
-5. **`produce_borrowed_ref<T>`** wraps ABI `void*` parameters in produce stubs. For
-   thunked types (sizeof > 8), a `reinterpret_cast` would overread the stack. The wrapper
-   constructs a proper thunked temporary via `T{nullptr}` + `attach_abi`, then `detach_abi`
-   on destruction to prevent Release (caller owns the reference).
-
-6. **`extern "C" inline` + `selectany` forcelink** for `winrt_cached_resolve_thunk` in the
-   header. MSVC won't emit `extern "C" inline` functions as externally-linkable symbols
-   unless something takes the address. The `selectany` function-pointer variable forces
-   emission. Projects not including `winrt/base.h` (C++/CX, proxy/stub) must not link
-   the ASM stubs.
-
-7. **`-flatten_classes` opt-in flag** gates thunked runtimeclass generation, matching the
-   `-fastabi` pattern. MSBuild property: `$(CppWinRTFlattenClasses)`.
-
-### Async exclusion
-
-Runtimeclasses whose default interface is `IAsyncAction`, `IAsyncOperation<T>`,
-`IAsyncActionWithProgress<T>`, or `IAsyncOperationWithProgress<T,P>` are excluded.
-Thunked types don't inherit the async interface, losing `await_resume`/`operator co_await`.
-Detected via `has_async_default_interface()` in `code_writers.h`.
-
-### COM identity for thunked types
-
-Thunked types add `has_thunked_cache_v<T>` to ~15 trait checks that previously used
-`is_base_of<IUnknown, T>`: `arg<T>`, `com_ref<T>`, `empty_value<T>`, `is_com_interface`,
-`box_value`/`unbox_value`, and all ABI overloads. Hidden-friend `operator==`/`!=` on
-`thunked_runtimeclass_base` implements COM identity via three-tier comparison:
-pointer equality → `default_cache` match → QI for IUnknown.
-
-### Commits
-
-| Hash | Description |
-|------|-------------|
-| `64b8e32f` | Plan doc + build/test scripts |
-| `85d475f0` | Plan review fixes |
-| `5a3fa1e1` | Move write_abi_args to Phase 1 |
-| `93ef473d` | Rules: -logo nul, noisy output |
-| `0cb57ec8` | Phase 1: thunked infrastructure |
-| `2600e332` | Phase 2: code generator emits thunked runtimeclasses |
-| `40dac14b` | Fix thunked type identity (arg, is_com_interface, empty_value, box/unbox) |
-| `59740cef` | thunked_dispatch test + disassembly verification |
-| `722d83a5` | Phase 3: copy/move, ABI interop, as/try_as, threading tests |
-| `63e8c490` | Phase 3: generic default + full mode tests |
-| `9edcf17d` | Phase 3 complete |
-| `b175ad26` | E2E: async exclusion, operator==, delegate ABI fix |
-| `6bdf12d0` | Inline resolve thunk into base.h |
-| `94f6aad4` | Gate behind -flatten_classes flag |
-| `ee7371aa` | Doc fixes for PR readiness |
+This removes the index from the payload entirely. Payload is now just `header_ptr | 1`.
+
+**Changes made:**
+- `strings/base_thunked_runtimeclass.h`:
+  - Added standalone constants `thunk_pair_thunk_offset` (8) and `thunk_pair_stride` (24)
+  - `interface_thunk::descriptor()` — uses pointer math instead of bit-extracted index
+  - `interface_thunk::resolve()` — simplified, no tagged/full branching
+  - `init_pair_tagged()` — no longer encodes index in payload
+  - Removed `cache_and_thunk_full` struct and `init_pair_full()` entirely
+  - `cache_and_thunk_t<bool>` now always resolves to `cache_and_thunk_tagged`
+  - `attach_impl()` — always uses tagged init path
+  - `cached_thunk_tagged_slot_count` raised to 1024 (no practical limit)
+- `test/test_cachedrtc/thunked_dispatch.cpp`:
+  - Updated static_assert: Package now uses tagged mode (all types do)
+
+**Binary size impact (Lottie sample, x64 Release, LTCG+ICF+/Ox):**
+- Before: no-flatten 251.5 KB, flatten 259.5 KB (+8 KB, 3.18%)
+- After:  no-flatten 251.5 KB, flatten 255.0 KB (+3.5 KB, 1.39%)
+- Improvement: -4.5 KB per DLL from eliminating full-mode overhead
+
+### Obstacle 2 Implementation: Lightweight Base-Class Conversions
+
+**Problem:** When passing a derived thunked type (e.g., `SpotLight`) to a method
+expecting a base type (e.g., `CompositionLight const&`), C++ invokes
+`base_one<SpotLight, CompositionLight>::operator CompositionLight()` which calls
+`try_as<CompositionLight>()`. This constructs a full temporary `CompositionLight`
+with all cache slots initialized (QI + attach_impl for every secondary interface),
+only to immediately extract `*(void**)(&obj)` (the default ABI pointer) and destroy
+the temporary. The cache slot initialization + teardown is pure waste.
+
+**Solution:** Specialize `base_one` for thunked-to-thunked conversions. When both D
+and I have `thunked_interfaces`, the conversion skips cache slot initialization:
+1. QI from source's default ABI to target's default interface
+2. Construct `I{ nullptr }` (zero-initialized pairs, no attach_impl)
+3. Write the QI result directly into `result.put_default_abi()`
+4. Return — destructor safely skips null cache entries
+
+**Implementation details:**
+- `base_one::operator I()` declaration moved to `strings/base_meta.h` (forward-declared only)
+- Definition deferred to `strings/base_thunked_runtimeclass.h` where `unknown_abi` and
+  `guid_of` are available
+- Uses `if constexpr (has_thunked_cache_v<D> && has_thunked_cache_v<I>)` to select path
+- Non-thunked types fall through to the original `try_as<I>()` path unchanged

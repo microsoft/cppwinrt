@@ -9,6 +9,8 @@ using namespace Windows::UI::Core;
 
 namespace
 {
+#pragma warning(push)
+#pragma warning(disable : 4324)
     fire_and_forget Async(CoreDispatcher queue, bool test)
     {
         if (test)
@@ -20,6 +22,7 @@ namespace
 
         co_await queue;
     }
+#pragma warning(pop)
 }
 
 TEST_CASE("coro_ui_core")

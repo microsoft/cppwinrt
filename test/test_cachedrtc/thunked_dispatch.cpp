@@ -9,10 +9,10 @@ using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
-static_assert(winrt::impl::has_thunked_cache_v<PropertySet>);
+static_assert(winrt::impl::has_flat_cache_v<PropertySet>);
 
 // These functions exercise thunked runtimeclass consumer-side dispatch.
-// PropertySet inherits from thunked_runtimeclass<IPropertySet, IMap, IIterable, IObservableMap>.
+// PropertySet inherits from flat_runtimeclass<IPropertySet, IMap, IIterable, IObservableMap>.
 // Calls to Insert/Lookup/Size go through the thunked cache slots rather than QI.
 //
 // Build x64 Release, then disassemble with:
@@ -283,10 +283,10 @@ TEST_CASE("thunked_full_mode")
     REQUIRE(!pkg3);
     REQUIRE(!pkg);
 
-    // Verify the type's thunked_interfaces tuple has >8 entries,
-    // confirming full mode is active.
-    static_assert(std::tuple_size_v<Package::thunked_interfaces> > 8,
-        "Package should have >8 thunked interfaces (full mode)");
-    static_assert(!Package::use_tagged,
-        "Package should use full mode, not tagged mode");
+    // Verify the type's flat_interfaces tuple has >8 entries.
+    // All types use the same pair_type (cache_and_thunk_tagged) regardless of count.
+    static_assert(std::tuple_size_v<Package::flat_interfaces> > 8,
+        "Package should have >8 thunked interfaces");
+    static_assert(std::is_same_v<Package::pair_type, winrt::impl::cache_and_thunk_tagged>,
+        "All thunked types should use cache_and_thunk_tagged");
 }

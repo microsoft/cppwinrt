@@ -67,7 +67,7 @@ namespace winrt::impl
 #endif
 
     template <typename T>
-    using com_ref = std::conditional_t<std::is_base_of_v<Windows::Foundation::IUnknown, T> || has_thunked_cache_v<T>, T, com_ptr<T>>;
+    using com_ref = std::conditional_t<std::is_base_of_v<Windows::Foundation::IUnknown, T> || has_flat_cache_v<T>, T, com_ptr<T>>;
 
     template <typename T, std::enable_if_t<is_implements_v<T>, int> = 0>
     com_ref<T> wrap_as_result(void* result)
@@ -85,7 +85,7 @@ namespace winrt::impl
     struct is_classic_com_interface : std::conjunction<std::is_base_of<::IUnknown, T>, std::negation<is_implements<T>>> {};
 
     template <typename T>
-    struct is_com_interface : std::disjunction<std::is_base_of<Windows::Foundation::IUnknown, T>, std::is_base_of<unknown_abi, T>, is_implements<T>, is_classic_com_interface<T>, std::bool_constant<has_thunked_cache_v<T>>> {};
+    struct is_com_interface : std::disjunction<std::is_base_of<Windows::Foundation::IUnknown, T>, std::is_base_of<unknown_abi, T>, is_implements<T>, is_classic_com_interface<T>, std::bool_constant<has_flat_cache_v<T>>> {};
 
     template <typename T>
     inline constexpr bool is_com_interface_v = is_com_interface<T>::value;
@@ -296,13 +296,13 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_thunked_cache_v<T>, int> = 0>
+    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_flat_cache_v<T>, int> = 0>
     auto get_abi(T const& object) noexcept
     {
         return reinterpret_cast<impl::abi_t<T> const&>(object);
     }
 
-    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_thunked_cache_v<T>, int> = 0>
+    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_flat_cache_v<T>, int> = 0>
     auto put_abi(T& object) noexcept
     {
         if constexpr (!std::is_trivially_destructible_v<T>)
@@ -313,19 +313,19 @@ WINRT_EXPORT namespace winrt
         return reinterpret_cast<impl::abi_t<T>*>(&object);
     }
 
-    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_thunked_cache_v<T>, int> = 0>
+    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_flat_cache_v<T>, int> = 0>
     void copy_from_abi(T& object, V&& value)
     {
         object = reinterpret_cast<T const&>(value);
     }
 
-    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_thunked_cache_v<T>, int> = 0>
+    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_flat_cache_v<T>, int> = 0>
     void copy_to_abi(T const& object, V& value)
     {
         reinterpret_cast<T&>(value) = object;
     }
 
-    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, std::decay_t<T>> && !impl::has_thunked_cache_v<std::decay_t<T>> && !std::is_convertible_v<T, std::wstring_view>, int> = 0>
+    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, std::decay_t<T>> && !impl::has_flat_cache_v<std::decay_t<T>> && !std::is_convertible_v<T, std::wstring_view>, int> = 0>
     auto detach_abi(T&& object)
     {
         impl::abi_t<T> result{};
@@ -369,48 +369,48 @@ WINRT_EXPORT namespace winrt
         return nullptr;
     }
 
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    template <typename T, std::enable_if_t<impl::has_flat_cache_v<T>, int> = 0>
     void* get_abi(T const& object) noexcept
     {
         return object.get_default_abi();
     }
 
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    template <typename T, std::enable_if_t<impl::has_flat_cache_v<T>, int> = 0>
     void** put_abi(T& object) noexcept
     {
-        object.clear_thunked();
+        object.clear_flat();
         return object.put_default_abi();
     }
 
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    template <typename T, std::enable_if_t<impl::has_flat_cache_v<T>, int> = 0>
     void* detach_abi(T& object) noexcept
     {
         return object.detach_default_abi();
     }
 
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<std::decay_t<T>>, int> = 0>
+    template <typename T, std::enable_if_t<impl::has_flat_cache_v<std::decay_t<T>>, int> = 0>
     void* detach_abi(T&& object) noexcept
     {
         return object.detach_default_abi();
     }
 
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    template <typename T, std::enable_if_t<impl::has_flat_cache_v<T>, int> = 0>
     void attach_abi(T& object, void* value) noexcept
     {
-        object.reset_thunked(value);
+        object.reset_flat(value);
     }
 
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    template <typename T, std::enable_if_t<impl::has_flat_cache_v<T>, int> = 0>
     void copy_from_abi(T& object, void* value) noexcept
     {
         if (value)
         {
             static_cast<impl::unknown_abi*>(value)->AddRef();
         }
-        object.reset_thunked(value);
+        object.reset_flat(value);
     }
 
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    template <typename T, std::enable_if_t<impl::has_flat_cache_v<T>, int> = 0>
     void copy_to_abi(T const& object, void*& value) noexcept
     {
         object.copy_to_default_abi(value);
@@ -509,9 +509,9 @@ WINRT_EXPORT namespace winrt::impl
             auto const _winrt_abi_type = *(abi_t<Base>**)d;
             (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
         }
-        else if constexpr (has_thunked_interface_v<Derive, Base>)
+        else if constexpr (has_flat_interface_v<Derive, Base>)
         {
-            auto const _winrt_abi_type = *(abi_t<Base>**)(&d->template thunk_cache_slot<Base>());
+            auto const _winrt_abi_type = static_cast<abi_t<Base>*>(d->template thunk_cache_slot<Base>().load(std::memory_order_acquire));
             (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
         }
         else
@@ -532,9 +532,9 @@ WINRT_EXPORT namespace winrt::impl
             auto const _winrt_abi_type = *(abi_t<Base>**)d;
             WINRT_VERIFY_(0, (_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
-        else if constexpr (has_thunked_interface_v<Derive, Base>)
+        else if constexpr (has_flat_interface_v<Derive, Base>)
         {
-            auto const _winrt_abi_type = *(abi_t<Base>**)(&d->template thunk_cache_slot<Base>());
+            auto const _winrt_abi_type = static_cast<abi_t<Base>*>(d->template thunk_cache_slot<Base>().load(std::memory_order_acquire));
             WINRT_VERIFY_(0, (_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
         else
@@ -555,9 +555,9 @@ WINRT_EXPORT namespace winrt::impl
             auto const _winrt_abi_type = *(abi_t<Base>**)d;
             check_hresult((_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
-        else if constexpr (has_thunked_interface_v<Derive, Base>)
+        else if constexpr (has_flat_interface_v<Derive, Base>)
         {
-            auto const _winrt_abi_type = *(abi_t<Base>**)(&d->template thunk_cache_slot<Base>());
+            auto const _winrt_abi_type = static_cast<abi_t<Base>*>(d->template thunk_cache_slot<Base>().load(std::memory_order_acquire));
             check_hresult((_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
         else
@@ -578,9 +578,9 @@ WINRT_EXPORT namespace winrt::impl
             auto const _winrt_abi_type = *(abi_t<Base>**)d;
             return (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
         }
-        else if constexpr (has_thunked_interface_v<Derive, Base>)
+        else if constexpr (has_flat_interface_v<Derive, Base>)
         {
-            auto const _winrt_abi_type = *(abi_t<Base>**)(&d->template thunk_cache_slot<Base>());
+            auto const _winrt_abi_type = static_cast<abi_t<Base>*>(d->template thunk_cache_slot<Base>().load(std::memory_order_acquire));
             return (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
         }
         else
