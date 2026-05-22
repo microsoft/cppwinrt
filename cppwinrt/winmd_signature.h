@@ -56,14 +56,47 @@ namespace winmd_signature
     }
 
     // ---- Format a GUID as a lowercase signature string: {xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx} ----
+    namespace impl
+    {
+        inline void write_hex(char*& p, std::uint8_t value)
+        {
+            static constexpr char digits[] = "0123456789abcdef";
+            *p++ = digits[value >> 4];
+            *p++ = digits[value & 0xF];
+        }
+
+        inline void write_hex(char*& p, std::uint16_t value)
+        {
+            write_hex(p, static_cast<std::uint8_t>(value >> 8));
+            write_hex(p, static_cast<std::uint8_t>(value & 0xFF));
+        }
+
+        inline void write_hex(char*& p, std::uint32_t value)
+        {
+            write_hex(p, static_cast<std::uint16_t>(value >> 16));
+            write_hex(p, static_cast<std::uint16_t>(value & 0xFFFF));
+        }
+    }
+
     inline std::string format_guid_signature(guid_value const& g)
     {
-        char buf[64];
-        sprintf_s(buf, "{%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x}",
-            g.Data1, g.Data2, g.Data3,
-            g.Data4[0], g.Data4[1], g.Data4[2], g.Data4[3],
-            g.Data4[4], g.Data4[5], g.Data4[6], g.Data4[7]);
-        return buf;
+        // {xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx} = 38 chars + null
+        char buf[39];
+        char* p = buf;
+        *p++ = '{';
+        impl::write_hex(p, g.Data1); *p++ = '-';
+        impl::write_hex(p, g.Data2); *p++ = '-';
+        impl::write_hex(p, g.Data3); *p++ = '-';
+        impl::write_hex(p, g.Data4[0]);
+        impl::write_hex(p, g.Data4[1]); *p++ = '-';
+        impl::write_hex(p, g.Data4[2]);
+        impl::write_hex(p, g.Data4[3]);
+        impl::write_hex(p, g.Data4[4]);
+        impl::write_hex(p, g.Data4[5]);
+        impl::write_hex(p, g.Data4[6]);
+        impl::write_hex(p, g.Data4[7]);
+        *p++ = '}';
+        return { buf, static_cast<std::size_t>(p - buf) };
     }
 
     // ---- SHA1 computation ----
