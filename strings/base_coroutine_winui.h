@@ -1,6 +1,6 @@
 
 #ifdef WINRT_IMPL_COROUTINES
-namespace winrt
+WINRT_EXPORT namespace winrt
 {
     template <>
     struct dispatcher_traits<Microsoft::UI::Dispatching::DispatcherQueue>
