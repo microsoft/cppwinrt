@@ -13,8 +13,12 @@ namespace cppwinrt
 {
     inline std::string file_to_string(std::string const& filename)
     {
-        std::ifstream file(filename, std::ios::binary);
-        return static_cast<std::stringstream const&>(std::stringstream() << file.rdbuf()).str();
+        std::ifstream file(filename, std::ios::binary | std::ios::ate);
+        const auto size = file.tellg();
+        file.seekg(0);
+        std::string result(size, '\0');
+        file.read(result.data(), size);
+        return result;
     }
 
     template <typename T>
@@ -218,17 +222,12 @@ namespace cppwinrt
 
         bool file_equal(std::string const& filename) const
         {
-            if (!std::filesystem::exists(filename))
+            if (!std::filesystem::exists(filename) || std::filesystem::file_size(filename) != m_first.size() + m_second.size())
             {
                 return false;
             }
 
             auto file = file_to_string(filename);
-
-            if (file.size() != m_first.size() + m_second.size())
-            {
-                return false;
-            }
 
             if (!std::equal(m_first.begin(), m_first.end(), file.begin(), file.begin() + m_first.size()))
             {
