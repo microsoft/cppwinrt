@@ -5,7 +5,7 @@ WINRT_EXPORT namespace winrt
     struct com_ptr;
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     struct capture_decay
     {
@@ -349,7 +349,7 @@ WINRT_EXPORT namespace winrt
     }
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename T, typename O, typename M, typename...Args>
     std::int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&& ...args)

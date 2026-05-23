@@ -32,6 +32,12 @@ namespace cppwinrt
         bool fastabi{};
         bool flatten_classes{};
         std::map<winmd::reader::TypeDef, winmd::reader::TypeDef> fastabi_cache;
+
+        bool modules{}; // Generate per-namespace C++20 module interface units (.ixx)
+
+        std::set<std::string> module_include;
+        std::set<std::string> module_exclude;
+        winmd::reader::filter module_filter;
     };
 
     extern settings_type settings;
