@@ -80,58 +80,76 @@ still look like they're accepting CompositionLight, and the conversion is hidden
 
 ## Detailed Notes
 
-### Obstacle 2 Implementation: Pointer-Math Slot Index (Completed)
+### Pointer-Math Slot Index (Completed)
 
-**Problem:** The tagged payload encoded `header_ptr | (index << 1) | 1` which limited
-the index to 3 bits (0-7). Types with >8 secondary interfaces fell back to "full mode"
-(`cache_and_thunk_full`, 32 bytes per slot instead of 24), wasting 8 bytes per slot and
-adding a branch in `resolve()`.
+Replaced the 3-bit index encoding in the thunk payload with pointer-math computation.
+All types now use a single pair layout (`cache_and_thunk_tagged`, 24 bytes per slot)
+with no practical limit on interface count. The old "full mode" (32 bytes/slot for
+types with >8 interfaces) was eliminated entirely.
 
-**Solution chosen:** Option 2 — compute index from pointer math. Since all `cache_and_thunk_tagged`
-elements are in a contiguous array at a known offset from the header, `resolve()` computes:
-```
-index = (this - header - sizeof(header) - thunk_offset_in_pair) / pair_stride
-```
-This removes the index from the payload entirely. Payload is now just `header_ptr | 1`.
+### Thunk IUnknown Stubs (Completed)
 
-**Changes made:**
-- `strings/base_thunked_runtimeclass.h`:
-  - Added standalone constants `thunk_pair_thunk_offset` (8) and `thunk_pair_stride` (24)
-  - `interface_thunk::descriptor()` — uses pointer math instead of bit-extracted index
-  - `interface_thunk::resolve()` — simplified, no tagged/full branching
-  - `init_pair_tagged()` — no longer encodes index in payload
-  - Removed `cache_and_thunk_full` struct and `init_pair_full()` entirely
-  - `cache_and_thunk_t<bool>` now always resolves to `cache_and_thunk_tagged`
-  - `attach_impl()` — always uses tagged init path
-  - `cached_thunk_tagged_slot_count` raised to 1024 (no practical limit)
-- `test/test_cachedrtc/thunked_dispatch.cpp`:
-  - Updated static_assert: Package now uses tagged mode (all types do)
+The ASM thunk vtable slots for QI/AddRef/Release now resolve and forward to the
+real interface (via the same `FlatResolveAndDispatch` path as method slots), instead
+of returning no-op values. This makes unresolved thunks behave as proper COM objects,
+which is required for `param_ref<T>` to safely pass thunk pointers as ABI parameters.
 
-**Binary size impact (Lottie sample, x64 Release, LTCG+ICF+/Ox):**
-- Before: no-flatten 251.5 KB, flatten 259.5 KB (+8 KB, 3.18%)
-- After:  no-flatten 251.5 KB, flatten 255.0 KB (+3.5 KB, 1.39%)
-- Improvement: -4.5 KB per DLL from eliminating full-mode overhead
+### `param_ref<T>` for IN Parameters (Completed)
 
-### Obstacle 2 Implementation: Lightweight Base-Class Conversions
+Consume methods for IN runtimeclass parameters now accept `impl::param_ref<T>` instead
+of `T const&`. This avoids constructing full flat runtimeclass temporaries when passing
+derived types to methods expecting base types. Three conversion paths, ordered by cost:
 
-**Problem:** When passing a derived thunked type (e.g., `SpotLight`) to a method
-expecting a base type (e.g., `CompositionLight const&`), C++ invokes
-`base_one<SpotLight, CompositionLight>::operator CompositionLight()` which calls
-`try_as<CompositionLight>()`. This constructs a full temporary `CompositionLight`
-with all cache slots initialized (QI + attach_impl for every secondary interface),
-only to immediately extract `*(void**)(&obj)` (the default ABI pointer) and destroy
-the temporary. The cache slot initialization + teardown is pure waste.
+1. **Flat RTC → flat RTC** (zero cost): Reads the target interface directly from the
+   source's cache slot. No QI, no temporary construction.
+2. **Non-composable implementation type** (zero cost): `static_cast` through the
+   `produce<>` inheritance chain to get the ABI interface pointer directly.
+3. **Composable implementation type** (AddRef/Release): Converts to the projected type,
+   extracts the ABI pointer, and AddRefs. Only this path sets `owned = true` in
+   `param_ref`, triggering Release in the destructor.
 
-**Solution:** Specialize `base_one` for thunked-to-thunked conversions. When both D
-and I have `thunked_interfaces`, the conversion skips cache slot initialization:
-1. QI from source's default ABI to target's default interface
-2. Construct `I{ nullptr }` (zero-initialized pairs, no attach_impl)
-3. Write the QI result directly into `result.put_default_abi()`
-4. Return — destructor safely skips null cache entries
+### Binary Size Results
 
-**Implementation details:**
-- `base_one::operator I()` declaration moved to `strings/base_meta.h` (forward-declared only)
-- Definition deferred to `strings/base_thunked_runtimeclass.h` where `unknown_abi` and
-  `guid_of` are available
-- Uses `if constexpr (has_thunked_cache_v<D> && has_thunked_cache_v<I>)` to select path
-- Non-thunked types fall through to the original `try_as<I>()` path unchanged
+Two real-world binaries were tested, with all builds using x64 Release, LTCG, ICF,
+and `/Ox /Os` optimization.
+
+**Lottie animation library** (LottieSample.dll — generated C++/WinRT code that calls
+Composition APIs intensively, creates objects transiently, rarely stores them as fields):
+
+| Build | Size | Delta vs no-flatten |
+|---|---|---|
+| No flatten | 251.5 KB | — |
+| Flatten | 239.5 KB | **-12 KB (-4.77%)** |
+
+Flattening *reduced* binary size because the Lottie code creates many transient
+Composition objects and calls methods on them without storing them. The `param_ref`
+optimization eliminates temporary flat runtimeclass construction on cross-type method
+calls, and the cache slot reads replace per-call QI/Release sequences.
+
+**Contoso.dll** (large WinRT component with XAML UI — hundreds of XAML controls stored
+as member fields, extensive use of composable types and data binding):
+
+| Build | Size | Delta vs no-flatten |
+|---|---|---|
+| Old NuGet baseline | 9,427.5 KB | — |
+| No flatten (new NuGet) | 9,410.0 KB | -17.5 KB |
+| Flatten | 10,292.5 KB | **+882.5 KB (+9.38%)** vs no-flatten |
+
+Flattening *increased* binary size substantially because:
+- Each XAML control stored as a member field carries its full array of cache slots
+  (e.g., a `Button` has ~20 secondary interfaces × 24 bytes = ~480 bytes per instance)
+- Constructor code to initialize cache slot arrays for every member is significant
+- Composable types (UIElement hierarchy) have deep interface chains, amplifying
+  the per-instance and per-constructor overhead
+
+### Implications
+
+The flat runtimeclass optimization is most beneficial for code that:
+- Creates objects transiently and calls methods on them (API-heavy code)
+- Uses few stored runtimeclass member fields
+- Calls methods on non-default interfaces repeatedly (e.g., collection operations)
+
+It is least beneficial (and can increase size) for code that:
+- Stores many runtimeclass instances as member fields (XAML UI code)
+- Uses composable types extensively (UIElement, DependencyObject hierarchies)
+- Has many constructors that must initialize large flat runtimeclass members

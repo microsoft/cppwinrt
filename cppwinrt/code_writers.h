@@ -1451,7 +1451,7 @@ namespace cppwinrt
             w.write(R"(
         auto TryLookup(param_type<K> const& key) const
         {
-            if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
+            if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V> || impl::has_flat_cache_v<V>)
             {
                 V result{ nullptr };
                 impl::check_hresult_allow_bounds(impl::consume_general_nothrow<Windows::Foundation::Collections::IMapView<K, V>>(static_cast<D const*>(this), &abi_t<Windows::Foundation::Collections::IMapView<K, V>>::Lookup, get_abi(key), put_abi(result)));
@@ -1477,7 +1477,7 @@ namespace cppwinrt
             w.write(R"(
         auto TryLookup(param_type<K> const& key) const
         {
-            if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
+            if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V> || impl::has_flat_cache_v<V>)
             {
                 V result{ nullptr };
                 impl::check_hresult_allow_bounds(impl::consume_general_nothrow<Windows::Foundation::Collections::IMap<K, V>>(static_cast<D const*>(this), &abi_t<Windows::Foundation::Collections::IMap<K, V>>::Lookup, get_abi(key), put_abi(result)));
@@ -1840,7 +1840,8 @@ namespace cppwinrt
                 {
                     if (category == param_category::object_type && is_object_class(param_signature->Type()))
                     {
-                        w.write("impl::produce_borrowed_ref<%>(%)",
+                        w.write("static_cast<% const&>(impl::produce_borrowed_ref<%>(%))",
+                            param_type,
                             param_type,
                             param_name);
                     }
@@ -3697,25 +3698,51 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         auto type_name = type.TypeName();
         auto factories = get_factories(w, type);
 
-        auto format = R"(    struct %;
-    struct WINRT_IMPL_EMPTY_BASES % : %%%
-    {
-        %(std::nullptr_t) noexcept : flat_runtimeclass(nullptr) {}
-        %(void* ptr, take_ownership_from_abi_t) noexcept : flat_runtimeclass(ptr, take_ownership_from_abi) {}
-%%%    };
-)";
+        // Check if any factory provides a default constructor.
+        bool has_default_ctor = false;
+        for (auto&& [factory_name, factory] : factories)
+        {
+            if (factory.activatable && !factory.type)
+            {
+                has_default_ctor = true;
+                break;
+            }
+            if (factory.composable && factory.visible)
+            {
+                for (auto&& method : factory.type.MethodList())
+                {
+                    method_signature signature{ method };
+                    // Composable factories have 2 hidden params (inner, outer) at the end
+                    if (signature.params().size() <= 2)
+                    {
+                        has_default_ctor = true;
+                        break;
+                    }
+                }
+                if (has_default_ctor) break;
+            }
+        }
 
-        w.write(format,
-            type_name,
+        w.write("    struct %;\n", type_name);
+        w.write("    struct WINRT_IMPL_EMPTY_BASES % : %%%\n    {\n",
             type_name,
             bind<write_flat_class_base>(type, default_interface),
             bind<write_flat_class_requires>(type),
-            bind<write_class_base>(type),
-            type_name,
-            type_name,
-            bind<write_constructor_declarations>(type, factories),
-            bind<write_flat_class_usings>(type),
-            bind_each<write_static_declaration>(factories, type));
+            bind<write_class_base>(type));
+
+        // For types without a default activation factory, emit a null default
+        // constructor so std::vector<T> and similar containers work.
+        if (!has_default_ctor)
+        {
+            w.write("        %() noexcept : flat_runtimeclass(nullptr) {}\n", type_name);
+        }
+
+        w.write("        %(std::nullptr_t) noexcept : flat_runtimeclass(nullptr) {}\n", type_name);
+        w.write("        %(void* ptr, take_ownership_from_abi_t) noexcept : flat_runtimeclass(ptr, take_ownership_from_abi) {}\n", type_name);
+        w.write(bind<write_constructor_declarations>(type, factories));
+        w.write(bind<write_flat_class_usings>(type));
+        w.write(bind_each<write_static_declaration>(factories, type));
+        w.write("    };\n");
     }
 
     static void write_fast_class(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& base_type)

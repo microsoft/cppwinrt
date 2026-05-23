@@ -449,20 +449,26 @@ WINRT_EXPORT namespace winrt::impl
             detach_abi(value);
         }
 
-        produce_borrowed_ref(produce_borrowed_ref const&) = delete;
+        produce_borrowed_ref(produce_borrowed_ref const& other) noexcept : value(other.value) {}
         produce_borrowed_ref& operator=(produce_borrowed_ref const&) = delete;
 
         operator T const&() const noexcept { return value; }
+
+        // Forward common methods so user code that stores the parameter via
+        // auto& can still call .as(), .try_as(), etc.
+        template <typename Q> auto as() const { return value.template as<Q>(); }
+        template <typename Q> auto try_as() const noexcept { return value.template try_as<Q>(); }
+        explicit operator bool() const noexcept { return static_cast<bool>(value); }
     };
 
     // Lightweight parameter wrapper for IN runtimeclass parameters in consume_ methods.
-    // Avoids constructing a full thunked runtimeclass temporary (with cache slot
-    // initialization + teardown) when a derived type is passed to a method expecting
-    // a base type. Instead, just QIs for the target's default interface.
+    // Most constructors produce a pure borrow (owned == false, no destructor cost).
+    // Only the composable implementation case sets owned = true.
     template <typename T>
     struct param_ref
     {
         void* abi{};
+        bool owned{};
 
         // From same type — borrow the ABI pointer (caller keeps it alive).
         param_ref(T const& value) noexcept : abi(get_abi(value)) {}
@@ -470,10 +476,8 @@ WINRT_EXPORT namespace winrt::impl
         // From produce_borrowed_ref<T> — borrow its ABI pointer.
         param_ref(produce_borrowed_ref<T> const& value) noexcept : abi(get_abi(static_cast<T const&>(value))) {}
 
-        // From a derived thunked type — read T's default interface directly from
-        // the source's thunk cache slot. No QI needed; the slot contains either
-        // the resolved ABI pointer or a self-resolving thunk, both valid for ABI calls.
-        // The source object stays alive for the call duration, keeping the slot valid.
+        // From a derived flat type — read T's default interface directly from
+        // the source's flat cache slot. Zero cost; source stays alive for the call.
         template <typename U, std::enable_if_t<
             has_flat_cache_v<U> &&
             !std::is_same_v<U, T> &&
@@ -483,10 +487,69 @@ WINRT_EXPORT namespace winrt::impl
         {
         }
 
+        // From a non-composable implementation type that directly implements
+        // T's default interface (via the produce<> chain). Zero cost static_cast.
+        template <typename U, std::enable_if_t<
+            !std::is_same_v<std::decay_t<U>, T> &&
+            !has_flat_cache_v<U> &&
+            !std::is_same_v<std::decay_t<U>, produce_borrowed_ref<T>> &&
+            std::is_base_of_v<abi_t<typename default_interface<T>::type>, std::decay_t<U>>, int> = 0>
+        param_ref(U const& value) noexcept
+            : abi(static_cast<abi_t<typename default_interface<T>::type>*>(const_cast<std::decay_t<U>*>(&value)))
+        {
+        }
+
+        // Composable implementation types and other convertible types that don't
+        // match the above zero-cost paths. Converts to T, extracts ABI, and AddRefs
+        // to keep the pointer alive after the temporary dies. Sets owned = true.
+        template <typename U, std::enable_if_t<
+            !std::is_same_v<std::decay_t<U>, T> &&
+            !std::is_same_v<std::decay_t<U>, param_ref> &&
+            !std::is_same_v<std::decay_t<U>, std::nullptr_t> &&
+            !std::is_same_v<std::decay_t<U>, produce_borrowed_ref<T>> &&
+            !has_flat_cache_v<U> &&
+            !std::is_base_of_v<abi_t<typename default_interface<T>::type>, std::decay_t<U>> &&
+            !(has_flat_cache_v<U> && has_flat_interface_v<U, typename default_interface<T>::type>) &&
+            std::is_convertible_v<U const&, T>, int> = 0>
+        param_ref(U const& value) noexcept
+        {
+            T temp = static_cast<T>(static_cast<U const&>(value));
+            abi = get_abi(temp);
+            if (abi)
+            {
+                static_cast<unknown_abi*>(abi)->AddRef();
+                owned = true;
+            }
+        }
+
         param_ref(std::nullptr_t) noexcept {}
 
-        // Copyable — copies borrow, only original releases.
         param_ref(param_ref const& other) noexcept : abi(other.abi) {}
         param_ref& operator=(param_ref const&) = delete;
+
+        ~param_ref()
+        {
+            if (owned)
+                static_cast<unknown_abi*>(abi)->Release();
+        }
+
+        // Forward common methods so code using auto&& can call .as(), .try_as().
+        template <typename Q> auto as() const
+        {
+            return reinterpret_cast<Windows::Foundation::IInspectable const*>(&abi)->as<Q>();
+        }
+        template <typename Q> auto try_as() const noexcept
+        {
+            return reinterpret_cast<Windows::Foundation::IInspectable const*>(&abi)->try_as<Q>();
+        }
+        explicit operator bool() const noexcept { return abi != nullptr; }
+
+        // Implicit conversion to T for produce stubs / make<> that need T const&.
+        operator T() const
+        {
+            T result{ nullptr };
+            copy_from_abi(result, abi);
+            return result;
+        }
     };
 }
