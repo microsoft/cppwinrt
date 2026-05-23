@@ -12,6 +12,10 @@ if "%target_version%"=="" set target_version=999.999.999.999
 if not exist ".\.nuget" mkdir ".\.nuget"
 if not exist ".\.nuget\nuget.exe" powershell -Command "$ProgressPreference = 'SilentlyContinue' ; Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile .\.nuget\nuget.exe"
 
+call .nuget\nuget.exe restore test\nuget\NugetTest.sln
+call .nuget\nuget.exe restore cppwinrt.sln
+call .nuget\nuget.exe restore natvis\cppwinrtvisualizer.sln
+
 if /I "%target_platform%" NEQ "arm64" goto skip_x86_build
 set build_targets=cppwinrt;fast_fwd;cached_thunks
 call msbuild %additional_msbuild_args% /m /p:Configuration=%target_configuration%,Platform=x86,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:%build_targets%
@@ -35,16 +39,13 @@ call msbuild %additional_msbuild_args% /m /p:Configuration=%target_configuration
 if errorlevel 1 exit /b 1
 
 if /I "%target_platform%" EQU "arm64" goto skip_nuget_test
-call .nuget\nuget.exe restore test\nuget\NugetTest.sln
 call msbuild %additional_msbuild_args% /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% test\nuget\NugetTest.sln
 if errorlevel 1 exit /b 1
 :skip_nuget_test
 
-call .nuget\nuget.exe restore cppwinrt.sln
 call msbuild %additional_msbuild_args% /p:Configuration=%target_configuration%,Platform=%target_platform%,Deployment=Component;CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
 if errorlevel 1 exit /b 1
 
-call .nuget\nuget.exe restore natvis\cppwinrtvisualizer.sln
 call msbuild %additional_msbuild_args% /p:Configuration=%target_configuration%,Platform=%target_platform%,Deployment=Standalone;CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
 if errorlevel 1 exit /b 1
 
