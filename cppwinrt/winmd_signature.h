@@ -161,7 +161,7 @@ namespace winmd_signature
                 i += 64;
             }
 
-            auto bit_length = input.size() * 8;
+            auto bit_length = static_cast<std::uint64_t>(input.size()) * 8;
             auto remainder_size = input.size() % 64;
 
             std::array<std::uint8_t, 128> final_block{};
@@ -203,7 +203,7 @@ namespace winmd_signature
     {
         constexpr std::uint8_t namespace_bytes[] =
         {
-            // {d57af411-737b-c042-abae-878b1e16adee} in little-endian byte order
+            // {11f47ad5-7b73-42c0-abae-878b1e16adee} in big-endian byte order (RFC 4122)
             0x11, 0xf4, 0x7a, 0xd5,
             0x7b, 0x73,
             0x42, 0xc0,
