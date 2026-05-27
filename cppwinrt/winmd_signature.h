@@ -222,12 +222,6 @@ namespace winmd_signature
         result.Data3 = static_cast<std::uint16_t>(hash[6]) << 8 | hash[7];
         std::copy(hash.begin() + 8, hash.begin() + 16, result.Data4);
 
-        // Endian swap
-        result.Data1 = ((result.Data1 & 0xFF000000) >> 24) | ((result.Data1 & 0x00FF0000) >> 8) |
-                        ((result.Data1 & 0x0000FF00) << 8) | ((result.Data1 & 0x000000FF) << 24);
-        result.Data2 = static_cast<std::uint16_t>((result.Data2 >> 8) | (result.Data2 << 8));
-        result.Data3 = static_cast<std::uint16_t>((result.Data3 >> 8) | (result.Data3 << 8));
-
         // Set version=5 and variant
         result.Data3 = static_cast<std::uint16_t>((result.Data3 & 0x0FFF) | (5 << 12));
         result.Data4[0] = static_cast<std::uint8_t>((result.Data4[0] & 0x3F) | 0x80);

@@ -537,6 +537,20 @@ namespace cppwinrt
         }
     }
 
+    static std::string make_pinterface_guard(std::string_view const& winrt_name)
+    {
+        std::string guard = "WINRT_IMPL_PINTERFACE_";
+        guard.reserve(guard.size() + winrt_name.size());
+        for (char c : winrt_name)
+        {
+            if (c == '.' || c == '<' || c == '>' || c == ',' || c == ' ' || c == '`')
+                guard += '_';
+            else
+                guard += c;
+        }
+        return guard;
+    }
+
     static void write_generic_inst_specializations(writer& w, std::map<std::string, generic_inst_info> const& instantiations)
     {
         if (instantiations.empty())
@@ -551,15 +565,14 @@ namespace cppwinrt
 
         for (auto&& [winrt_name, info] : instantiations)
         {
+            auto guard = make_pinterface_guard(winrt_name);
+            auto& g = info.guid;
+            w.write("#ifndef %\n", guard);
+            w.write("#define %\n", guard);
             w.write(R"(    template <> inline constexpr auto& name_v<%> = L"%";
 )",
                 info.cpp_name,
                 winrt_name);
-        }
-
-        for (auto&& [winrt_name, info] : instantiations)
-        {
-            auto& g = info.guid;
             w.write("    template <> inline constexpr guid guid_v<%>{ ", info.cpp_name);
             w.write_printf("0x%08X,0x%04X,0x%04X,{ 0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X }",
                 g.Data1, g.Data2, g.Data3,
@@ -570,6 +583,7 @@ namespace cppwinrt
                 g.Data1, g.Data2, g.Data3,
                 g.Data4[0], g.Data4[1], g.Data4[2], g.Data4[3],
                 g.Data4[4], g.Data4[5], g.Data4[6], g.Data4[7]);
+            w.write("#endif // %\n", guard);
         }
     }
 

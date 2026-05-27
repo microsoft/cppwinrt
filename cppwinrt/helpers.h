@@ -1168,9 +1168,6 @@ namespace cppwinrt
         {
             auto generic_type = type.GenericType();
             auto [ns, name] = get_type_namespace_and_name(generic_type);
-            auto tick = name.rfind('`');
-            if (tick != std::string_view::npos)
-                name = name.substr(0, tick);
 
             std::string result = std::string(ns) + "." + std::string(name) + "<";
             bool first = true;
@@ -1245,7 +1242,45 @@ namespace cppwinrt
     };
 
     // ---- Recursive collection of concrete generic instantiations ----
-    // Walks InterfaceImpl chains, carrying concrete TypeSig args to resolve GenericTypeIndex.
+    // Walks InterfaceImpl chains and method signatures, carrying concrete TypeSig args to resolve GenericTypeIndex.
+
+    static void collect_generic_inst_recursive(
+        writer& w,
+        GenericTypeInstSig const& type,
+        type_arg_stack const& outer_resolve,
+        std::map<std::string, generic_inst_info>& instantiations);
+
+    // Helper: if a TypeSig contains a GenericTypeInstSig (directly or via TypeSpec), collect it.
+    static void collect_from_type_sig(
+        writer& w,
+        TypeSig const& sig,
+        type_arg_stack const& resolve,
+        std::map<std::string, generic_inst_info>& instantiations)
+    {
+        call(sig.Type(),
+            [](ElementType) {},
+            [&](GenericTypeIndex idx)
+            {
+                // Resolve and recurse if the resolved type is itself a generic instantiation
+                if (!resolve.empty() && idx.index < resolve.back().size())
+                {
+                    type_arg_stack parent_resolve(resolve.begin(), resolve.end() - 1);
+                    collect_from_type_sig(w, resolve.back()[idx.index], parent_resolve, instantiations);
+                }
+            },
+            [](GenericMethodTypeIndex) {},
+            [&](coded_index<TypeDefOrRef> const& t)
+            {
+                if (t.type() == TypeDefOrRef::TypeSpec)
+                {
+                    collect_generic_inst_recursive(w, t.TypeSpec().Signature().GenericTypeInst(), resolve, instantiations);
+                }
+            },
+            [&](GenericTypeInstSig const& t)
+            {
+                collect_generic_inst_recursive(w, t, resolve, instantiations);
+            });
+    }
 
     static void collect_generic_inst_recursive(
         writer& w,
@@ -1322,6 +1357,22 @@ namespace cppwinrt
                 collect_generic_inst_recursive(w, iface.TypeSpec().Signature().GenericTypeInst(), resolve, instantiations);
             }
         }
+
+        // Walk method signatures to find generic types in return types and parameters.
+        // E.g., IIterable<T>.First() returns IIterator<T>, so IIterable<IKeyValuePair<K,V>>
+        // produces IIterator<IKeyValuePair<K,V>> which needs name_v/guid_v.
+        for (auto&& method : base_type.MethodList())
+        {
+            auto sig = method.Signature();
+            if (sig.ReturnType())
+            {
+                collect_from_type_sig(w, sig.ReturnType().Type(), resolve, instantiations);
+            }
+            for (auto&& param : sig.Params())
+            {
+                collect_from_type_sig(w, param.Type(), resolve, instantiations);
+            }
+        }
     }
 
     // Entry point: collect all concrete generic instantiations from a namespace's members.
@@ -1338,6 +1389,20 @@ namespace cppwinrt
                 if (iface.type() == TypeDefOrRef::TypeSpec)
                 {
                     collect_generic_inst_recursive(w, iface.TypeSpec().Signature().GenericTypeInst(), {}, instantiations);
+                }
+            }
+
+            // Also walk the type's own methods for concrete generic return/param types.
+            for (auto&& method : type.MethodList())
+            {
+                auto sig = method.Signature();
+                if (sig.ReturnType())
+                {
+                    collect_from_type_sig(w, sig.ReturnType().Type(), {}, instantiations);
+                }
+                for (auto&& param : sig.Params())
+                {
+                    collect_from_type_sig(w, param.Type(), {}, instantiations);
                 }
             }
         };
