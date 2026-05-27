@@ -338,7 +338,7 @@ namespace winrt::impl
             {
                 factory_count_guard const guard(m_value.count);
 
-                if (nullptr == _InterlockedCompareExchangePointer(abi_cast(m_value.object), *abi_cast(object), nullptr))
+                if (nullptr == _InterlockedCompareExchangePointer(reinterpret_cast<void* volatile*>(&m_value.object), *abi_cast(object), nullptr))
                 {
                     *abi_cast(object) = nullptr;
 #ifndef WINRT_NO_MODULE_LOCK
