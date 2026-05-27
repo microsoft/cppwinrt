@@ -549,22 +549,17 @@ namespace cppwinrt
     // These avoid costly constexpr SHA1 computation at compile time.
 )");
 
-        for (auto&& [cpp_name, info] : instantiations)
+        for (auto&& [winrt_name, info] : instantiations)
         {
-            // name_v specialization: e.g.,
-            //     template <> inline constexpr auto name_v<winrt::Windows::Foundation::Collections::IMap<hstring, winrt::Windows::Foundation::IInspectable>>
-            //         = L"Windows.Foundation.Collections.IMap<String, Object>";
             w.write(R"(    template <> inline constexpr auto& name_v<%> = L"%";
 )",
                 info.cpp_name,
-                info.winrt_name);
+                winrt_name);
         }
 
-        for (auto&& [cpp_name, info] : instantiations)
+        for (auto&& [winrt_name, info] : instantiations)
         {
             auto& g = info.guid;
-            // guid_v specialization: e.g.,
-            //     template <> inline constexpr guid guid_v<winrt::...::IMap<hstring, winrt::...::IInspectable>>{ 0x..., ... };
             w.write("    template <> inline constexpr guid guid_v<%>{ ", info.cpp_name);
             w.write_printf("0x%08X,0x%04X,0x%04X,{ 0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X }",
                 g.Data1, g.Data2, g.Data3,

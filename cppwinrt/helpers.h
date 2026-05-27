@@ -1157,8 +1157,7 @@ namespace cppwinrt
 
     struct generic_inst_info
     {
-        std::string cpp_name;       // C++ name, produced by the writer at the end
-        std::string winrt_name;     // WinRT name, e.g. "Windows.Foundation.Collections.IMap<String, Object>"
+        std::string cpp_name;
         guid_value guid;
     };
 
@@ -1247,7 +1246,6 @@ namespace cppwinrt
 
     // ---- Recursive collection of concrete generic instantiations ----
     // Walks InterfaceImpl chains, carrying concrete TypeSig args to resolve GenericTypeIndex.
-    // All computation stays in metadata-land; the C++ name is only produced at the end via the writer.
 
     static void collect_generic_inst_recursive(
         writer& w,
@@ -1281,25 +1279,16 @@ namespace cppwinrt
         type_arg_stack resolve = outer_resolve;
         resolve.push_back(concrete_args);
 
-        // Compute the type signature and GUID using our resolving signature_builder
-        auto sig = signature_builder::get_signature(type, outer_resolve);
-        auto guid = compute_guid_from_signature(sig);
+        // Use winrt_name as the dedup key. Only do expensive work if this is a new entry.
         auto winrt_name = winrt_name_builder::get_name(type, outer_resolve);
-
-        // Get the C++ name from the writer. The writer's generic_param_stack already has
-        // the outer context pushed by our caller, so write_temp resolves GenericTypeIndex.
-        auto cpp_name = w.write_temp("%", type);
-
-        if (instantiations.count(cpp_name))
+        auto [it, inserted] = instantiations.try_emplace(std::move(winrt_name));
+        if (!inserted)
         {
             return;
         }
 
-        generic_inst_info info;
-        info.cpp_name = cpp_name;
-        info.winrt_name = winrt_name;
-        info.guid = guid;
-        instantiations[cpp_name] = std::move(info);
+        it->second.cpp_name = w.write_temp("%", type);
+        it->second.guid = compute_guid_from_signature(signature_builder::get_signature(type, outer_resolve));
 
         // Recurse into generic args that are themselves generic instantiations
         for (auto&& arg : concrete_args)
@@ -1320,7 +1309,7 @@ namespace cppwinrt
         // Recurse into the generic type's required interfaces (e.g., IMap : IIterable, etc.)
         auto base_type = find_required(type.GenericType());
 
-        // Push the writer's generic_param_stack for write_temp in nested calls
+        // Push the writer's generic_param_stack so write_temp resolves GenericTypeIndex in nested calls
         auto writer_guard = w.push_generic_params(type);
 
         for (auto&& impl : base_type.InterfaceImpl())
