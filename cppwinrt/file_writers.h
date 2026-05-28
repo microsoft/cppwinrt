@@ -117,19 +117,19 @@ namespace cppwinrt
             w.write_each<write_guid>(members.delegates);
             w.write_each<write_default_interface>(members.classes);
 
-            // Collect and emit explicit name_v/guid_v specializations for concrete
-            // parameterized type instantiations (e.g., IMap<hstring, IInspectable>).
-            // This avoids costly constexpr SHA1 GUID computation at compile time.
-            {
-                std::map<std::string, generic_inst_info> instantiations;
-                collect_generic_instantiations(w, members, instantiations);
-                write_generic_inst_specializations(w, instantiations);
-            }
-
             w.write_each<write_interface_abi>(members.interfaces);
             w.write_each<write_delegate_abi>(members.delegates);
             w.write_each<write_consume>(members.interfaces);
             w.write_each<write_struct_abi>(members.structs);
+        }
+
+        // Emit pinterface_guid specializations AFTER the wrap_impl_namespace block
+        // so they don't break the WINRT_EXPORT attribute on subsequent declarations.
+        // The function writes a self-contained extern "C++" block.
+        {
+            std::map<std::string, generic_inst_info> instantiations;
+            collect_generic_instantiations(w, members, instantiations);
+            write_generic_inst_specializations(w, instantiations);
         }
 
         write_close_file_guard(w);

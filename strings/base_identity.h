@@ -453,6 +453,7 @@ WINRT_EXPORT namespace winrt::impl
     template <typename T>
     struct pinterface_guid
     {
+        static constexpr bool precomputed = false;
 #ifdef _MSC_VER
 #pragma warning(suppress: 4307)
 #endif
