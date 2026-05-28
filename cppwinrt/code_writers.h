@@ -206,6 +206,23 @@ namespace cppwinrt
         return { w, write_close_namespace };
     }
 
+    [[nodiscard]] static finish_with wrap_extern_cpp_impl_namespace(writer& w)
+    {
+        w.write(R"(
+extern "C++"
+{
+namespace winrt::impl
+{
+)");
+
+        return { w, [](writer& w) {
+            w.write(R"(
+} // winrt::impl
+} // extern "C++"
+)");
+        }};
+    }
+
     [[nodiscard]] static finish_with wrap_std_namespace(writer& w)
     {
         w.write(R"(namespace std
@@ -562,40 +579,31 @@ namespace cppwinrt
         // extern "C++" attaches specializations to the global module so identical
         // specializations across modules merge rather than collide.
         // #ifndef guards prevent redefinition within a single TU (SCC-consolidated modules).
-        w.write(R"(
-extern "C++"
-{
-namespace winrt::impl
-{
-)");
+        auto wrap_ns = wrap_extern_cpp_impl_namespace(w);
 
         for (auto&& [winrt_name, info] : instantiations)
         {
             auto guard = make_pinterface_guard(info.cpp_name);
-            auto& g = info.guid;
-            w.write("#ifndef %\n", guard);
-            w.write("#define %\n", guard);
-            w.write("    template <> struct pinterface_guid<%>\n", info.cpp_name);
-            w.write("    {\n");
-            w.write("        static constexpr bool precomputed = true;\n");
-            w.write("        static constexpr guid value{ ");
-            w.write_printf("0x%08X,0x%04X,0x%04X,{ 0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X }",
-                g.Data1, g.Data2, g.Data3,
-                g.Data4[0], g.Data4[1], g.Data4[2], g.Data4[3],
-                g.Data4[4], g.Data4[5], g.Data4[6], g.Data4[7]);
-            w.write(" }; // ");
-            w.write_printf("%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X\n",
-                g.Data1, g.Data2, g.Data3,
-                g.Data4[0], g.Data4[1], g.Data4[2], g.Data4[3],
-                g.Data4[4], g.Data4[5], g.Data4[6], g.Data4[7]);
-            w.write("    };\n");
-            w.write("#endif // %\n", guard);
+            {
+                auto wrap_guard = wrap_ifndef(w, guard);
+                w.write("#define %\n", guard);
+                w.write("    template <> struct pinterface_guid<%>\n", info.cpp_name);
+                w.write("    {\n");
+                w.write("        static constexpr bool precomputed = true;\n");
+                w.write("        static constexpr guid value{ ");
+                auto& g = info.guid;
+                w.write_printf("0x%08X,0x%04X,0x%04X,{ 0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X }",
+                    g.Data1, g.Data2, g.Data3,
+                    g.Data4[0], g.Data4[1], g.Data4[2], g.Data4[3],
+                    g.Data4[4], g.Data4[5], g.Data4[6], g.Data4[7]);
+                w.write(" }; // ");
+                w.write_printf("%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X\n",
+                    g.Data1, g.Data2, g.Data3,
+                    g.Data4[0], g.Data4[1], g.Data4[2], g.Data4[3],
+                    g.Data4[4], g.Data4[5], g.Data4[6], g.Data4[7]);
+                w.write("    };\n");
+            }
         }
-
-        w.write(R"(
-} // winrt::impl
-} // extern "C++"
-)");
     }
 
     static void write_struct_category(writer& w, TypeDef const& type)
