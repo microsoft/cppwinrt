@@ -129,6 +129,16 @@ namespace cppwinrt
         {
             std::map<std::string, generic_inst_info> instantiations;
             collect_generic_instantiations(w, members, instantiations);
+
+            // For Windows.Foundation, also inject well-known IReference<T>/IReferenceArray<T>
+            // specializations for standard primitive and struct types. These ensure that
+            // consumers who only include Windows.Foundation.h get precomputed GUIDs for
+            // boxing types, without depending on other namespace headers.
+            if (ns == "Windows.Foundation")
+            {
+                add_well_known_ireference_instantiations(instantiations);
+            }
+
             write_generic_inst_specializations(w, instantiations);
         }
 

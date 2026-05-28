@@ -1424,4 +1424,92 @@ namespace cppwinrt
             }
         }
     }
+
+    // Add well-known IReference<T> and IReferenceArray<T> instantiations for standard primitive
+    // and Windows.Foundation struct types. These are emitted into Windows.Foundation.0.h so that
+    // consumers who only include Windows.Foundation.h (e.g. for boxing) still get precomputed GUIDs
+    // without requiring a header from a namespace that happens to use IReference<int32_t> etc.
+    //
+    // The pinterface signature format is: pinterface({open-type-guid};{arg-signature})
+    // These signatures are part of the WinRT ABI specification and are immutable.
+    static void add_well_known_ireference_instantiations(
+        std::map<std::string, generic_inst_info>& instantiations)
+    {
+        // IReference: {61c17706-2d65-11e0-9ae8-d48564015472}
+        // IReferenceArray: {61c17707-2d65-11e0-9ae8-d48564015472}
+        constexpr auto iref_guid = "{61c17706-2d65-11e0-9ae8-d48564015472}";
+        constexpr auto iref_arr_guid = "{61c17707-2d65-11e0-9ae8-d48564015472}";
+
+        struct well_known_type
+        {
+            const char* winrt_name;   // dedup key (WinRT display name)
+            const char* cpp_name;     // C++ qualified name for the specialization
+            const char* arg_sig;      // WinRT signature of the type argument
+        };
+
+        // DateTime = struct(Windows.Foundation.DateTime;i8)
+        // TimeSpan = struct(Windows.Foundation.TimeSpan;i8)
+        // Point    = struct(Windows.Foundation.Point;f4;f4)
+        // Size     = struct(Windows.Foundation.Size;f4;f4)
+        // Rect     = struct(Windows.Foundation.Rect;f4;f4;f4;f4)
+        static constexpr well_known_type types[] = {
+            { "Windows.Foundation.IReference`1<UInt8>",   "winrt::Windows::Foundation::IReference<std::uint8_t>",  "u1" },
+            { "Windows.Foundation.IReference`1<Int16>",   "winrt::Windows::Foundation::IReference<std::int16_t>",  "i2" },
+            { "Windows.Foundation.IReference`1<UInt16>",  "winrt::Windows::Foundation::IReference<std::uint16_t>", "u2" },
+            { "Windows.Foundation.IReference`1<Int32>",   "winrt::Windows::Foundation::IReference<std::int32_t>",  "i4" },
+            { "Windows.Foundation.IReference`1<UInt32>",  "winrt::Windows::Foundation::IReference<std::uint32_t>", "u4" },
+            { "Windows.Foundation.IReference`1<Int64>",   "winrt::Windows::Foundation::IReference<std::int64_t>",  "i8" },
+            { "Windows.Foundation.IReference`1<UInt64>",  "winrt::Windows::Foundation::IReference<std::uint64_t>", "u8" },
+            { "Windows.Foundation.IReference`1<Single>",  "winrt::Windows::Foundation::IReference<float>",         "f4" },
+            { "Windows.Foundation.IReference`1<Double>",  "winrt::Windows::Foundation::IReference<double>",        "f8" },
+            { "Windows.Foundation.IReference`1<Char16>",  "winrt::Windows::Foundation::IReference<char16_t>",      "c2" },
+            { "Windows.Foundation.IReference`1<Boolean>", "winrt::Windows::Foundation::IReference<bool>",          "b1" },
+            { "Windows.Foundation.IReference`1<String>",  "winrt::Windows::Foundation::IReference<hstring>",       "string" },
+            { "Windows.Foundation.IReference`1<Guid>",    "winrt::Windows::Foundation::IReference<guid>",          "g16" },
+            { "Windows.Foundation.IReference`1<Windows.Foundation.DateTime>",  "winrt::Windows::Foundation::IReference<winrt::Windows::Foundation::DateTime>",  "struct(Windows.Foundation.DateTime;i8)" },
+            { "Windows.Foundation.IReference`1<Windows.Foundation.TimeSpan>",  "winrt::Windows::Foundation::IReference<winrt::Windows::Foundation::TimeSpan>",  "struct(Windows.Foundation.TimeSpan;i8)" },
+            { "Windows.Foundation.IReference`1<Windows.Foundation.Point>",     "winrt::Windows::Foundation::IReference<winrt::Windows::Foundation::Point>",     "struct(Windows.Foundation.Point;f4;f4)" },
+            { "Windows.Foundation.IReference`1<Windows.Foundation.Size>",      "winrt::Windows::Foundation::IReference<winrt::Windows::Foundation::Size>",      "struct(Windows.Foundation.Size;f4;f4)" },
+            { "Windows.Foundation.IReference`1<Windows.Foundation.Rect>",      "winrt::Windows::Foundation::IReference<winrt::Windows::Foundation::Rect>",      "struct(Windows.Foundation.Rect;f4;f4;f4;f4)" },
+        };
+
+        static constexpr well_known_type array_types[] = {
+            { "Windows.Foundation.IReferenceArray`1<UInt8>",   "winrt::Windows::Foundation::IReferenceArray<std::uint8_t>",  "u1" },
+            { "Windows.Foundation.IReferenceArray`1<Int16>",   "winrt::Windows::Foundation::IReferenceArray<std::int16_t>",  "i2" },
+            { "Windows.Foundation.IReferenceArray`1<UInt16>",  "winrt::Windows::Foundation::IReferenceArray<std::uint16_t>", "u2" },
+            { "Windows.Foundation.IReferenceArray`1<Int32>",   "winrt::Windows::Foundation::IReferenceArray<std::int32_t>",  "i4" },
+            { "Windows.Foundation.IReferenceArray`1<UInt32>",  "winrt::Windows::Foundation::IReferenceArray<std::uint32_t>", "u4" },
+            { "Windows.Foundation.IReferenceArray`1<Int64>",   "winrt::Windows::Foundation::IReferenceArray<std::int64_t>",  "i8" },
+            { "Windows.Foundation.IReferenceArray`1<UInt64>",  "winrt::Windows::Foundation::IReferenceArray<std::uint64_t>", "u8" },
+            { "Windows.Foundation.IReferenceArray`1<Single>",  "winrt::Windows::Foundation::IReferenceArray<float>",         "f4" },
+            { "Windows.Foundation.IReferenceArray`1<Double>",  "winrt::Windows::Foundation::IReferenceArray<double>",        "f8" },
+            { "Windows.Foundation.IReferenceArray`1<Char16>",  "winrt::Windows::Foundation::IReferenceArray<char16_t>",      "c2" },
+            { "Windows.Foundation.IReferenceArray`1<Boolean>", "winrt::Windows::Foundation::IReferenceArray<bool>",          "b1" },
+            { "Windows.Foundation.IReferenceArray`1<String>",  "winrt::Windows::Foundation::IReferenceArray<hstring>",       "string" },
+            { "Windows.Foundation.IReferenceArray`1<Object>",  "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::IInspectable>", "cinterface(IInspectable)" },
+            { "Windows.Foundation.IReferenceArray`1<Guid>",    "winrt::Windows::Foundation::IReferenceArray<guid>",          "g16" },
+            { "Windows.Foundation.IReferenceArray`1<Windows.Foundation.DateTime>",  "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::DateTime>",  "struct(Windows.Foundation.DateTime;i8)" },
+            { "Windows.Foundation.IReferenceArray`1<Windows.Foundation.TimeSpan>",  "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::TimeSpan>",  "struct(Windows.Foundation.TimeSpan;i8)" },
+            { "Windows.Foundation.IReferenceArray`1<Windows.Foundation.Point>",     "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::Point>",     "struct(Windows.Foundation.Point;f4;f4)" },
+            { "Windows.Foundation.IReferenceArray`1<Windows.Foundation.Size>",      "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::Size>",      "struct(Windows.Foundation.Size;f4;f4)" },
+            { "Windows.Foundation.IReferenceArray`1<Windows.Foundation.Rect>",      "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::Rect>",      "struct(Windows.Foundation.Rect;f4;f4;f4;f4)" },
+        };
+
+        auto add_entries = [&](auto const& entries, const char* pinterface_guid)
+        {
+            for (auto& t : entries)
+            {
+                auto sig = std::string("pinterface(") + pinterface_guid + ";" + t.arg_sig + ")";
+                auto [it, inserted] = instantiations.try_emplace(t.winrt_name);
+                if (inserted)
+                {
+                    it->second.cpp_name = t.cpp_name;
+                    it->second.guid = compute_guid_from_signature(sig);
+                }
+            }
+        };
+
+        add_entries(types, iref_guid);
+        add_entries(array_types, iref_arr_guid);
+    }
 }
