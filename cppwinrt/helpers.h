@@ -1430,86 +1430,131 @@ namespace cppwinrt
     // consumers who only include Windows.Foundation.h (e.g. for boxing) still get precomputed GUIDs
     // without requiring a header from a namespace that happens to use IReference<int32_t> etc.
     //
-    // The pinterface signature format is: pinterface({open-type-guid};{arg-signature})
-    // These signatures are part of the WinRT ABI specification and are immutable.
+    // Uses the same code path as metadata-discovered instantiations by constructing
+    // GenericTypeInstSig objects and feeding them through collect_generic_inst_recursive.
+    // This ensures cpp_name, guard names, and signatures are always consistent.
     static void add_well_known_ireference_instantiations(
+        writer& w,
+        cache::namespace_members const& members,
         std::map<std::string, generic_inst_info>& instantiations)
     {
-        // IReference: {61c17706-2d65-11e0-9ae8-d48564015472}
-        // IReferenceArray: {61c17707-2d65-11e0-9ae8-d48564015472}
-        constexpr auto iref_guid = "{61c17706-2d65-11e0-9ae8-d48564015472}";
-        constexpr auto iref_arr_guid = "{61c17707-2d65-11e0-9ae8-d48564015472}";
-
-        struct well_known_type
+        auto find_type = [&](std::string_view name) -> TypeDef
         {
-            const char* winrt_name;   // dedup key (WinRT display name)
-            const char* cpp_name;     // C++ qualified name for the specialization
-            const char* arg_sig;      // WinRT signature of the type argument
+            auto it = members.types.find(name);
+            return it != members.types.end() ? it->second : TypeDef{};
         };
 
-        // DateTime = struct(Windows.Foundation.DateTime;i8)
-        // TimeSpan = struct(Windows.Foundation.TimeSpan;i8)
-        // Point    = struct(Windows.Foundation.Point;f4;f4)
-        // Size     = struct(Windows.Foundation.Size;f4;f4)
-        // Rect     = struct(Windows.Foundation.Rect;f4;f4;f4;f4)
-        static constexpr well_known_type types[] = {
-            { "Windows.Foundation.IReference`1<UInt8>",   "winrt::Windows::Foundation::IReference<std::uint8_t>",  "u1" },
-            { "Windows.Foundation.IReference`1<Int16>",   "winrt::Windows::Foundation::IReference<std::int16_t>",  "i2" },
-            { "Windows.Foundation.IReference`1<UInt16>",  "winrt::Windows::Foundation::IReference<std::uint16_t>", "u2" },
-            { "Windows.Foundation.IReference`1<Int32>",   "winrt::Windows::Foundation::IReference<std::int32_t>",  "i4" },
-            { "Windows.Foundation.IReference`1<UInt32>",  "winrt::Windows::Foundation::IReference<std::uint32_t>", "u4" },
-            { "Windows.Foundation.IReference`1<Int64>",   "winrt::Windows::Foundation::IReference<std::int64_t>",  "i8" },
-            { "Windows.Foundation.IReference`1<UInt64>",  "winrt::Windows::Foundation::IReference<std::uint64_t>", "u8" },
-            { "Windows.Foundation.IReference`1<Single>",  "winrt::Windows::Foundation::IReference<float>",         "f4" },
-            { "Windows.Foundation.IReference`1<Double>",  "winrt::Windows::Foundation::IReference<double>",        "f8" },
-            { "Windows.Foundation.IReference`1<Char16>",  "winrt::Windows::Foundation::IReference<char16_t>",      "c2" },
-            { "Windows.Foundation.IReference`1<Boolean>", "winrt::Windows::Foundation::IReference<bool>",          "b1" },
-            { "Windows.Foundation.IReference`1<String>",  "winrt::Windows::Foundation::IReference<hstring>",       "string" },
-            { "Windows.Foundation.IReference`1<Guid>",    "winrt::Windows::Foundation::IReference<winrt::guid>",          "g16" },
-            { "Windows.Foundation.IReference`1<Windows.Foundation.DateTime>",  "winrt::Windows::Foundation::IReference<winrt::Windows::Foundation::DateTime>",  "struct(Windows.Foundation.DateTime;i8)" },
-            { "Windows.Foundation.IReference`1<Windows.Foundation.TimeSpan>",  "winrt::Windows::Foundation::IReference<winrt::Windows::Foundation::TimeSpan>",  "struct(Windows.Foundation.TimeSpan;i8)" },
-            { "Windows.Foundation.IReference`1<Windows.Foundation.Point>",     "winrt::Windows::Foundation::IReference<winrt::Windows::Foundation::Point>",     "struct(Windows.Foundation.Point;f4;f4)" },
-            { "Windows.Foundation.IReference`1<Windows.Foundation.Size>",      "winrt::Windows::Foundation::IReference<winrt::Windows::Foundation::Size>",      "struct(Windows.Foundation.Size;f4;f4)" },
-            { "Windows.Foundation.IReference`1<Windows.Foundation.Rect>",      "winrt::Windows::Foundation::IReference<winrt::Windows::Foundation::Rect>",      "struct(Windows.Foundation.Rect;f4;f4;f4;f4)" },
-        };
+        auto iref = find_type("IReference`1");
+        auto iref_arr = find_type("IReferenceArray`1");
+        if (!iref || !iref_arr) return;
 
-        static constexpr well_known_type array_types[] = {
-            { "Windows.Foundation.IReferenceArray`1<UInt8>",   "winrt::Windows::Foundation::IReferenceArray<std::uint8_t>",  "u1" },
-            { "Windows.Foundation.IReferenceArray`1<Int16>",   "winrt::Windows::Foundation::IReferenceArray<std::int16_t>",  "i2" },
-            { "Windows.Foundation.IReferenceArray`1<UInt16>",  "winrt::Windows::Foundation::IReferenceArray<std::uint16_t>", "u2" },
-            { "Windows.Foundation.IReferenceArray`1<Int32>",   "winrt::Windows::Foundation::IReferenceArray<std::int32_t>",  "i4" },
-            { "Windows.Foundation.IReferenceArray`1<UInt32>",  "winrt::Windows::Foundation::IReferenceArray<std::uint32_t>", "u4" },
-            { "Windows.Foundation.IReferenceArray`1<Int64>",   "winrt::Windows::Foundation::IReferenceArray<std::int64_t>",  "i8" },
-            { "Windows.Foundation.IReferenceArray`1<UInt64>",  "winrt::Windows::Foundation::IReferenceArray<std::uint64_t>", "u8" },
-            { "Windows.Foundation.IReferenceArray`1<Single>",  "winrt::Windows::Foundation::IReferenceArray<float>",         "f4" },
-            { "Windows.Foundation.IReferenceArray`1<Double>",  "winrt::Windows::Foundation::IReferenceArray<double>",        "f8" },
-            { "Windows.Foundation.IReferenceArray`1<Char16>",  "winrt::Windows::Foundation::IReferenceArray<char16_t>",      "c2" },
-            { "Windows.Foundation.IReferenceArray`1<Boolean>", "winrt::Windows::Foundation::IReferenceArray<bool>",          "b1" },
-            { "Windows.Foundation.IReferenceArray`1<String>",  "winrt::Windows::Foundation::IReferenceArray<hstring>",       "string" },
-            { "Windows.Foundation.IReferenceArray`1<Object>",  "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::IInspectable>", "cinterface(IInspectable)" },
-            { "Windows.Foundation.IReferenceArray`1<Guid>",    "winrt::Windows::Foundation::IReferenceArray<winrt::guid>",          "g16" },
-            { "Windows.Foundation.IReferenceArray`1<Windows.Foundation.DateTime>",  "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::DateTime>",  "struct(Windows.Foundation.DateTime;i8)" },
-            { "Windows.Foundation.IReferenceArray`1<Windows.Foundation.TimeSpan>",  "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::TimeSpan>",  "struct(Windows.Foundation.TimeSpan;i8)" },
-            { "Windows.Foundation.IReferenceArray`1<Windows.Foundation.Point>",     "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::Point>",     "struct(Windows.Foundation.Point;f4;f4)" },
-            { "Windows.Foundation.IReferenceArray`1<Windows.Foundation.Size>",      "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::Size>",      "struct(Windows.Foundation.Size;f4;f4)" },
-            { "Windows.Foundation.IReferenceArray`1<Windows.Foundation.Rect>",      "winrt::Windows::Foundation::IReferenceArray<winrt::Windows::Foundation::Rect>",      "struct(Windows.Foundation.Rect;f4;f4;f4;f4)" },
-        };
-
-        auto add_entries = [&](auto const& entries, const char* pinterface_guid)
+        // Find the System.Guid TypeRef via IPropertyValue.GetGuid's return type.
+        // There is no TypeDef for System.Guid, only scattered TypeRefs.
+        // IPropertyValue is in Windows.Foundation, so it's available in members.
+        // The GetGuid method is at a stable ABI vtable position (index 14, 0-based
+        // within MethodList), but we fall back to a name search if that doesn't match.
+        coded_index<TypeDefOrRef> guid_type_ref{};
+        auto ipv = find_type("IPropertyValue");
+        if (ipv)
         {
-            for (auto& t : entries)
+            // Find the GetGuid method — try index 14 first (stable ABI vtable position),
+            // then fall back to linear search.
+            auto methods = ipv.MethodList();
+            MethodDef get_guid_method{};
+
+            if (size(methods) > 14 && methods.first[14].Name() == "GetGuid")
             {
-                auto sig = std::string("pinterface(") + pinterface_guid + ";" + t.arg_sig + ")";
-                auto [it, inserted] = instantiations.try_emplace(t.winrt_name);
-                if (inserted)
+                get_guid_method = methods.first[14];
+            }
+            else
+            {
+                for (auto&& m : methods)
                 {
-                    it->second.cpp_name = t.cpp_name;
-                    it->second.guid = compute_guid_from_signature(sig);
+                    if (m.Name() == "GetGuid")
+                    {
+                        get_guid_method = m;
+                        break;
+                    }
                 }
             }
-        };
 
-        add_entries(types, iref_guid);
-        add_entries(array_types, iref_arr_guid);
+            if (get_guid_method)
+            {
+                auto method_sig = get_guid_method.Signature();
+                auto const& ret_type = method_sig.ReturnType().Type().Type();
+                if (std::holds_alternative<coded_index<TypeDefOrRef>>(ret_type))
+                {
+                    guid_type_ref = std::get<coded_index<TypeDefOrRef>>(ret_type);
+                }
+            }
+        }
+
+        // Collect TypeSig args for all well-known type arguments.
+        // Primitives use ElementType directly; WinRT structs use their TypeDef;
+        // Guid uses the TypeRef found above; Object uses ElementType::Object.
+        std::vector<TypeSig> type_args;
+        type_args.reserve(20);
+
+        // Fundamental types
+        type_args.emplace_back(ElementType::U1);
+        type_args.emplace_back(ElementType::I2);
+        type_args.emplace_back(ElementType::U2);
+        type_args.emplace_back(ElementType::I4);
+        type_args.emplace_back(ElementType::U4);
+        type_args.emplace_back(ElementType::I8);
+        type_args.emplace_back(ElementType::U8);
+        type_args.emplace_back(ElementType::R4);
+        type_args.emplace_back(ElementType::R8);
+        type_args.emplace_back(ElementType::Char);
+        type_args.emplace_back(ElementType::Boolean);
+        type_args.emplace_back(ElementType::String);
+
+        // Guid (only if we found the TypeRef)
+        if (guid_type_ref)
+        {
+            type_args.emplace_back(guid_type_ref);
+        }
+
+        // Windows.Foundation struct types
+        static constexpr std::string_view struct_names[] = { "DateTime", "TimeSpan", "Point", "Size", "Rect" };
+        for (auto name : struct_names)
+        {
+            auto td = find_type(name);
+            if (td)
+            {
+                type_args.emplace_back(td.coded_index<TypeDefOrRef>());
+            }
+        }
+
+        auto iref_coded = iref.coded_index<TypeDefOrRef>();
+        auto iref_arr_coded = iref_arr.coded_index<TypeDefOrRef>();
+
+        for (auto& arg_sig : type_args)
+        {
+            // IReference<T>
+            {
+                std::vector<TypeSig> args;
+                args.push_back(arg_sig);
+                GenericTypeInstSig inst{ iref_coded, std::move(args) };
+                collect_generic_inst_recursive(w, inst, {}, instantiations);
+            }
+            // IReferenceArray<T>
+            {
+                std::vector<TypeSig> args;
+                args.push_back(arg_sig);
+                GenericTypeInstSig inst{ iref_arr_coded, std::move(args) };
+                collect_generic_inst_recursive(w, inst, {}, instantiations);
+            }
+        }
+
+        // IReferenceArray<Object> is valid (for passing arrays of inspectable objects),
+        // but IReference<Object> is not (IReference boxes value types; Object is a
+        // reference type). So Object is not in the shared type_args list above.
+        {
+            std::vector<TypeSig> args;
+            args.push_back(TypeSig{ ElementType::Object });
+            GenericTypeInstSig inst{ iref_arr_coded, std::move(args) };
+            collect_generic_inst_recursive(w, inst, {}, instantiations);
+        }
     }
 }

@@ -136,7 +136,7 @@ namespace cppwinrt
             // boxing types, without depending on other namespace headers.
             if (ns == "Windows.Foundation")
             {
-                add_well_known_ireference_instantiations(instantiations);
+                add_well_known_ireference_instantiations(w, members, instantiations);
             }
 
             write_generic_inst_specializations(w, instantiations);
