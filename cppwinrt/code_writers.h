@@ -581,13 +581,13 @@ namespace winrt::impl
         // #ifndef guards prevent redefinition within a single TU (SCC-consolidated modules).
         auto wrap_ns = wrap_extern_cpp_impl_namespace(w);
 
-        for (auto&& [winrt_name, info] : instantiations)
+        for (auto&& [cpp_name, info] : instantiations)
         {
-            auto guard = make_pinterface_guard(info.cpp_name);
+            auto guard = make_pinterface_guard(cpp_name);
             {
                 auto wrap_guard = wrap_ifndef(w, guard);
                 w.write("#define %\n", guard);
-                w.write("    template <> struct pinterface_guid<%>\n", info.cpp_name);
+                w.write("    template <> struct pinterface_guid<%>\n", cpp_name);
                 w.write("    {\n");
                 w.write("        static constexpr bool precomputed = true;\n");
                 w.write("        static constexpr guid value{ ");

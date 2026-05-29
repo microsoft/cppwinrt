@@ -1157,88 +1157,7 @@ namespace cppwinrt
 
     struct generic_inst_info
     {
-        std::string cpp_name;
         guid_value guid;
-    };
-
-    // ---- winrt_name_builder: builds WinRT display names from metadata ----
-    struct winrt_name_builder
-    {
-        static std::string get_name(GenericTypeInstSig const& type, type_arg_stack const& resolve = {})
-        {
-            auto generic_type = type.GenericType();
-            auto [ns, name] = get_type_namespace_and_name(generic_type);
-
-            std::string result = std::string(ns) + "." + std::string(name) + "<";
-            bool first = true;
-            for (auto&& arg : type.GenericArgs())
-            {
-                if (!first) result += ", ";
-                first = false;
-                result += get_arg_name(arg, resolve);
-            }
-            result += ">";
-            return result;
-        }
-
-    private:
-        static std::string get_element_name(ElementType t)
-        {
-            switch (t)
-            {
-            case ElementType::Boolean: return "Boolean";
-            case ElementType::Char: return "Char16";
-            case ElementType::I1: return "Int8";
-            case ElementType::U1: return "UInt8";
-            case ElementType::I2: return "Int16";
-            case ElementType::U2: return "UInt16";
-            case ElementType::I4: return "Int32";
-            case ElementType::U4: return "UInt32";
-            case ElementType::I8: return "Int64";
-            case ElementType::U8: return "UInt64";
-            case ElementType::R4: return "Single";
-            case ElementType::R8: return "Double";
-            case ElementType::String: return "String";
-            case ElementType::Object: return "Object";
-            default: return {};
-            }
-        }
-
-        static std::string get_typedef_name(TypeDef const& td)
-        {
-            return std::string(td.TypeNamespace()) + "." + std::string(td.TypeName());
-        }
-
-        static std::string get_arg_name(TypeSig const& sig, type_arg_stack const& resolve)
-        {
-            return call(sig.Type(),
-                [](ElementType t) -> std::string { return get_element_name(t); },
-                [&](GenericTypeIndex idx) -> std::string
-                {
-                    if (!resolve.empty() && idx.index < resolve.back().size())
-                    {
-                        type_arg_stack parent_resolve(resolve.begin(), resolve.end() - 1);
-                        return get_arg_name(resolve.back()[idx.index], parent_resolve);
-                    }
-                    return {};
-                },
-                [](GenericMethodTypeIndex) -> std::string { return {}; },
-                [&](coded_index<TypeDefOrRef> const& t) -> std::string
-                {
-                    switch (t.type())
-                    {
-                    case TypeDefOrRef::TypeDef: return get_typedef_name(t.TypeDef());
-                    case TypeDefOrRef::TypeRef:
-                    {
-                        auto tr = t.TypeRef();
-                        if (tr.TypeNamespace() == "System" && tr.TypeName() == "Guid") return "Guid";
-                        return get_typedef_name(find_required(tr));
-                    }
-                    default: return get_name(t.TypeSpec().Signature().GenericTypeInst(), resolve);
-                    }
-                },
-                [&](GenericTypeInstSig const& t) -> std::string { return get_name(t, resolve); });
-        }
     };
 
     // ---- Recursive collection of concrete generic instantiations ----
@@ -1310,19 +1229,14 @@ namespace cppwinrt
             }
         }
 
-        // Build a resolution stack with our concrete args appended
-        type_arg_stack resolve = outer_resolve;
-        resolve.push_back(concrete_args);
-
-        // Use winrt_name as the dedup key. Only do expensive work if this is a new entry.
-        auto winrt_name = winrt_name_builder::get_name(type, outer_resolve);
-        auto [it, inserted] = instantiations.try_emplace(std::move(winrt_name));
+        // Use cpp_name as the dedup key. Only do expensive work if this is a new entry.
+        auto cpp_name = w.write_temp("%", type);
+        auto [it, inserted] = instantiations.try_emplace(std::move(cpp_name));
         if (!inserted)
         {
             return;
         }
 
-        it->second.cpp_name = w.write_temp("%", type);
         it->second.guid = compute_guid_from_signature(signature_builder::get_signature(type, outer_resolve));
 
         // Recurse into generic args that are themselves generic instantiations
@@ -1341,11 +1255,15 @@ namespace cppwinrt
             }
         }
 
-        // Recurse into the generic type's required interfaces (e.g., IMap : IIterable, etc.)
-        auto base_type = find_required(type.GenericType());
+        // Build a resolution stack with our concrete args appended
+        type_arg_stack resolve = outer_resolve;
+        resolve.push_back(concrete_args);
 
         // Push the writer's generic_param_stack so write_temp resolves GenericTypeIndex in nested calls
         auto writer_guard = w.push_generic_params(type);
+
+        // Recurse into the generic type's required interfaces (e.g., IMap : IIterable, etc.)
+        auto base_type = find_required(type.GenericType());
 
         for (auto&& impl : base_type.InterfaceImpl())
         {
