@@ -4,9 +4,11 @@
 // 1. Have the precomputed flag set to true
 // 2. Produce GUID values matching the algorithmic SHA-1 computation
 //
-// Tests cover both hand-written specializations (IReference/IReferenceArray
-// in base_reference_produce.h) and code-generated specializations discovered
-// from Windows SDK metadata (IMap, IIterable, TypedEventHandler, etc.).
+// Tests cover both code-generated IReference/IReferenceArray
+// specializations injected via add_well_known_ireference_instantiations into
+// the generated Windows.Foundation.0.h output and other code-generated
+// specializations discovered from Windows SDK metadata (IMap, IIterable,
+// TypedEventHandler, etc.).
 
 using namespace winrt;
 using namespace winrt::impl;

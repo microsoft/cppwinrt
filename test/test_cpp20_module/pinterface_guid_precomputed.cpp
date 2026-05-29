@@ -8,8 +8,9 @@ import winrt.Windows.Foundation.Collections;
 // 1. Have the precomputed flag set to true
 // 2. Produce correct GUID values across module boundaries
 //
-// Tests cover both hand-written specializations (IReference/IReferenceArray
-// in base_reference_produce.h) and code-generated specializations discovered
+// Tests cover both well-known IReference/IReferenceArray specializations
+// injected by add_well_known_ireference_instantiations into the generated
+// Windows.Foundation.0.h output and code-generated specializations discovered
 // from Windows SDK metadata (IMap, IIterable, TypedEventHandler, etc.).
 
 using namespace winrt;
