@@ -1414,23 +1414,23 @@ namespace cppwinrt
         type_args.reserve(20);
 
         // Fundamental types
-        type_args.push_back(TypeSig{ ElementType::U1 });
-        type_args.push_back(TypeSig{ ElementType::I2 });
-        type_args.push_back(TypeSig{ ElementType::U2 });
-        type_args.push_back(TypeSig{ ElementType::I4 });
-        type_args.push_back(TypeSig{ ElementType::U4 });
-        type_args.push_back(TypeSig{ ElementType::I8 });
-        type_args.push_back(TypeSig{ ElementType::U8 });
-        type_args.push_back(TypeSig{ ElementType::R4 });
-        type_args.push_back(TypeSig{ ElementType::R8 });
-        type_args.push_back(TypeSig{ ElementType::Char });
-        type_args.push_back(TypeSig{ ElementType::Boolean });
-        type_args.push_back(TypeSig{ ElementType::String });
+        type_args.emplace_back(ElementType::U1);
+        type_args.emplace_back(ElementType::I2);
+        type_args.emplace_back(ElementType::U2);
+        type_args.emplace_back(ElementType::I4);
+        type_args.emplace_back(ElementType::U4);
+        type_args.emplace_back(ElementType::I8);
+        type_args.emplace_back(ElementType::U8);
+        type_args.emplace_back(ElementType::R4);
+        type_args.emplace_back(ElementType::R8);
+        type_args.emplace_back(ElementType::Char);
+        type_args.emplace_back(ElementType::Boolean);
+        type_args.emplace_back(ElementType::String);
 
         // Guid (only if we found the TypeRef)
         if (guid_type_ref)
         {
-            type_args.push_back(TypeSig{ guid_type_ref });
+            type_args.emplace_back(guid_type_ref);
         }
 
         // Windows.Foundation struct types
@@ -1440,7 +1440,7 @@ namespace cppwinrt
             auto td = find_type(name);
             if (td)
             {
-                type_args.push_back(TypeSig{ td.coded_index<TypeDefOrRef>() });
+                type_args.emplace_back(td.coded_index<TypeDefOrRef>());
             }
         }
 
