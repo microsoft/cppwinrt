@@ -1348,9 +1348,8 @@ namespace cppwinrt
     // consumers who only include Windows.Foundation.h (e.g. for boxing) still get precomputed GUIDs
     // without requiring a header from a namespace that happens to use IReference<int32_t> etc.
     //
-    // Uses the same code path as metadata-discovered instantiations by constructing
-    // GenericTypeInstSig objects and feeding them through collect_generic_inst_recursive.
-    // This ensures cpp_name, guard names, and signatures are always consistent.
+    // Uses canonical metadata TypeSig values from IPropertyValue getters to produce
+    // stable cpp names and parameterized-interface GUIDs for these common projections.
     static void add_well_known_ireference_instantiations(
         writer& w,
         cache::namespace_members const& members,
@@ -1366,113 +1365,115 @@ namespace cppwinrt
         auto iref_arr = find_type("IReferenceArray`1");
         if (!iref || !iref_arr) return;
 
-        // Find the System.Guid TypeRef via IPropertyValue.GetGuid's return type.
-        // There is no TypeDef for System.Guid, only scattered TypeRefs.
-        // IPropertyValue is in Windows.Foundation, so it's available in members.
-        // The GetGuid method is at a stable ABI vtable position (index 14, 0-based
-        // within MethodList), but we fall back to a name search if that doesn't match.
-        coded_index<TypeDefOrRef> guid_type_ref{};
         auto ipv = find_type("IPropertyValue");
-        if (ipv)
+        if (!ipv)
         {
-            // Find the GetGuid method — try index 14 first (stable ABI vtable position),
-            // then fall back to linear search.
-            auto methods = ipv.MethodList();
-            MethodDef get_guid_method{};
-
-            if (size(methods) > 14 && methods.first[14].Name() == "GetGuid")
-            {
-                get_guid_method = methods.first[14];
-            }
-            else
-            {
-                for (auto&& m : methods)
-                {
-                    if (m.Name() == "GetGuid")
-                    {
-                        get_guid_method = m;
-                        break;
-                    }
-                }
-            }
-
-            if (get_guid_method)
-            {
-                auto method_sig = get_guid_method.Signature();
-                auto const& ret_type = method_sig.ReturnType().Type().Type();
-                if (std::holds_alternative<coded_index<TypeDefOrRef>>(ret_type))
-                {
-                    guid_type_ref = std::get<coded_index<TypeDefOrRef>>(ret_type);
-                }
-            }
+            return;
         }
 
-        // Collect TypeSig args for all well-known type arguments.
-        // Primitives use ElementType directly; WinRT structs use their TypeDef;
-        // Guid uses the TypeRef found above; Object uses ElementType::Object.
+        // Collect TypeSig args from IPropertyValue getter return types, which provide
+        // canonical metadata TypeSig representations for primitive and struct types.
         std::vector<TypeSig> type_args;
-        type_args.reserve(20);
+        type_args.reserve(19);
 
-        // Fundamental types
-        type_args.emplace_back(ElementType::U1);
-        type_args.emplace_back(ElementType::I2);
-        type_args.emplace_back(ElementType::U2);
-        type_args.emplace_back(ElementType::I4);
-        type_args.emplace_back(ElementType::U4);
-        type_args.emplace_back(ElementType::I8);
-        type_args.emplace_back(ElementType::U8);
-        type_args.emplace_back(ElementType::R4);
-        type_args.emplace_back(ElementType::R8);
-        type_args.emplace_back(ElementType::Char);
-        type_args.emplace_back(ElementType::Boolean);
-        type_args.emplace_back(ElementType::String);
-
-        // Guid (only if we found the TypeRef)
-        if (guid_type_ref)
+        auto append_method_return_type = [&](std::string_view method_name) -> bool
         {
-            type_args.emplace_back(guid_type_ref);
+            for (auto&& method : ipv.MethodList())
+            {
+                if (method.Name() == method_name)
+                {
+                    auto sig = method.Signature();
+                    if (sig.ReturnType())
+                    {
+                        type_args.push_back(sig.ReturnType().Type());
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            return false;
+        };
+        static constexpr std::string_view method_names[] =
+        {
+            "GetUInt8", "GetInt16", "GetUInt16", "GetInt32", "GetUInt32", "GetInt64", "GetUInt64",
+            "GetSingle", "GetDouble", "GetChar16", "GetBoolean", "GetString",
+            "GetGuid", "GetDateTime", "GetTimeSpan", "GetPoint", "GetSize", "GetRect", "GetInspectable"
+        };
+        for (auto method_name : method_names)
+        {
+            append_method_return_type(method_name);
         }
 
-        // Windows.Foundation struct types
-        static constexpr std::string_view struct_names[] = { "DateTime", "TimeSpan", "Point", "Size", "Rect" };
-        for (auto name : struct_names)
+        auto element_signature = [](ElementType type) -> std::string
         {
-            auto td = find_type(name);
-            if (td)
+            switch (type)
             {
-                type_args.emplace_back(td.coded_index<TypeDefOrRef>());
+            case ElementType::Boolean: return "b1";
+            case ElementType::Char: return "c2";
+            case ElementType::I1: return "i1";
+            case ElementType::U1: return "u1";
+            case ElementType::I2: return "i2";
+            case ElementType::U2: return "u2";
+            case ElementType::I4: return "i4";
+            case ElementType::U4: return "u4";
+            case ElementType::I8: return "i8";
+            case ElementType::U8: return "u8";
+            case ElementType::R4: return "f4";
+            case ElementType::R8: return "f8";
+            case ElementType::String: return "string";
+            case ElementType::Object: return "cinterface(IInspectable)";
+            default: return {};
             }
-        }
+        };
 
-        auto iref_coded = iref.coded_index<TypeDefOrRef>();
-        auto iref_arr_coded = iref_arr.coded_index<TypeDefOrRef>();
-
-        for (auto& arg_sig : type_args)
+        auto get_type_signature = [&](TypeSig const& type) -> std::string
         {
-            // IReference<T>
-            {
-                std::vector<TypeSig> args;
-                args.push_back(arg_sig);
-                GenericTypeInstSig inst{ iref_coded, std::move(args) };
-                collect_generic_inst_recursive(w, inst, {}, instantiations);
-            }
-            // IReferenceArray<T>
-            {
-                std::vector<TypeSig> args;
-                args.push_back(arg_sig);
-                GenericTypeInstSig inst{ iref_arr_coded, std::move(args) };
-                collect_generic_inst_recursive(w, inst, {}, instantiations);
-            }
-        }
+            return call(type.Type(),
+                [&](ElementType t) -> std::string
+                {
+                    return element_signature(t);
+                },
+                [&](coded_index<TypeDefOrRef> const& t) -> std::string
+                {
+                    return signature_builder::get_signature(t);
+                },
+                [](auto const&) -> std::string
+                {
+                    return {};
+                });
+        };
 
-        // IReferenceArray<Object> is valid (for passing arrays of inspectable objects),
-        // but IReference<Object> is not (IReference boxes value types; Object is a
-        // reference type). So Object is not in the shared type_args list above.
+        auto iref_guid = format_guid_signature(extract_guid(iref));
+        auto iref_arr_guid = format_guid_signature(extract_guid(iref_arr));
+
+        auto add_instantiation = [&](std::string_view template_name, std::string_view generic_guid, TypeSig const& arg)
         {
-            std::vector<TypeSig> args;
-            args.push_back(TypeSig{ ElementType::Object });
-            GenericTypeInstSig inst{ iref_arr_coded, std::move(args) };
-            collect_generic_inst_recursive(w, inst, {}, instantiations);
+            auto arg_signature = get_type_signature(arg);
+            if (arg_signature.empty())
+            {
+                return;
+            }
+
+            auto cpp_name = w.write_temp("winrt::Windows::Foundation::%<%>", template_name, arg);
+            auto sig = std::string("pinterface(") + std::string(generic_guid) + ";" + arg_signature + ")";
+            auto [it, inserted] = instantiations.try_emplace(std::move(cpp_name));
+            if (inserted)
+            {
+                it->second.guid = compute_guid_from_signature(sig);
+            }
+        };
+
+        for (auto const& arg_sig : type_args)
+        {
+            bool const is_object =
+                std::holds_alternative<ElementType>(arg_sig.Type()) &&
+                std::get<ElementType>(arg_sig.Type()) == ElementType::Object;
+
+            if (!is_object)
+            {
+                add_instantiation("IReference", iref_guid, arg_sig);
+            }
+            add_instantiation("IReferenceArray", iref_arr_guid, arg_sig);
         }
     }
 }
