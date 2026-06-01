@@ -137,7 +137,9 @@ void DerivedPage::InitializeComponent()
 
 ## C++20 Modules
 
-C++/WinRT supports C++20 named modules as an alternative to `#include`-based consumption. Instead of `#include <winrt/Windows.Foundation.h>`, you can write `import winrt.Windows.Foundation;`. See [modules.md](modules.md) for the full guide.
+C++/WinRT supports C++20 named modules as an alternative to `#include`-based consumption. Instead of `#include <winrt/Windows.Foundation.h>`, you can write `import winrt.Windows.Foundation;`.
+
+See the [C++/WinRT C++20 Modules Guide](https://github.com/microsoft/cppwinrt/blob/master/nuget/modules.md) for the full guide (also shipped alongside this file as `modules.md`).
 
 | ProjectReference metadata | Description |
 |-|-|

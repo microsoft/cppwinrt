@@ -3,6 +3,7 @@
 
   <Rule.Categories>
     <Category Name="General" DisplayName="General"/>
+    <Category Name="Modules" DisplayName="C++20 Modules"/>
   </Rule.Categories>
 
   <Rule.DataSource>
@@ -85,5 +86,25 @@
                 DisplayName="Enable C++17 coroutines"
                 Description="Enables the /await:strict compiler option"
                 Category="General" />
+
+  <BoolProperty Name="CppWinRTMergeNoValidate"
+                DisplayName="Disable mdmerge Validation"
+                Description="Disables mdmerge.exe validation of merged Windows Metadata"
+                Category="General" />
+
+  <BoolProperty Name="CppWinRTBuildModule"
+                DisplayName="Build C++20 Modules"
+                Description="Generates per-namespace C++20 module interface units (.ixx) alongside projection headers. See modules.md in the NuGet package for guidance."
+                Category="Modules" />
+
+  <StringProperty Name="CppWinRTModuleInclude"
+                  DisplayName="Module Include Filter"
+                  Description="Semicolon-delimited list of namespace prefixes to include in module (.ixx) generation. When empty, all namespaces are candidates."
+                  Category="Modules" />
+
+  <StringProperty Name="CppWinRTModuleExclude"
+                  DisplayName="Module Exclude Filter"
+                  Description="Semicolon-delimited list of namespace prefixes to exclude from module (.ixx) generation. Use to avoid generating modules with unsatisfied dependencies, or to avoid duplicating modules already provided by a referenced project."
+                  Category="Modules" />
 
 </Rule>
