@@ -206,6 +206,23 @@ namespace cppwinrt
         return { w, write_close_namespace };
     }
 
+    [[nodiscard]] static finish_with wrap_extern_cpp_impl_namespace(writer& w)
+    {
+        w.write(R"(
+extern "C++"
+{
+namespace winrt::impl
+{
+)");
+
+        return { w, [](writer& w) {
+            w.write(R"(
+} // winrt::impl
+} // extern "C++"
+)");
+        }};
+    }
+
     [[nodiscard]] static finish_with wrap_std_namespace(writer& w)
     {
         w.write(R"(namespace std
@@ -534,6 +551,58 @@ namespace cppwinrt
             auto format = R"(    template <> struct default_interface<%>{ using type = %; };
 )";
             w.write(format, type, default_interface);
+        }
+    }
+
+    static std::string make_pinterface_guard(std::string_view const& cpp_name)
+    {
+        std::string guard = "WINRT_IMPL_PINTERFACE_GUID_";
+        guard.reserve(guard.size() + cpp_name.size());
+        for (char c : cpp_name)
+        {
+            if (c == ':' || c == '<' || c == '>' || c == ',' || c == ' ')
+                guard += '_';
+            else
+                guard += c;
+        }
+        return guard;
+    }
+
+    static void write_generic_inst_specializations(writer& w, std::map<std::string, generic_inst_info> const& instantiations)
+    {
+        if (instantiations.empty())
+        {
+            return;
+        }
+
+        // This block is self-contained (written outside any open namespace).
+        // extern "C++" attaches specializations to the global module so identical
+        // specializations across modules merge rather than collide.
+        // #ifndef guards prevent redefinition within a single TU (SCC-consolidated modules).
+        auto wrap_ns = wrap_extern_cpp_impl_namespace(w);
+
+        for (auto&& [cpp_name, info] : instantiations)
+        {
+            auto guard = make_pinterface_guard(cpp_name);
+            {
+                auto wrap_guard = wrap_ifndef(w, guard);
+                w.write("#define %\n", guard);
+                w.write("    template <> struct pinterface_guid<%>\n", cpp_name);
+                w.write("    {\n");
+                w.write("        static constexpr bool precomputed = true;\n");
+                w.write("        static constexpr guid value{ ");
+                auto& g = info.guid;
+                w.write_printf("0x%08X,0x%04X,0x%04X,{ 0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X,0x%02X }",
+                    g.Data1, g.Data2, g.Data3,
+                    g.Data4[0], g.Data4[1], g.Data4[2], g.Data4[3],
+                    g.Data4[4], g.Data4[5], g.Data4[6], g.Data4[7]);
+                w.write(" }; // ");
+                w.write_printf("%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X\n",
+                    g.Data1, g.Data2, g.Data3,
+                    g.Data4[0], g.Data4[1], g.Data4[2], g.Data4[3],
+                    g.Data4[4], g.Data4[5], g.Data4[6], g.Data4[7]);
+                w.write("    };\n");
+            }
         }
     }
 
