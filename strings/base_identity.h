@@ -11,7 +11,7 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename... T>
-    bool is_guid_of(guid const& id) noexcept
+    constexpr bool is_guid_of(guid const& id) noexcept
     {
         return ((id == guid_of<T>()) || ...);
     }
