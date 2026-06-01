@@ -178,7 +178,7 @@
     <ClInclude Include="..\strings\base_coroutine_system.h">
       <Filter>strings</Filter>
     </ClInclude>
-    <ClInclude Include="..\strings\base_coroutine_system_winui.h">
+    <ClInclude Include="..\strings\base_coroutine_winui.h">
       <Filter>strings</Filter>
     </ClInclude>
     <ClInclude Include="..\strings\base_xaml_component_connector_winui.h">
