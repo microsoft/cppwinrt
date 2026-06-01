@@ -30,6 +30,7 @@ namespace cppwinrt
         winmd::reader::filter component_filter;
 
         bool fastabi{};
+        bool flatten_classes{};
         std::map<winmd::reader::TypeDef, winmd::reader::TypeDef> fastabi_cache;
 
         bool modules{}; // Generate per-namespace C++20 module interface units (.ixx)

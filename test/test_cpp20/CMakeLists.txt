@@ -31,6 +31,7 @@ foreach(TEST_SRCS_EXCLUDE_ITEM IN LISTS BROKEN_TESTS)
 endforeach()
 
 add_executable(test_cpp20 main.cpp ${TEST_SRCS})
+target_include_directories(test_cpp20 PRIVATE "${CPPWINRT_PROJECTION_INCLUDE_DIR}")
 
 target_precompile_headers(test_cpp20 PRIVATE pch.h)
 set_source_files_properties(

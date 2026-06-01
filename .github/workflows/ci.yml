@@ -88,7 +88,7 @@ jobs:
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
-          & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose
+          & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose -flatten_classes
 
   test-msvc-cppwinrt-test:
     name: '${{ matrix.compiler }}: Test [${{ matrix.test_exe }}] (${{ matrix.arch }}, ${{ matrix.config }}, ${{ matrix.toolchain.platform_toolset }})'
@@ -377,7 +377,7 @@ jobs:
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
-          & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose
+          & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose -flatten_classes
       
       - name: Remove module test projects on v143
         if: matrix.toolchain.platform_toolset == 'v143'

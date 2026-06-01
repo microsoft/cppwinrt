@@ -40,6 +40,10 @@ namespace cppwinrt
             w.write(strings::base_events);
             w.write(strings::base_activation);
             w.write(strings::base_implements);
+            w.write(strings::base_flat_runtimeclass,
+                settings.flatten_classes ? 1 : 0,
+                256,
+                256);
             w.write(strings::base_composable);
             w.write(strings::base_foundation);
             w.write(strings::base_chrono);
@@ -120,6 +124,13 @@ namespace cppwinrt
             w.write_each<write_delegate_abi>(members.delegates);
             w.write_each<write_consume>(members.interfaces);
             w.write_each<write_struct_abi>(members.structs);
+
+            if (!empty(members.interfaces))
+            {
+                w.write("\n#if defined(_M_IX86)\n");
+                w.write_each<write_interface_abi_method_pops>(members.interfaces);
+                w.write("#endif\n");
+            }
         }
 
         write_close_file_guard(w);

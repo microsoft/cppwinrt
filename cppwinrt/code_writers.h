@@ -672,6 +672,11 @@ namespace cppwinrt
                 switch (category)
                 {
                 case param_category::object_type:
+                    if (settings.flatten_classes && is_object_class(param_signature->Type()))
+                        w.write("%.abi", param_name);
+                    else
+                        w.write("*(void**)(&%)", param_name);
+                    break;
                 case param_category::string_type:
                     w.write("*(void**)(&%)", param_name);
                     break;
@@ -790,6 +795,37 @@ namespace cppwinrt
         }
     }
 
+    static void write_flat_x86_stack_pop_size(writer& w, method_signature const& signature);
+
+    static void write_interface_abi_method_pops(writer& w, TypeDef const& type)
+    {
+        auto generics = type.GenericParam();
+        auto guard{ w.push_generic_params(generics) };
+        auto const method_count = size(type.MethodList());
+        auto const array_bound = (std::max)(std::size_t{ 1 }, method_count);
+
+        if (empty(generics))
+        {
+            w.write("    template <> struct abi_method_pops<%>\n    {\n", type);
+        }
+        else
+        {
+            w.write("    template <%> struct abi_method_pops<%>\n    {\n",
+                bind<write_generic_typenames>(generics),
+                type);
+        }
+
+        w.write("        inline static constexpr std::uint16_t pops[%] = { ", array_bound);
+        separator s{ w };
+        for (auto&& method : type.MethodList())
+        {
+            s();
+            write_flat_x86_stack_pop_size(w, method_signature{ method });
+        }
+        w.write(" };\n");
+        w.write("    };\n");
+    }
+
     static void write_interface_abi(writer& w, TypeDef const& type)
     {
         auto generics = type.GenericParam();
@@ -822,20 +858,22 @@ namespace cppwinrt
         auto format = R"(            virtual std::int32_t __stdcall %(%) noexcept = 0;
 )";
 
-        auto abi_guard = w.push_abi_types(true);
-        for (auto&& method : type.MethodList())
         {
-            try
+            auto abi_guard = w.push_abi_types(true);
+            for (auto&& method : type.MethodList())
             {
-                method_signature signature{ method };
-                w.write(format, get_abi_name(method), bind<write_abi_params>(signature));
-            }
-            catch (std::exception const& e)
-            {
-                throw_invalid(e.what(),
-                    "\n method: ", get_name(method),
-                    "\n type: ", type.TypeNamespace(), ".", type.TypeName(),
-                    "\n database: ", type.get_database().path());
+                try
+                {
+                    method_signature signature{ method };
+                    w.write(format, get_abi_name(method), bind<write_abi_params>(signature));
+                }
+                catch (std::exception const& e)
+                {
+                    throw_invalid(e.what(),
+                        "\n method: ", get_name(method),
+                        "\n type: ", type.TypeNamespace(), ".", type.TypeName(),
+                        "\n database: ", type.get_database().path());
+                }
             }
         }
 
@@ -940,6 +978,10 @@ namespace cppwinrt
                     else if (std::holds_alternative<GenericTypeIndex>(param_signature->Type().Type()))
                     {
                         w.write("impl::param_type<%> const&", param_signature->Type());
+                    }
+                    else if (settings.flatten_classes && get_category(param_signature->Type()) == param_category::object_type && is_object_class(param_signature->Type()))
+                    {
+                        w.write("impl::param_ref<%>", param_signature->Type());
                     }
                     else
                     {
@@ -1409,10 +1451,10 @@ namespace cppwinrt
             w.write(R"(
         auto TryLookup(param_type<K> const& key) const
         {
-            if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
+            if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V> || impl::has_flat_cache_v<V>)
             {
                 V result{ nullptr };
-                impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMapView<K, V>)->Lookup(get_abi(key), put_abi(result)));
+                impl::check_hresult_allow_bounds(impl::consume_general_nothrow<Windows::Foundation::Collections::IMapView<K, V>>(static_cast<D const*>(this), &abi_t<Windows::Foundation::Collections::IMapView<K, V>>::Lookup, get_abi(key), put_abi(result)));
                 return result;
             }
             else
@@ -1420,7 +1462,7 @@ namespace cppwinrt
                 std::optional<V> result;
                 V value{ empty_value<V>() };
 
-                if (0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMapView<K, V>)->Lookup(get_abi(key), put_abi(value))))
+                if (0 == impl::check_hresult_allow_bounds(impl::consume_general_nothrow<Windows::Foundation::Collections::IMapView<K, V>>(static_cast<D const*>(this), &abi_t<Windows::Foundation::Collections::IMapView<K, V>>::Lookup, get_abi(key), put_abi(value))))
                 {
                     result = std::move(value);
                 }
@@ -1435,10 +1477,10 @@ namespace cppwinrt
             w.write(R"(
         auto TryLookup(param_type<K> const& key) const
         {
-            if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
+            if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V> || impl::has_flat_cache_v<V>)
             {
                 V result{ nullptr };
-                impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Lookup(get_abi(key), put_abi(result)));
+                impl::check_hresult_allow_bounds(impl::consume_general_nothrow<Windows::Foundation::Collections::IMap<K, V>>(static_cast<D const*>(this), &abi_t<Windows::Foundation::Collections::IMap<K, V>>::Lookup, get_abi(key), put_abi(result)));
                 return result;
             }
             else
@@ -1446,7 +1488,7 @@ namespace cppwinrt
                 std::optional<V> result;
                 V value{ empty_value<V>() };
 
-                if (0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Lookup(get_abi(key), put_abi(value))))
+                if (0 == impl::check_hresult_allow_bounds(impl::consume_general_nothrow<Windows::Foundation::Collections::IMap<K, V>>(static_cast<D const*>(this), &abi_t<Windows::Foundation::Collections::IMap<K, V>>::Lookup, get_abi(key), put_abi(value))))
                 {
                     result = std::move(value);
                 }
@@ -1457,7 +1499,7 @@ namespace cppwinrt
 
         auto TryRemove(param_type<K> const& key) const
         {
-            return 0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Remove(get_abi(key)));
+            return 0 == impl::check_hresult_allow_bounds(impl::consume_general_nothrow<Windows::Foundation::Collections::IMap<K, V>>(static_cast<D const*>(this), &abi_t<Windows::Foundation::Collections::IMap<K, V>>::Remove, get_abi(key)));
         }
 )");
         }
@@ -1796,7 +1838,14 @@ namespace cppwinrt
 
                 if (param.Flags().In())
                 {
-                    if (category != param_category::fundamental_type)
+                    if (category == param_category::object_type && is_object_class(param_signature->Type()))
+                    {
+                        w.write("static_cast<% const&>(impl::produce_borrowed_ref<%>(%))",
+                            param_type,
+                            param_type,
+                            param_name);
+                    }
+                    else if (category != param_category::fundamental_type)
                     {
                         w.write("*reinterpret_cast<% const*>(&%)",
                             param_type,
@@ -3365,6 +3414,337 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             bind_each<write_static_declaration>(factories, type));
     }
 
+    static void write_flat_class_base(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& default_interface)
+    {
+        w.write("impl::flat_runtimeclass<%, %", type.TypeName(), default_interface);
+
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
+        {
+            if ((!info.is_default || info.base) && !info.is_protected && !info.overridable)
+            {
+                w.write(", %", interface_name);
+            }
+        }
+
+        w.write('>');
+    }
+
+    static std::size_t align_flat_x86_size(std::size_t value, std::size_t alignment)
+    {
+        return (value + alignment - 1) & ~(alignment - 1);
+    }
+
+    static constexpr std::size_t flat_x86_pointer_size = 4;
+
+    static std::pair<std::size_t, std::size_t> get_flat_x86_type_layout(TypeSig const& type)
+    {
+        TypeDef signature_type;
+
+        switch (get_category(type, &signature_type))
+        {
+        case param_category::fundamental_type:
+            return call(type.Type(),
+                [](ElementType element) -> std::pair<std::size_t, std::size_t>
+                {
+                    switch (element)
+                    {
+                    case ElementType::Boolean:
+                    case ElementType::I1:
+                    case ElementType::U1:
+                        return { 1, 1 };
+                    case ElementType::Char:
+                    case ElementType::I2:
+                    case ElementType::U2:
+                        return { 2, 2 };
+                    case ElementType::I4:
+                    case ElementType::U4:
+                    case ElementType::R4:
+                        return { 4, 4 };
+                    case ElementType::I8:
+                    case ElementType::U8:
+                    case ElementType::R8:
+                        return { 8, 8 };
+                    case ElementType::I:
+                    case ElementType::U:
+                        return { flat_x86_pointer_size, flat_x86_pointer_size };
+                    default:
+                        throw_invalid("Unsupported x86 cached thunk fundamental element type.");
+                    }
+                },
+                [](auto&&) -> std::pair<std::size_t, std::size_t>
+                {
+                    throw_invalid("Unexpected non-fundamental type in x86 cached thunk layout computation.");
+                });
+
+        case param_category::enum_type:
+            return get_flat_x86_type_layout(signature_type.FieldList().first.Signature().Type());
+
+        case param_category::struct_type:
+        {
+            if (!signature_type)
+            {
+                return { 16, 4 };
+            }
+
+            std::size_t size = 0;
+            std::size_t alignment = 1;
+
+            for (auto&& field : signature_type.FieldList())
+            {
+                auto [field_size, field_alignment] = get_flat_x86_type_layout(field.Signature().Type());
+                size = align_flat_x86_size(size, field_alignment);
+                size += field_size;
+                alignment = (std::max)(alignment, field_alignment);
+            }
+
+            size = align_flat_x86_size(size, alignment);
+            return { size, alignment };
+        }
+
+        case param_category::object_type:
+        case param_category::string_type:
+        case param_category::generic_type:
+        case param_category::array_type:
+            return { flat_x86_pointer_size, flat_x86_pointer_size };
+        }
+
+        throw_invalid("Unsupported x86 cached thunk parameter category.");
+    }
+
+    static std::uint16_t get_flat_x86_stack_arg_bytes(std::size_t size)
+    {
+        return static_cast<std::uint16_t>(align_flat_x86_size(size, flat_x86_pointer_size));
+    }
+
+    static std::uint16_t get_flat_x86_stack_pop_size(method_signature const& signature)
+    {
+        std::uint16_t result = static_cast<std::uint16_t>(flat_x86_pointer_size);
+
+        for (auto&& [param, param_signature] : signature.params())
+        {
+            auto category = get_category(param_signature->Type());
+
+            if (param_signature->Type().is_szarray())
+            {
+                result = static_cast<std::uint16_t>(result + 8);
+            }
+            else if (param.Flags().In())
+            {
+                if (is_const(*param_signature) || category == param_category::object_type || category == param_category::string_type || category == param_category::generic_type)
+                {
+                    result = static_cast<std::uint16_t>(result + flat_x86_pointer_size);
+                }
+                else
+                {
+                    auto [size, alignment] = get_flat_x86_type_layout(param_signature->Type());
+                    (void)alignment;
+                    result = static_cast<std::uint16_t>(result + get_flat_x86_stack_arg_bytes(size));
+                }
+            }
+            else
+            {
+                result = static_cast<std::uint16_t>(result + flat_x86_pointer_size);
+            }
+        }
+
+        if (signature.return_signature())
+        {
+            result = static_cast<std::uint16_t>(result + (signature.return_signature().Type().is_szarray() ? 8 : flat_x86_pointer_size));
+        }
+
+        return result;
+    }
+
+    static void write_flat_x86_stack_pop_size(writer& w, method_signature const& signature)
+    {
+        w.write("%", get_flat_x86_stack_pop_size(signature));
+    }
+
+    static void write_flat_class_requires(writer& w, TypeDef const& type)
+    {
+        bool first = true;
+
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
+        {
+            if (!info.is_protected && !info.overridable)
+            {
+                if (first)
+                {
+                    first = false;
+                    w.write(",\n        impl::require<%", type.TypeName());
+                }
+
+                w.write(", %", interface_name);
+            }
+        }
+
+        if (!first)
+        {
+            w.write('>');
+        }
+    }
+
+    static void write_flat_class_usings(writer& w, TypeDef const& type)
+    {
+        auto type_name = type.TypeName();
+        std::map<std::string_view, std::set<std::string>> method_usage;
+
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
+        {
+            if (!info.is_protected && !info.overridable)
+            {
+                for (auto&& method : info.type.MethodList())
+                {
+                    method_usage[get_name(method)].insert(interface_name);
+                }
+            }
+        }
+
+        for (auto&& [method_name, interfaces] : method_usage)
+        {
+            if (interfaces.size() <= 1)
+            {
+                continue;
+            }
+
+            for (auto&& interface_name : interfaces)
+            {
+                w.write("        using impl::consume_t<%, %>::%;\n",
+                    type_name,
+                    interface_name,
+                    method_name);
+            }
+        }
+    }
+
+    static bool has_secondary_interfaces(writer& w, TypeDef const& type)
+    {
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
+        {
+            if ((!info.is_default || info.base) && !info.is_protected && !info.overridable)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static bool has_async_default_interface(coded_index<TypeDefOrRef> const& default_interface)
+    {
+        std::string_view ns;
+        std::string_view n;
+
+        if (default_interface.type() == TypeDefOrRef::TypeSpec)
+        {
+            auto sig = default_interface.TypeSpec().Signature().GenericTypeInst();
+            auto const& [type_namespace, type_name_val] = get_type_namespace_and_name(sig.GenericType());
+            ns = type_namespace;
+            n = type_name_val;
+        }
+        else
+        {
+            auto tn = type_name(default_interface);
+            ns = tn.name_space;
+            n = tn.name;
+        }
+
+        if (ns != "Windows.Foundation")
+        {
+            return false;
+        }
+        return n == "IAsyncAction" ||
+            n == "IAsyncOperation`1" ||
+            n == "IAsyncActionWithProgress`1" ||
+            n == "IAsyncOperationWithProgress`2";
+    }
+
+    static constexpr std::size_t flat_vtable_method_count = 256;
+    static constexpr std::size_t flat_reserved_slots = 6;
+    static constexpr std::size_t flat_method_limit = flat_vtable_method_count - flat_reserved_slots;
+
+    static void validate_flat_interfaces(writer& w, TypeDef const& type)
+    {
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
+        {
+            if ((info.is_default && !info.base) || info.is_protected || info.overridable)
+            {
+                continue;
+            }
+
+            auto const method_count = size(info.type.MethodList());
+            if (method_count > flat_method_limit)
+            {
+                throw_invalid("Type '",
+                    type.TypeNamespace(),
+                    ".",
+                    type.TypeName(),
+                    "' cannot use flat runtimeclasses because interface '",
+                    info.type.TypeNamespace(),
+                    ".",
+                    info.type.TypeName(),
+                    "' has ",
+                    std::to_string(method_count),
+                    " methods, exceeding the flat method limit of ",
+                    std::to_string(flat_method_limit),
+                    ".");
+            }
+        }
+    }
+
+    static void write_flat_class(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& default_interface)
+    {
+        validate_flat_interfaces(w, type);
+
+        auto type_name = type.TypeName();
+        auto factories = get_factories(w, type);
+
+        // Check if any factory provides a default constructor.
+        bool has_default_ctor = false;
+        for (auto&& [factory_name, factory] : factories)
+        {
+            if (factory.activatable && !factory.type)
+            {
+                has_default_ctor = true;
+                break;
+            }
+            if (factory.composable && factory.visible)
+            {
+                for (auto&& method : factory.type.MethodList())
+                {
+                    method_signature signature{ method };
+                    // Composable factories have 2 hidden params (inner, outer) at the end
+                    if (signature.params().size() <= 2)
+                    {
+                        has_default_ctor = true;
+                        break;
+                    }
+                }
+                if (has_default_ctor) break;
+            }
+        }
+
+        w.write("    struct %;\n", type_name);
+        w.write("    struct WINRT_IMPL_EMPTY_BASES % : %%%\n    {\n",
+            type_name,
+            bind<write_flat_class_base>(type, default_interface),
+            bind<write_flat_class_requires>(type),
+            bind<write_class_base>(type));
+
+        // For types without a default activation factory, emit a null default
+        // constructor so std::vector<T> and similar containers work.
+        if (!has_default_ctor)
+        {
+            w.write("        %() noexcept : flat_runtimeclass(nullptr) {}\n", type_name);
+        }
+
+        w.write("        %(std::nullptr_t) noexcept : flat_runtimeclass(nullptr) {}\n", type_name);
+        w.write("        %(void* ptr, take_ownership_from_abi_t) noexcept : flat_runtimeclass(ptr, take_ownership_from_abi) {}\n", type_name);
+        w.write(bind<write_constructor_declarations>(type, factories));
+        w.write(bind<write_flat_class_usings>(type));
+        w.write(bind_each<write_static_declaration>(factories, type));
+        w.write("    };\n");
+    }
+
     static void write_fast_class(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& base_type)
     {
         auto type_name = type.TypeName();
@@ -3413,6 +3793,10 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             if (has_fastabi(type))
             {
                 write_fast_class(w, type, default_interface);
+            }
+            else if (settings.flatten_classes && has_secondary_interfaces(w, type) && !has_async_default_interface(default_interface))
+            {
+                write_flat_class(w, type, default_interface);
             }
             else
             {
