@@ -55,10 +55,10 @@ WINRT_EXPORT namespace winrt::impl
                 if ((WINRT_IMPL_VirtualQuery(object, &info, sizeof(info)) != 0) && ((info.protect & 0xEE) != 0))
                 {
                     inspectable_abi* pinsp;
-                    if (((unknown_abi*)object)->QueryInterface(iid, reinterpret_cast<void**>(&pinsp)) == 0)
+                    if ((reinterpret_cast<unknown_abi*>(object))->QueryInterface(iid, reinterpret_cast<void**>(&pinsp)) == 0)
                     {
                         static const int IInspectable_vtbl_size = 6;
-                        auto vtbl = *(void***)pinsp;
+                        auto vtbl = *reinterpret_cast<void***>(pinsp);
                         // validate vtbl pointer is readable
                         if ((WINRT_IMPL_VirtualQuery(vtbl, &info, sizeof(info)) != 0) && ((info.protect & 0xEE) != 0))
                         {
