@@ -1,5 +1,6 @@
 #include "pch.h"
 #include <objidl.h>
+#include <winrt/base.h>
 
 import std;
 import winrt.Windows.Foundation.Collections;
