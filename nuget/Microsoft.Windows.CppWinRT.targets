@@ -920,7 +920,6 @@ $(XamlMetaDataProviderPch)
                 <ModuleOutputFile>$(IntDir)Microsoft\cppwinrt\</ModuleOutputFile>
                 <ObjectFileName>$(IntDir)Microsoft\cppwinrt\</ObjectFileName>
                 <ModuleDependenciesFile>$(IntDir)Microsoft\cppwinrt\</ModuleDependenciesFile>
-                <SourceDependenciesFile>$(IntDir)Microsoft\cppwinrt\</SourceDependenciesFile>
             </ClCompile>
         </ItemGroup>
     </Target>
