@@ -151,7 +151,7 @@ WINRT_EXPORT namespace winrt
 
         void revoke_canceller()
         {
-            while (m_canceller.exchange(nullptr, std::memory_order_acquire) == cancelling_ptr)
+            while (m_canceller.load(std::memory_order_acquire) == cancelling_ptr)
             {
                 std::this_thread::yield();
             }
@@ -160,6 +160,11 @@ WINRT_EXPORT namespace winrt
         void cancel()
         {
             auto canceller = m_canceller.exchange(cancelling_ptr, std::memory_order_acquire);
+            if (canceller == cancelling_ptr)
+            {
+                return;
+            }
+
             struct unique_cancellation_lock
             {
                 cancellable_promise* promise;
@@ -169,7 +174,7 @@ WINRT_EXPORT namespace winrt
                 }
             } lock{ this };
 
-            if ((canceller != nullptr) && (canceller != cancelling_ptr))
+            if (canceller != nullptr)
             {
                 canceller(m_context);
             }
