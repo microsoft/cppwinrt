@@ -154,8 +154,8 @@ WINRT_EXPORT namespace winrt
             auto canceller = m_canceller.load(std::memory_order_relaxed);
             do
             {
-                if (canceller == cancelling_ptr) {
-
+                if (canceller == cancelling_ptr)
+                {
                     std::this_thread::yield();
                     canceller = nullptr;
                 }
