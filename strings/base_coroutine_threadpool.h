@@ -151,10 +151,15 @@ WINRT_EXPORT namespace winrt
 
         void revoke_canceller()
         {
-            while (m_canceller.load(std::memory_order_acquire) == cancelling_ptr)
+            auto canceller = m_canceller.load(std::memory_order_relaxed);
+            do
             {
-                std::this_thread::yield();
-            }
+                if (canceller == cancelling_ptr) {
+
+                    std::this_thread::yield();
+                    canceller = nullptr;
+                }
+            } while (!m_canceller.compare_exchange_strong(canceller, nullptr, std::memory_order_acquire, std::memory_order_relaxed));
         }
 
         void cancel()
