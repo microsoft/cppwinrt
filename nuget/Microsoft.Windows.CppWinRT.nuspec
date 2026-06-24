@@ -12,6 +12,7 @@
     <tags>native C++ WinRT nativepackage</tags>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
     <license type="file">LICENSE</license>
+    <readme>readme.md</readme>
     <projectUrl>https://github.com/Microsoft/cppwinrt</projectUrl>
     <iconUrl>https://aka.ms/cppwinrt.ico</iconUrl>
   </metadata>
@@ -25,5 +26,7 @@
     <file src="Microsoft.Windows.CppWinRT.targets" target="build\native"/>
     <file src="CppWinrtRules.Project.xml" target="build\native"/>
     <file src="readme.txt"/>
+    <file src="readme.md"/>
+    <file src="modules.md"/>
   </files>
 </package>
