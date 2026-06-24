@@ -13,8 +13,26 @@ namespace cppwinrt
 {
     inline std::string file_to_string(std::string const& filename)
     {
-        std::ifstream file(filename, std::ios::binary);
-        return static_cast<std::stringstream const&>(std::stringstream() << file.rdbuf()).str();
+        std::ifstream file(filename, std::ios::binary | std::ios::ate);
+        if (!file) { return{}; }
+
+        const auto stream_size = file.tellg();
+        if (stream_size == std::ifstream::pos_type(-1))
+        {
+            return {};
+        }
+
+        file.seekg(0);
+
+        auto size = static_cast<std::size_t>(stream_size);
+        std::string result(size, '\0');
+        file.read(result.data(), size);
+        if (!file)
+        {
+            result.resize(static_cast<std::size_t>(file.gcount()));
+        }
+
+        return result;
     }
 
     template <typename T>
@@ -218,17 +236,14 @@ namespace cppwinrt
 
         bool file_equal(std::string const& filename) const
         {
-            if (!std::filesystem::exists(filename))
+            // Non-throwing file_size returns uintmax_t(-1) on errors, which shouldn't ever be the size of m_first or m_second
+            std::error_code ec;
+            if (std::filesystem::file_size(filename, ec) != m_first.size() + m_second.size())
             {
                 return false;
             }
 
             auto file = file_to_string(filename);
-
-            if (file.size() != m_first.size() + m_second.size())
-            {
-                return false;
-            }
 
             if (!std::equal(m_first.begin(), m_first.end(), file.begin(), file.begin() + m_first.size()))
             {
