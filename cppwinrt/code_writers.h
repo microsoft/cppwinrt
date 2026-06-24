@@ -206,6 +206,17 @@ namespace cppwinrt
         return { w, write_close_namespace };
     }
 
+    [[nodiscard]] static finish_with wrap_impl_namespace_without_export(writer& w)
+    {
+        auto format = R"(namespace winrt::impl
+{
+)";
+
+        w.write(format);
+
+        return { w, write_close_namespace };
+    }
+
     [[nodiscard]] static finish_with wrap_std_namespace(writer& w)
     {
         w.write(R"(namespace std
@@ -873,14 +884,29 @@ namespace cppwinrt
         w.write("        % %;\n", get_field_abi(w, field), field.Name());
     }
 
-    static void write_struct_abi(writer& w, TypeDef const& type)
+    static void write_struct_abi_type(writer& w, TypeDef const& type)
     {
         auto abi_guard = w.push_abi_types(true);
 
         auto format = R"(    struct struct_%
     {
 %    };
-    template <> struct abi<@::%>
+)";
+
+        type_name type_name(type);
+        auto impl_name = get_impl_name(type_name.name_space, type_name.name);
+
+        w.write(format,
+            impl_name,
+            bind_each<write_field_abi>(type.FieldList()));
+
+    }
+
+    static void write_struct_abi_specialization(writer& w, TypeDef const& type)
+    {
+        auto abi_guard = w.push_abi_types(true);
+
+        auto format = R"(    template <> struct abi<@::%>
     {
         using type = struct_%;
     };
@@ -890,8 +916,6 @@ namespace cppwinrt
         auto impl_name = get_impl_name(type_name.name_space, type_name.name);
 
         w.write(format,
-            impl_name,
-            bind_each<write_field_abi>(type.FieldList()),
             type_name.name_space, type_name.name,
             impl_name);
 
