@@ -26,7 +26,7 @@ jobs:
             config: Release
     runs-on: ${{ matrix.toolchain.image }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Download nuget
         run: |
@@ -113,7 +113,7 @@ jobs:
             test_exe: test_cpp20_module
     runs-on: ${{ matrix.toolchain.image }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Fetch cppwinrt executables
         if: matrix.arch != 'arm64'
@@ -263,7 +263,7 @@ jobs:
       CMAKE_COLOR_DIAGNOSTICS: 1
       CLICOLOR_FORCE: 1
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install cross compiler
         run: |
@@ -296,7 +296,7 @@ jobs:
         Deployment: [Component, Standalone]
     runs-on: windows-2025-vs2026
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Download nuget
         run: |
@@ -339,7 +339,7 @@ jobs:
             platform_toolset: v145
     runs-on: ${{ matrix.toolchain.image }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Fetch cppwinrt executables
         uses: actions/download-artifact@v8
@@ -384,7 +384,7 @@ jobs:
     name: Build nuget package with MSVC
     runs-on: windows-2025-vs2026
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Package
         run: |
