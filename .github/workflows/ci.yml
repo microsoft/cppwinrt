@@ -15,8 +15,6 @@ jobs:
         arch: [x86, x64, arm64]
         config: [Debug, Release]
         toolchain:
-          - image: windows-2025
-            platform_toolset: v143
           - image: windows-2025-vs2026
             platform_toolset: v145
         exclude:
@@ -99,10 +97,8 @@ jobs:
         compiler: [MSVC, clang-cl]
         arch: [x86, x64, arm64]
         config: [Debug, Release]
-        test_exe: [test, test_nocoro, test_cpp20, test_cpp20_no_sourcelocation, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
+        test_exe: [test, test_nocoro, test_cpp20, test_cpp20_no_sourcelocation, test_cpp20_module, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
         toolchain:
-          - image: windows-2025
-            platform_toolset: v143
           - image: windows-2025-vs2026
             platform_toolset: v145
         exclude:
@@ -112,6 +108,9 @@ jobs:
             arch: arm64
           - compiler: clang-cl
             config: Release
+          # C++20 named modules require the MSVC v145 toolset; clang-cl is not supported.
+          - compiler: clang-cl
+            test_exe: test_cpp20_module
     runs-on: ${{ matrix.toolchain.image }}
     steps:
       - uses: actions/checkout@v6
@@ -295,7 +294,7 @@ jobs:
         arch: [x86, x64, arm64]
         config: [Release]
         Deployment: [Component, Standalone]
-    runs-on: windows-latest
+    runs-on: windows-2025-vs2026
     steps:
       - uses: actions/checkout@v6
 
@@ -316,7 +315,7 @@ jobs:
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
           $target_version = "999.999.999.999"
-          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
+          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version,PlatformToolset=v145"
 
       - name: Restore nuget packages
         run: |
@@ -336,8 +335,6 @@ jobs:
         arch: [x86, x64]
         config: [Release]
         toolchain:
-          - image: windows-2025
-            platform_toolset: v143
           - image: windows-2025-vs2026
             platform_toolset: v145
     runs-on: ${{ matrix.toolchain.image }}
@@ -378,15 +375,6 @@ jobs:
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
           & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose
-      
-      - name: Remove module test projects on v143
-        if: matrix.toolchain.platform_toolset == 'v143'
-        run: |
-          # Module test projects require v145 toolset
-          mv test\nuget\NugetTest.sln test\nuget\NugetTest.sln.orig
-          Get-Content test\nuget\NugetTest.sln.orig |
-            Where-Object { -not ($_ -match 'TestModule') } |
-            Set-Content test\nuget\NugetTest.sln
 
       - name: Run nuget test
         run: |
@@ -394,7 +382,7 @@ jobs:
 
   build-nuget:
     name: Build nuget package with MSVC
-    runs-on: windows-latest
+    runs-on: windows-2025-vs2026
     steps:
       - uses: actions/checkout@v6
 
