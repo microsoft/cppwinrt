@@ -25,7 +25,7 @@
 - Use VS Developer Shell for correct toolset environment
 - `cmake --build build --config Release --target cppwinrt` for cppwinrt.exe (or MSBuild: `msbuild cppwinrt\cppwinrt.vcxproj /p:Configuration=Release /p:Platform=x64`)
 - NuGet tests: `msbuild test\nuget\NuGetTest.sln /p:Configuration=Release /p:Platform=x64`
-- Module test projects require v145 toolset (VS 2026). Directory.Build.Props sets v143 by default — override with `<PlatformToolset>v145</PlatformToolset>` in Configuration PropertyGroup
+- Module test projects require v145 toolset (VS 2026). Directory.Build.Props sets v145 by default; older toolsets can be selected by overriding `<PlatformToolset>` in the Configuration PropertyGroup
 
 ## Key Patterns
 
