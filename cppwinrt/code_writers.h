@@ -226,6 +226,17 @@ namespace cppwinrt
         return { w, write_close_namespace };
     }
 
+    [[nodiscard]] static finish_with wrap_type_namespace_without_export(writer& w, std::string_view const& ns)
+    {
+        auto format = R"(namespace winrt::@
+{
+)";
+
+        w.write(format, ns);
+
+        return { w, write_close_namespace };
+    }
+
     static void write_enum_field(writer& w, Field const& field)
     {
         auto format = R"(        % = %,
