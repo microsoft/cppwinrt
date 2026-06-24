@@ -992,6 +992,27 @@ namespace cppwinrt
         return object;
     }
 
+    static bool is_object_class(TypeSig const& signature)
+    {
+        bool result{};
+
+        call(signature.Type(),
+            [](ElementType) {},
+            [&](coded_index<TypeDefOrRef> const& type)
+            {
+                TypeDef type_def;
+                if (type.type() == TypeDefOrRef::TypeDef)
+                    type_def = type.TypeDef();
+                else if (type.type() == TypeDefOrRef::TypeRef)
+                    type_def = find_required(type.TypeRef());
+                if (type_def && get_category(type_def) == category::class_type)
+                    result = true;
+            },
+            [](auto&&) {});
+
+        return result;
+    }
+
     static auto get_delegate_method(TypeDef const& type)
     {
         auto methods = type.MethodList();

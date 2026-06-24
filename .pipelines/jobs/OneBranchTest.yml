@@ -107,7 +107,7 @@ jobs:
     - task: CmdLine@2
       displayName: Run cppwinrt to build projection
       inputs:
-        script: $(BuildPath)\cppwinrt.exe -in local -out $(BuildPath) -verbose
+        script: $(BuildPath)\cppwinrt.exe -in local -out $(BuildPath) -verbose -flatten_classes
 
     - task: VSBuild@1
       displayName: Build test

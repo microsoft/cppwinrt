@@ -34,5 +34,5 @@ if not exist "%cppwinrt_exe%" (
 )
 
 echo Building projection into %target_platform% %target_configuration%
-%cppwinrt_exe% -in local -out %~p0\_build\%target_platform%\%target_configuration% -verbose
+%cppwinrt_exe% -in local -out %~p0\_build\%target_platform%\%target_configuration% -verbose -flatten_classes
 echo.

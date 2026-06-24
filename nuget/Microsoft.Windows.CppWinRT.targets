@@ -1,4 +1,4 @@
-﻿<!--
+<!--
 ***********************************************************************************************
 Copyright (C) Microsoft Corporation. All rights reserved.
 ***********************************************************************************************
@@ -25,7 +25,10 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTHasHashTask Condition="'$(CppWinRTHasHashTask)' != 'true'">false</CppWinRTHasHashTask>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))..\..\</CppWinRTPackageDir>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))</CppWinRTPackageDir>
+        <CppWinRTFlatPlatform Condition="'$(CppWinRTFlatPlatform)' == '' and '$(Platform)' == 'ARM64EC'">arm64ec</CppWinRTFlatPlatform>
+        <CppWinRTFlatPlatform Condition="'$(CppWinRTFlatPlatform)' == ''">$(Platform)</CppWinRTFlatPlatform>
         <CppWinRTParameters Condition="'$(CppWinRTFastAbi)'=='true'">$(CppWinRTParameters) -fastabi</CppWinRTParameters>
+        <CppWinRTParameters Condition="'$(CppWinRTFlattenClasses)'=='true'">$(CppWinRTParameters) -flatten_classes</CppWinRTParameters>
         <!-- Module args are kept separate so they can be selectively applied to platform vs component projections -->
         <CppWinRTCommandModules Condition="'$(CppWinRTBuildModule)'=='true'">-modules</CppWinRTCommandModules>
         <CppWinRTCommandModuleFilter Condition="'$(CppWinRTModuleInclude)' != ''">-module_include $(CppWinRTModuleInclude.Replace(';', ' '))</CppWinRTCommandModuleFilter>
@@ -899,6 +902,7 @@ $(XamlMetaDataProviderPch)
         <Link>
             <AdditionalDependencies Condition="'$(CppWinRTLibs)' != 'false'">%(AdditionalDependencies);WindowsApp.lib</AdditionalDependencies>
             <AdditionalDependencies Condition="'$(CppWinRTFastAbi)'=='true'">%(AdditionalDependencies);$(CppWinRTPackageDir)build\native\lib\$(Platform)\cppwinrt_fast_forwarder.lib</AdditionalDependencies>
+            <AdditionalDependencies Condition="'$(CppWinRTFlattenClasses)'=='true'">%(AdditionalDependencies);$(CppWinRTPackageDir)build\native\lib\$(CppWinRTFlatPlatform)\cppwinrt_cached_thunks.lib</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
 

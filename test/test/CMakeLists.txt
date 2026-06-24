@@ -57,6 +57,7 @@ endforeach()
 add_executable(test-vanilla main.cpp ${TEST_SRCS})
 set_target_properties(test-vanilla PROPERTIES OUTPUT_NAME "test")
 target_link_libraries(test-vanilla runtimeobject synchronization)
+target_include_directories(test-vanilla PRIVATE "${CPPWINRT_PROJECTION_INCLUDE_DIR}")
 
 target_precompile_headers(test-vanilla PRIVATE pch.h)
 set_source_files_properties(

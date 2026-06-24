@@ -518,7 +518,7 @@ WINRT_EXPORT namespace winrt
     template <typename T, std::enable_if_t<!std::is_constructible_v<hstring, T>, int> = 0>
     Windows::Foundation::IInspectable box_value(T const& value)
     {
-        if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>)
+        if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T> || impl::has_flat_cache_v<T>)
         {
             return value;
         }
@@ -531,7 +531,7 @@ WINRT_EXPORT namespace winrt
     template <typename T>
     T unbox_value(Windows::Foundation::IInspectable const& value)
     {
-        if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>)
+        if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T> || impl::has_flat_cache_v<T>)
         {
             return value.as<T>();
         }
@@ -560,7 +560,7 @@ WINRT_EXPORT namespace winrt
     {
         if (value)
         {
-            if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>)
+            if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T> || impl::has_flat_cache_v<T>)
             {
                 if (auto temp = value.try_as<T>())
                 {

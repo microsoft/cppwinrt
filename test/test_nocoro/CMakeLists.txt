@@ -20,6 +20,7 @@ endforeach()
 add_executable(test_nocoro main.cpp ${TEST_SRCS})
 
 target_compile_definitions(test_nocoro PRIVATE WINRT_NO_SOURCE_LOCATION)
+target_include_directories(test_nocoro PRIVATE "${CPPWINRT_PROJECTION_INCLUDE_DIR}")
 
 target_precompile_headers(test_nocoro PRIVATE pch.h)
 set_source_files_properties(
