@@ -1,5 +1,5 @@
 
-WINRT_EXPORT namespace winrt::impl
+namespace winrt::impl
 {
     inline std::int32_t make_marshaler(unknown_abi* outer, void** result) noexcept
     {
