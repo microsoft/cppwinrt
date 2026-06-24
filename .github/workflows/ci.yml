@@ -97,7 +97,7 @@ jobs:
         compiler: [MSVC, clang-cl]
         arch: [x86, x64, arm64]
         config: [Debug, Release]
-        test_exe: [test, test_nocoro, test_cpp20, test_cpp20_no_sourcelocation, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
+        test_exe: [test, test_nocoro, test_cpp20, test_cpp20_no_sourcelocation, test_cpp20_module, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
         toolchain:
           - image: windows-2025-vs2026
             platform_toolset: v145
@@ -108,6 +108,9 @@ jobs:
             arch: arm64
           - compiler: clang-cl
             config: Release
+          # C++20 named modules require the MSVC v145 toolset; clang-cl is not supported.
+          - compiler: clang-cl
+            test_exe: test_cpp20_module
     runs-on: ${{ matrix.toolchain.image }}
     steps:
       - uses: actions/checkout@v6

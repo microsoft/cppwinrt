@@ -3,7 +3,10 @@
   <!-- Set common MSBuild properties and item metadata for CppWinRT tool and tests -->
 
   <PropertyGroup>
-    <PlatformToolset>v145</PlatformToolset>
+    <!-- Use the v145 toolset on Visual Studio 2026 (VisualStudioVersion 18.0) and later,
+         where it is available; fall back to v143 on older Visual Studio (e.g. 2022). -->
+    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' &gt;= '18.0'">v145</PlatformToolset>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
