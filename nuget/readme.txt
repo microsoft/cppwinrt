@@ -19,4 +19,7 @@ In addition, C++/WinRT generates templates and skeleton implementations for each
 ========================================================================
 For more information, visit:
 https://github.com/Microsoft/cppwinrt/tree/master/nuget
+
+The full documentation is also included in this package as readme.md, and
+the C++20 modules guide as modules.md.
 ========================================================================
