@@ -10,6 +10,7 @@ test*.xml
 test*_results.txt
 test_failures.txt
 build
+_build
 packages
 Debug
 Release
