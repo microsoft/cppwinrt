@@ -1,7 +1,7 @@
 
 WINRT_EXPORT namespace winrt
 {
-#if defined (WINRT_NO_MODULE_LOCK)
+#if defined(WINRT_NO_MODULE_LOCK)
 
     // Defining WINRT_NO_MODULE_LOCK is appropriate for apps (executables) or pinned DLLs (that don't support unloading)
     // and can thus avoid the synchronization overhead imposed by the default module lock.
@@ -29,7 +29,7 @@ WINRT_EXPORT namespace winrt
         return lock{};
     }
 
-#elif defined (WINRT_CUSTOM_MODULE_LOCK)
+#elif defined(WINRT_CUSTOM_MODULE_LOCK)
 
     // When WINRT_CUSTOM_MODULE_LOCK is defined, you must provide an implementation of winrt::get_module_lock()
     // that returns an object that implements operator++ and operator--.
