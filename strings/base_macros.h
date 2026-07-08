@@ -44,7 +44,7 @@
 
 // Template specializations in namespace std (hash, coroutine_traits) need extern "C++"
 // linkage in module builds for proper merging with the std module, but must NOT be
-// exported — exporting namespace std would make all of std transitively visible.
+// exported - exporting namespace std would make all of std transitively visible.
 #ifndef WINRT_IMPL_STD_EXPORT
 #ifdef WINRT_IMPL_BUILD_MODULE
 #define WINRT_IMPL_STD_EXPORT extern "C++"
