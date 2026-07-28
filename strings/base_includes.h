@@ -17,6 +17,7 @@
 #include <map>
 #include <memory>
 #include <optional>
+#include <ratio>
 #include <stdexcept>
 #include <string_view>
 #include <string>
