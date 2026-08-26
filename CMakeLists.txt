@@ -184,7 +184,7 @@ if(EXTERNAL_WINMD_INCLUDE_DIR STREQUAL "")
     include(ExternalProject)
     ExternalProject_Add(winmd
         GIT_REPOSITORY https://github.com/microsoft/winmd.git
-        GIT_TAG 0f1eae3bfa63fa2ba3c2912cbfe72a01db94cc5a
+        GIT_TAG 1.0.260529.3
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
         INSTALL_COMMAND ""

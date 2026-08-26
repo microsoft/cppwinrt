@@ -109,6 +109,7 @@
     <ClCompile Include="com_interop.cpp" />
     <ClCompile Include="natvis.cpp" />
     <ClCompile Include="numerics.cpp" />
+    <ClCompile Include="pinterface_guid_precomputed.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
