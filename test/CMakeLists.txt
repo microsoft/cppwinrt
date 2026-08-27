@@ -108,6 +108,7 @@ add_subdirectory(test)
 add_subdirectory(test_nocoro)
 add_subdirectory(test_cpp20)
 add_subdirectory(test_cpp20_no_sourcelocation)
+add_subdirectory(test_cpp23)
 
 if(HAS_WINDOWSNUMERICS)
     add_subdirectory(old_tests)
