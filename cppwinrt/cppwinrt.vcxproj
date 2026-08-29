@@ -311,4 +311,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props'))" />
   </Target>
+  <ItemGroup>
+    <ProjectReference Include="..\fast_fwd\fast_fwd.vcxproj">
+      <Project>{A63B3AD1-AB7B-461E-9FFF-2447F5BCD459}</Project>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
