@@ -148,7 +148,7 @@ WINRT_EXPORT namespace winrt::param
     template <typename K, typename V>
     auto get_abi(map_view<K, V> const& object) noexcept
     {
-        return *(void**)(&object);
+        return *impl::abi_cast(object);
     }
 
     template <typename K, typename V>
@@ -214,6 +214,6 @@ WINRT_EXPORT namespace winrt::param
     template <typename K, typename V>
     auto get_abi(async_map_view<K, V> const& object) noexcept
     {
-        return *(void**)(&object);
+        return *impl::abi_cast(object);
     }
 }

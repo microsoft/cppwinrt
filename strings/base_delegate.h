@@ -203,7 +203,7 @@ WINRT_EXPORT namespace winrt::impl
 
         auto operator()(Args const& ... args) const
         {
-            return (*(variadic_delegate_abi<R, Args...> * *)this)->invoke(args...);
+            return (*reinterpret_cast<variadic_delegate_abi<R, Args...> **>(const_cast<delegate_base<R, Args...>*>(this)))->invoke(args...);
         }
 
     private:

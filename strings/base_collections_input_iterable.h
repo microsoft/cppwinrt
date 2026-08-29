@@ -226,7 +226,7 @@ WINRT_EXPORT namespace winrt::param
     template <typename T>
     auto get_abi(iterable<T> const& object) noexcept
     {
-        return *(void**)(&object);
+        return *impl::abi_cast(object);
     }
 
     template <typename T>
@@ -346,6 +346,6 @@ WINRT_EXPORT namespace winrt::param
     template <typename T>
     auto get_abi(async_iterable<T> const& object) noexcept
     {
-        return *(void**)(&object);
+        return *impl::abi_cast(object);
     }
 }

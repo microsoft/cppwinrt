@@ -94,6 +94,6 @@ WINRT_EXPORT namespace winrt::param
     template <typename T>
     auto get_abi(vector<T> const& object) noexcept
     {
-        return *(void**)(&object);
+        return *impl::abi_cast(object);
     }
 }
