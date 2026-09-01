@@ -5,13 +5,13 @@ WINRT_EXPORT namespace winrt::impl
     {
         atomic_ref_count() noexcept = default;
 
-        explicit atomic_ref_count(std::uint32_t count) noexcept : m_count(count)
+        explicit atomic_ref_count(std::uint32_t count) noexcept : m_count(static_cast<std::int32_t>(count))
         {
         }
 
         std::uint32_t operator=(std::uint32_t count) noexcept
         {
-            return m_count = count;
+            return static_cast<std::uint32_t>(m_count = static_cast<std::int32_t>(count));
         }
 
         std::uint32_t operator++() noexcept
@@ -639,7 +639,7 @@ WINRT_EXPORT namespace winrt::impl
         }
         WINRT_ASSERT(result.ec == std::errc{});
         wchar_t buffer[32];
-        auto end = std::copy(std::begin(temp), result.ptr, buffer);
+        auto end = std::transform(std::begin(temp), result.ptr, buffer, [](char value) noexcept { return static_cast<wchar_t>(value); });
         return hstring{ std::wstring_view{ buffer, static_cast<std::size_t>(end - buffer)} };
     }
 
@@ -785,7 +785,7 @@ WINRT_EXPORT namespace winrt
             return{};
         }
 
-        impl::hstring_builder result(size);
+        impl::hstring_builder result(static_cast<std::uint32_t>(size));
         WINRT_VERIFY_(size, WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<std::int32_t>(view.size()), result.data(), size));
         return result.to_hstring();
     }
@@ -799,7 +799,7 @@ WINRT_EXPORT namespace winrt
             return{};
         }
 
-        std::string result(size, '?');
+        std::string result(static_cast<std::size_t>(size), '?');
         WINRT_VERIFY_(size, WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<std::int32_t>(value.size()), result.data(), size, nullptr, nullptr));
         return result;
     }

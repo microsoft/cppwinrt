@@ -22,7 +22,7 @@ WINRT_EXPORT namespace winrt::impl
     template <std::size_t Size, typename T, std::size_t... Index>
     constexpr std::array<T, Size> to_array(T const* value, std::index_sequence<Index...> const) noexcept
     {
-        return { value[Index]... };
+        return {{ value[Index]... }};
     }
 
     template <typename T, std::size_t Size>
@@ -50,7 +50,7 @@ WINRT_EXPORT namespace winrt::impl
         std::index_sequence<LeftIndex...> const,
         std::index_sequence<RightIndex...> const) noexcept
     {
-        return { left[LeftIndex]..., right[RightIndex]... };
+        return {{ left[LeftIndex]..., right[RightIndex]... }};
     }
 
     template <typename T, std::size_t LeftSize, std::size_t RightSize>
@@ -99,7 +99,7 @@ WINRT_EXPORT namespace winrt::impl
     template <typename T, std::size_t LS, std::size_t RS, std::size_t... LI, std::size_t... RI>
     constexpr std::array<T, LS + RS - 1> zconcat_base(std::array<T, LS> const& left, std::array<T, RS> const& right, std::index_sequence<LI...> const, std::index_sequence<RI...> const) noexcept
     {
-        return { left[LI]..., right[RI]..., T{} };
+        return {{ left[LI]..., right[RI]..., T{} }};
     }
 
     template <typename T, std::size_t LS, std::size_t RS>
@@ -111,7 +111,7 @@ WINRT_EXPORT namespace winrt::impl
     template <typename T, std::size_t S, std::size_t... I>
     constexpr std::array<T, S> to_zarray_base(T const(&value)[S], std::index_sequence<I...> const) noexcept
     {
-        return { value[I]... };
+        return {{ value[I]... }};
     }
 
     template <typename T, std::size_t S>
@@ -141,43 +141,43 @@ WINRT_EXPORT namespace winrt::impl
 
     constexpr std::array<std::uint8_t, 4> to_array(std::uint32_t value) noexcept
     {
-        return { static_cast<std::uint8_t>(value & 0x000000ff), static_cast<std::uint8_t>((value & 0x0000ff00) >> 8), static_cast<std::uint8_t>((value & 0x00ff0000) >> 16), static_cast<std::uint8_t>((value & 0xff000000) >> 24) };
+        return {{ static_cast<std::uint8_t>(value & 0x000000ff), static_cast<std::uint8_t>((value & 0x0000ff00) >> 8), static_cast<std::uint8_t>((value & 0x00ff0000) >> 16), static_cast<std::uint8_t>((value & 0xff000000) >> 24) }};
     }
 
     constexpr std::array<std::uint8_t, 2> to_array(std::uint16_t value) noexcept
     {
-        return { static_cast<std::uint8_t>(value & 0x00ff), static_cast<std::uint8_t>((value & 0xff00) >> 8) };
+        return {{ static_cast<std::uint8_t>(value & 0x00ff), static_cast<std::uint8_t>((value & 0xff00) >> 8) }};
     }
 
     constexpr auto to_array(guid const& value) noexcept
     {
         return combine(to_array(value.Data1), to_array(value.Data2), to_array(value.Data3),
-            std::array<std::uint8_t, 8>{ value.Data4[0], value.Data4[1], value.Data4[2], value.Data4[3], value.Data4[4], value.Data4[5], value.Data4[6], value.Data4[7] });
+            std::array<std::uint8_t, 8>{{ value.Data4[0], value.Data4[1], value.Data4[2], value.Data4[3], value.Data4[4], value.Data4[5], value.Data4[6], value.Data4[7] }});
     }
 
     template <typename T>
     constexpr T to_hex_digit(std::uint8_t value) noexcept
     {
         value &= 0xF;
-        return value < 10 ? static_cast<T>('0') + value : static_cast<T>('a') + (value - 10);
+        return value < 10 ? static_cast<T>('0' + value) : static_cast<T>('a' + (value - 10));
     }
 
     template <typename T>
     constexpr std::array<T, 2> uint8_to_hex(std::uint8_t const value) noexcept
     {
-        return { to_hex_digit<T>(value >> 4), to_hex_digit<T>(value & 0xF) };
+        return {{ to_hex_digit<T>(static_cast<std::uint8_t>(value >> 4)), to_hex_digit<T>(static_cast<std::uint8_t>(value & 0xF)) }};
     }
 
     template <typename T>
     constexpr auto uint16_to_hex(std::uint16_t value) noexcept
     {
-        return combine(uint8_to_hex<T>(static_cast<std::uint8_t>(value >> 8)), uint8_to_hex<T>(value & 0xFF));
+        return combine(uint8_to_hex<T>(static_cast<std::uint8_t>(value >> 8)), uint8_to_hex<T>(static_cast<std::uint8_t>(value & 0xFF)));
     }
 
     template <typename T>
     constexpr auto uint32_to_hex(std::uint32_t const value) noexcept
     {
-        return combine(uint16_to_hex<T>(value >> 16), uint16_to_hex<T>(value & 0xFFFF));
+        return combine(uint16_to_hex<T>(static_cast<std::uint16_t>(value >> 16)), uint16_to_hex<T>(static_cast<std::uint16_t>(value & 0xFFFF)));
     }
 
     template <typename T>
@@ -185,15 +185,15 @@ WINRT_EXPORT namespace winrt::impl
     {
         return combine
         (
-            std::array<T, 1>{'{'},
-            uint32_to_hex<T>(value.Data1), std::array<T, 1>{'-'},
-            uint16_to_hex<T>(value.Data2), std::array<T, 1>{'-'},
-            uint16_to_hex<T>(value.Data3), std::array<T, 1>{'-'},
-            uint16_to_hex<T>(value.Data4[0] << 8 | value.Data4[1]), std::array<T, 1>{'-'},
-            uint16_to_hex<T>(value.Data4[2] << 8 | value.Data4[3]),
-            uint16_to_hex<T>(value.Data4[4] << 8 | value.Data4[5]),
-            uint16_to_hex<T>(value.Data4[6] << 8 | value.Data4[7]),
-            std::array<T, 1>{'}'}
+            std::array<T, 1>{{'{'}},
+            uint32_to_hex<T>(value.Data1), std::array<T, 1>{{'-'}},
+            uint16_to_hex<T>(value.Data2), std::array<T, 1>{{'-'}},
+            uint16_to_hex<T>(value.Data3), std::array<T, 1>{{'-'}},
+            uint16_to_hex<T>(static_cast<std::uint16_t>(value.Data4[0] << 8 | value.Data4[1])), std::array<T, 1>{{'-'}},
+            uint16_to_hex<T>(static_cast<std::uint16_t>(value.Data4[2] << 8 | value.Data4[3])),
+            uint16_to_hex<T>(static_cast<std::uint16_t>(value.Data4[4] << 8 | value.Data4[5])),
+            uint16_to_hex<T>(static_cast<std::uint16_t>(value.Data4[6] << 8 | value.Data4[7])),
+            std::array<T, 1>{{'}'}}
         );
     }
 
@@ -226,7 +226,7 @@ WINRT_EXPORT namespace winrt::impl
 
     constexpr std::uint16_t endian_swap(std::uint16_t value) noexcept
     {
-        return (value & 0xFF00) >> 8 | (value & 0x00FF) << 8;
+        return static_cast<std::uint16_t>((value & 0xFF00) >> 8 | (value & 0x00FF) << 8);
     }
 
     constexpr guid endian_swap(guid value) noexcept
@@ -247,7 +247,7 @@ WINRT_EXPORT namespace winrt::impl
     template <typename T, std::size_t Size, std::size_t... Index>
     constexpr std::array<std::uint8_t, Size> char_to_byte_array(std::array<T, Size> const& value, std::index_sequence<Index...> const) noexcept
     {
-        return { static_cast<std::uint8_t>(value[Index])... };
+        return {{ static_cast<std::uint8_t>(value[Index])... }};
     }
 
     constexpr auto sha1_rotl(std::uint8_t bits, std::uint32_t word) noexcept
@@ -337,7 +337,7 @@ WINRT_EXPORT namespace winrt::impl
             A = temp;
         }
 
-        return { intermediate_hash[0] + A, intermediate_hash[1] + B, intermediate_hash[2] + C, intermediate_hash[3] + D, intermediate_hash[4] + E };
+        return {{ intermediate_hash[0] + A, intermediate_hash[1] + B, intermediate_hash[2] + C, intermediate_hash[3] + D, intermediate_hash[4] + E }};
     }
 
     template <std::size_t Size>
@@ -349,7 +349,7 @@ WINRT_EXPORT namespace winrt::impl
     constexpr std::array<std::uint8_t, 8> size_to_bytes(std::size_t size) noexcept
     {
         return
-        {
+        {{
             static_cast<std::uint8_t>((size & 0xff00000000000000) >> 56),
             static_cast<std::uint8_t>((size & 0x00ff000000000000) >> 48),
             static_cast<std::uint8_t>((size & 0x0000ff0000000000) >> 40),
@@ -358,13 +358,13 @@ WINRT_EXPORT namespace winrt::impl
             static_cast<std::uint8_t>((size & 0x0000000000ff0000) >> 16),
             static_cast<std::uint8_t>((size & 0x000000000000ff00) >> 8),
             static_cast<std::uint8_t>((size & 0x00000000000000ff) >> 0)
-        };
+        }};
     }
 
     template <std::size_t Size, std::size_t RemainingSize, std::size_t... Index>
     constexpr std::array<std::uint8_t, RemainingSize + 1> make_remaining([[maybe_unused]] std::array<std::uint8_t, Size> const& input, [[maybe_unused]] std::size_t start_pos, std::index_sequence<Index...>) noexcept
     {
-        return { input[Index + start_pos]..., 0x80 };
+        return {{ input[Index + start_pos]..., 0x80 }};
     }
 
     template <std::size_t Size>
@@ -402,7 +402,7 @@ WINRT_EXPORT namespace winrt::impl
     template <std::size_t... Index>
     constexpr std::array<std::uint8_t, 20> get_result(std::array<std::uint32_t, 5> const& intermediate_hash, std::index_sequence<Index...>) noexcept
     {
-        return { static_cast<std::uint8_t>(intermediate_hash[Index >> 2] >> (8 * (3 - (Index & 0x03))))... };
+        return {{ static_cast<std::uint8_t>(intermediate_hash[Index >> 2] >> (8 * (3 - (Index & 0x03))))... }};
     }
 
     constexpr auto get_result(std::array<std::uint32_t, 5> const& intermediate_hash) noexcept
@@ -413,7 +413,7 @@ WINRT_EXPORT namespace winrt::impl
     template <std::size_t Size>
     constexpr auto calculate_sha1(std::array<std::uint8_t, Size> const& input) noexcept
     {
-        std::array<std::uint32_t, 5> intermediate_hash{ 0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0 };
+        std::array<std::uint32_t, 5> intermediate_hash{{ 0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0 }};
         std::size_t i = 0;
 
         while (i + 64 <= Size)
@@ -468,7 +468,7 @@ WINRT_EXPORT namespace winrt::impl
         combine
         (
             to_array<wchar_t>(guid_of<T>()),
-            std::array<wchar_t, 1>{ L'\0' }
+            std::array<wchar_t, 1>{{ L'\0' }}
         )
     };
 
