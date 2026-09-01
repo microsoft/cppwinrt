@@ -81,8 +81,45 @@ namespace cppwinrt
         w.write(format);
     }
 
+    // The ABI interface structs, the delegate structs, and the produce<D, I> vtable adapters
+    // all have virtual functions and non-virtual destructors, which trips C4265/C5204 on MSVC
+    // and -Wnon-virtual-dtor on clang. None of those types is ever deleted. The only
+    // refcounted, heap-allocated type is root_implements, and it already has a virtual
+    // destructor; everything below it is a non-owning subobject whose address is simply the
+    // COM interface pointer. The warning is therefore reporting a delete that cannot occur.
+    // Scoped with push/pop so that consumer code outside these headers is unaffected.
+    static void write_diagnostic_push(writer& w)
+    {
+        auto format = R"(#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4265) // class has virtual functions, but destructor is not virtual
+#pragma warning(disable: 5204) // class has virtual functions, but its trivial destructor is not virtual
+#endif // _MSC_VER
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnon-virtual-dtor"
+#endif // __clang__
+)";
+
+        w.write(format);
+    }
+
+    static void write_diagnostic_pop(writer& w)
+    {
+        auto format = R"(#ifdef __clang__
+#pragma clang diagnostic pop
+#endif // __clang__
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif // _MSC_VER
+)";
+
+        w.write(format);
+    }
+
     static void write_close_file_guard(writer& w)
     {
+        write_diagnostic_pop(w);
         write_endif(w);
     }
 
@@ -108,6 +145,7 @@ namespace cppwinrt
 )";
 
         w.write(format, mangled_name, mangled_name);
+        write_diagnostic_push(w);
     }
 
     template<typename... Args>
