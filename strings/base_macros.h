@@ -24,9 +24,10 @@
 
 #ifdef _MSC_VER
 // These disables deliberately apply to the remainder of the file that includes
-// this header, because they cover declarations made throughout C++/WinRT. The
-// including file opens a #pragma warning(push) beforehand and pops it at the
-// end, which keeps them from escaping into consumer code.
+// this header, because they cover declarations made throughout C++/WinRT.
+// When included by <winrt/base.h>, that file opens a #pragma warning(push)
+// before including base_macros.h and pops it at the end to avoid leaking
+// the disables into consumer code.
 
 // Note: this is a workaround for a false-positive warning produced by the Visual C++ 15.9 compiler.
 #pragma warning(disable : 5046)
