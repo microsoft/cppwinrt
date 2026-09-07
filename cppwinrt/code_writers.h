@@ -117,33 +117,6 @@ namespace cppwinrt
         return { w, write_close_file_guard };
     }
 
-    static void write_macro_warning_pop(writer& w)
-    {
-        auto format = R"(#ifdef _MSC_VER
-#pragma warning(pop)
-#endif // _MSC_VER
-)";
-
-        w.write(format);
-    }
-
-    // base_macros.h disables a handful of compiler warnings that C++/WinRT's own
-    // declarations would otherwise trigger. Those disables have to stay in effect
-    // for the rest of the file that includes it, so the enclosing scope is opened
-    // here rather than inside base_macros.h itself. Without the matching pop the
-    // disables would remain active for everything the consumer writes after the
-    // include, silently turning the warnings off for their code as well.
-    [[nodiscard]] static finish_with wrap_macro_warning_scope(writer& w)
-    {
-        auto format = R"(#ifdef _MSC_VER
-#pragma warning(push)
-#endif // _MSC_VER
-)";
-
-        w.write(format);
-        return { w, write_macro_warning_pop };
-    }
-
     [[nodiscard]] static finish_with wrap_lean_and_mean(writer& w, bool is_lean_and_mean = true)
     {
         if (is_lean_and_mean)

@@ -17,7 +17,6 @@ namespace cppwinrt
                 w.write(strings::base_detect_numerics);
                 w.write(strings::base_include_numerics);
             }
-            auto wrap_macro_warnings = wrap_macro_warning_scope(w);
             w.write_root_include("base_macros");
             w.write(strings::base_source_location);
             w.write(strings::base_types);
