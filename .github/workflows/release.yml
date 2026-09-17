@@ -25,6 +25,10 @@ jobs:
             echo "::error::Output nuget package not found!"
             exit 1
           }
+          if (!(Test-Path "vsix\Dev17\bin\Release\Standalone\Microsoft.Windows.CppWinRT.Dev17.vsix")) {
+            echo "::error::Output vsix package not found!"
+            exit 1
+          }
 
       - name: NuGet login
         uses: NuGet/login@v1
