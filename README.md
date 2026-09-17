@@ -1,3 +1,35 @@
+# C++/WinRT Plus
+
+[![CI Tests](https://github.com/YexuanXiao/cppwinrtplus/actions/workflows/ci.yml/badge.svg)](https://github.com/YexuanXiao/cppwinrtplus/actions/workflows/ci.yml)
+
+C++/WinRT Plus is a community-driven evolution of the original C++/WinRT project. This independent initiative is neither affiliated with nor sponsored by Microsoft. Our mission is to address long-standing issues in C++/WinRT and deliver meaningful improvements to the developer experience. While the project introduces some breaking changes, we provide a simple and smooth migration path. You can continue using it just as you would with C++/WinRT.
+
+We're deeply grateful to the original authors of C++/WinRT for their groundbreaking work, which gave the C++ community first-class access to the Windows Runtime.
+
+With development on the original project slowing, we believe it's time for the community to take the lead. C++/WinRT Plus builds on that strong foundation—preserving what works while addressing the issues that matter most to daily users. Join us in shaping the future of Windows Runtime development in C++.
+
+## How to use
+
+You can install the package directly via NuGet with the ID YexuanXiao.CppWinRTPlus.
+
+## Roadmap
+
+The current plans for C++/WinRT Plus can be viewed in the issue list. C++/WinRT Plus currently has many ambitious improvements, so your help is greatly needed!
+
+## Changelog
+
+Since the C++/WinRT mainline has accepted our module implementation, C++/WinRT Plus is now rebased onto the C++/WinRT 3.0 mainline to maintain compatibility.
+
+All the changes listed here only show the differences from the C++/WinRT mainline, and once the C++/WinRT Plus commits are merged upstream, they will be removed.
+
+2026/09/17:
+
+1. C++/WinRT Plus can now work with our VSIX extension to provide visualization for WinRT types in third-party NuGet packages (such as WindowsAppSDK).
+2. Fixed the issue where XamlMetadataProvider.cpp still requires the pch.h even when it is disabled.
+3. Optimized the performance of winrt::to_string using C++23's new resize_and_overwrite function.
+
+2026/03/24: Support using lambdas with explicit object parameter as delegates to resolve the issue where the captured lifetime may be shorter than the lifetime of the coroutine frame.
+
 # The C++/WinRT language projection
 
 C++/WinRT is an entirely standard C++ language projection for Windows Runtime (WinRT) APIs, implemented as a header-file-based library, and designed to provide you with first-class access to the modern Windows API. With C++/WinRT, you can author and consume Windows Runtime APIs using any standards-compliant C++17 compiler.

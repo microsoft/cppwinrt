@@ -1,0 +1,54 @@
+name: Release NuGet
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    permissions:
+        id-token: write
+        contents: write
+    runs-on: windows-2025-vs2026
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Build and pack
+        shell: pwsh
+        run: |
+          $version = "${{ github.event.release.tag_name }}" -replace '^v', ''
+          $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
+          echo "Using VSDevCmd: ${VSDevCmd}"
+          cmd /c "${VSDevCmd}" "&" nuget.exe restore cppwinrt.slnx
+          cmd /c "${VSDevCmd}" "&" build_vsix.cmd Release "${version}"
+          if (!(Test-Path "*.nupkg")) {
+            echo "::error::Output nuget package not found!"
+            exit 1
+          }
+
+      - name: NuGet login
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: YexuanXiao
+
+      - name: NuGet push
+        run: |
+          $version = "${{ github.event.release.tag_name }}" -replace '^v', ''
+          $packageName = "YexuanXiao.CppWinRTPlus.${version}.nupkg"
+          dotnet nuget push $packageName --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+
+      - name: Upload to Release
+        shell: pwsh
+        run: |
+          $headers = @{
+            "Authorization" = "Bearer ${{ secrets.GITHUB_TOKEN }}"
+            "Content-Type" = "application/octet-stream"
+          }
+          $version = "${{ github.event.release.tag_name }}" -replace '^v', ''
+          $packageName = "YexuanXiao.CppWinRTPlus.${version}.nupkg"
+          $url = "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }}/assets?name=${packageName}"
+          Invoke-RestMethod -Uri $url -Method POST -Headers $headers -InFile $packageName
+          $vsixName = "Microsoft.Windows.CppWinRT.Dev17.${version}.vsix"
+          $url = "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }}/assets?name=${vsixName}"
+          Invoke-RestMethod -Uri $url -Method POST -Headers $headers -InFile "vsix\Dev17\bin\Release\Standalone\Microsoft.Windows.CppWinRT.Dev17.vsix"
