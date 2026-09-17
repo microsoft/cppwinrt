@@ -19,7 +19,7 @@ jobs:
           $version = "${{ github.event.release.tag_name }}" -replace '^v', ''
           $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
           echo "Using VSDevCmd: ${VSDevCmd}"
-          cmd /c "${VSDevCmd}" "&" nuget.exe restore cppwinrt.slnx
+          cmd /c "${VSDevCmd}" "&" nuget.exe restore cppwinrt.sln
           cmd /c "${VSDevCmd}" "&" build_vsix.cmd Release "${version}"
           if (!(Test-Path "*.nupkg")) {
             echo "::error::Output nuget package not found!"
