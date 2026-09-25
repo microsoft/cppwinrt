@@ -4,6 +4,7 @@ using namespace winrt;
 using namespace winmd::reader;
 using namespace std::literals;
 using namespace Microsoft::VisualStudio::Debugger;
+using namespace Microsoft::VisualStudio::Debugger::Evaluation;
 
 static std::map<coded_index<TypeDefOrRef>, std::pair<TypeDef, std::wstring>> _cache;
 
@@ -278,7 +279,7 @@ static guid generate_guid(GenericTypeInstSig const& type)
     return set_named_guid_fields(endian_swap(to_guid(calculate_sha1(buffer))));
 }
 
-std::pair<TypeDef, std::wstring> ResolveTypeInterface(DkmProcess* process, winmd::reader::TypeSig const& typeSig)
+std::pair<TypeDef, std::wstring> ResolveTypeInterface(DkmVisualizedExpression* pExpression, winmd::reader::TypeSig const& typeSig)
 {
     coded_index<TypeDefOrRef> index;
     if (auto ptrIndex = std::get_if<coded_index<TypeDefOrRef>>(&typeSig.Type()))
@@ -290,7 +291,7 @@ std::pair<TypeDef, std::wstring> ResolveTypeInterface(DkmProcess* process, winmd
             return found->second;
         }
 
-        TypeDef type = ResolveType(process, index);
+        TypeDef type = ResolveType(pExpression, index);
         if (!type)
         {
             return {};
@@ -307,7 +308,7 @@ std::pair<TypeDef, std::wstring> ResolveTypeInterface(DkmProcess* process, winmd
     {
         index = ptrGeneric->GenericType();
         auto guid = format_guid(generate_guid(*ptrGeneric));
-        return { ResolveType(process, index), guid };
+        return { ResolveType(pExpression, index), guid };
     }
     return {};
 };
