@@ -115,6 +115,8 @@ void MyComponent::InitializeComponent()
 }
 ```
 
+InitializeComponent can also have parameters, and its parameters must be equal to the parameters of the corresponding constructor. When a constructor is called, the InitializeComponent that has the same parameters as it, or that has zero formal parameters, will also be called, preferring the one with the same parameters as the constructor.
+
 ***[Windows|Microsoft]::UI::Xaml::Markup::ComponentConnectorT***
 
 A consequence of calling InitializeComponent outside construction is that Xaml runtime callbacks to IComponentConnector::Connect and IComponentConnector2::GetBindingConnector are now dispatched to the most derived implementations. Previously, these calls were dispatched directly to the class under construction, as the vtable had yet to be initialized. For objects with markup that derive from composable base classes with markup, this is a breaking change. Derived classes must now implement IComponentConnector::Connect and IComponentConnector2::GetBindingConnector by explicitly calling into the base class. The ComponentConnectorT template provides a correct implementation for these interfaces:
