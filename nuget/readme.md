@@ -115,7 +115,7 @@ void MyComponent::InitializeComponent()
 }
 ```
 
-InitializeComponent can also have parameters, and its parameters must be equal to the parameters of the corresponding constructor. When a constructor is called, the InitializeComponent that has the same parameters as it, or that has zero parameters, will also be called, preferring the one with the same parameters as the constructor.
+InitializeComponent can also have parameters, the arguments passed to the constructor will also be attempted for use in calling InitializeComponent. If no such overload exists, it will fall back to calling InitializeComponent without arguments.
 
 ***[Windows|Microsoft]::UI::Xaml::Markup::ComponentConnectorT***
 
