@@ -110,25 +110,11 @@ namespace cppwinrt
 
     static void write_component_activation(writer& w, TypeDef const& type)
     {
-        if (!has_factory_members(w, type) || is_always_disabled(type))
-        {
-            return;
-        }
-
-        auto impl_name = get_impl_name(type.TypeNamespace(), type.TypeName());
-
-        if (settings.component_opt)
-        {
-            auto format = R"(void* winrt_make_%();
-)";
-
-            w.write(format, impl_name);
-            return;
-        }
-        else
+        if (!settings.component_opt)
         {
             write_component_make_definition(w, type);
         }
+        // Declarations are synthesized by WINRT_DECLARE_FUNC to avoid duplication
     }
 
     static void add_component_manifest_entry(writer& w, TypeDef const& type, std::vector<std::string>& manifest)
