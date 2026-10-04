@@ -85,7 +85,7 @@ namespace cppwinrt
         }
     }
 
-    static void write_component_activation(writer& w, TypeDef const& type)
+    static void write_component_make_definition(writer& w, TypeDef const& type)
     {
         if (!has_factory_members(w, type) || is_always_disabled(type))
         {
@@ -96,25 +96,38 @@ namespace cppwinrt
         auto type_namespace = type.TypeNamespace();
         auto impl_name = get_impl_name(type_namespace, type_name);
 
+        auto format = R"(void* winrt_make_%()
+{
+    return winrt::detach_abi(winrt::make<winrt::@::factory_implementation::%>());
+}
+)";
+
+        w.write(format,
+            impl_name,
+            type_namespace,
+            type_name);
+    }
+
+    static void write_component_activation(writer& w, TypeDef const& type)
+    {
+        if (!has_factory_members(w, type) || is_always_disabled(type))
+        {
+            return;
+        }
+
+        auto impl_name = get_impl_name(type.TypeNamespace(), type.TypeName());
+
         if (settings.component_opt)
         {
             auto format = R"(void* winrt_make_%();
 )";
 
             w.write(format, impl_name);
+            return;
         }
         else
         {
-            auto format = R"(void* winrt_make_%()
-{
-    return winrt::detach_abi(winrt::make<winrt::@::factory_implementation::%>());
-}
-)";
-
-            w.write(format,
-                impl_name,
-                type_namespace,
-                type_name);
+            write_component_make_definition(w, type);
         }
     }
 
@@ -428,7 +441,7 @@ catch (...) { return winrt::to_hresult(); }
         auto type_name = type.TypeName();
         auto type_namespace = type.TypeNamespace();
 
-        write_component_activation(w, type);
+        write_component_make_definition(w, type);
 
         if (!settings.component_opt)
         {
