@@ -108,16 +108,26 @@ namespace cppwinrt
             type_name);
     }
 
-    static void write_component_activation(writer& w, TypeDef const& type)
+    static void write_component_activation(writer& w, std::vector<TypeDef> const& classes)
     {
         if (!settings.component_opt)
         {
-            write_component_make_definition(w, type);
+            for (auto&& type : classes)
+            {
+                write_component_make_definition(w, type);
+            }
         }
-        // Declarations are synthesized by WINRT_DECLARE_FUNC to avoid duplication
+        else
+        {
+            auto declarations = R"(
+#define WINRT_DECLARE_FUNC(func, name) void* func();
+WINRT_ACTIVATION_TABLE(WINRT_DECLARE_FUNC)
+)";
+            w.write(declarations);
+        }
     }
 
-    static void add_component_manifest_entry(writer& w, TypeDef const& type, std::vector<std::string>& manifest)
+    static void collect_component(writer& w, TypeDef const& type, std::vector<std::string>& components)
     {
         if (!has_factory_members(w, type) || is_always_disabled(type))
         {
@@ -128,7 +138,7 @@ namespace cppwinrt
         name += type.TypeNamespace();
         name += '.';
         name += type.TypeName();
-        manifest.push_back(std::move(name));
+        components.push_back(std::move(name));
     }
 
     static void write_module_g_cpp(writer& w, std::vector<TypeDef> const& classes)
@@ -138,43 +148,28 @@ namespace cppwinrt
             w.write_root_include("base");
         }
 
+        std::vector<std::string> components;
         for (auto&& type : classes)
         {
             write_component_include(w, type);
-        }
-
-        std::vector<std::string> manifest;
-
-        for (auto&& type : classes)
-        {
-            add_component_manifest_entry(w, type, manifest);
+            collect_component(w, type, components);
         }
 
         // Sort the strings so that binary search can be used.
-        std::sort(manifest.begin(), manifest.end());
-
+        std::sort(components.begin(), components.end());
         w.write("#define WINRT_ACTIVATION_TABLE(X)\\\n");
 
-        for (std::size_t i = 0; i + 1 < manifest.size(); ++i)
+        for (std::size_t i = 0; i + 1 < components.size(); ++i)
         {
-            w.write(std::string{ "    X(winrt_make_" } + get_impl_name(manifest[i]) + ", L\"" + manifest[i] + "\") \\\n");
+            w.write(std::string{ "    X(winrt_make_" } + get_impl_name(components[i]) + ", L\"" + components[i] + "\") \\\n");
         }
 
-        if (!manifest.empty())
+        if (!components.empty())
         {
-            w.write(std::string{ "    X(winrt_make_" } + get_impl_name(manifest.back()) + ", L\"" + manifest.back() + "\")\n");
+            w.write(std::string{ "    X(winrt_make_" } + get_impl_name(components.back()) + ", L\"" + components.back() + "\")\n");
         }
 
-        auto declarations = R"(
-#define WINRT_DECLARE_FUNC(func, name) void* func();
-WINRT_ACTIVATION_TABLE(WINRT_DECLARE_FUNC)
-)";
-        w.write(declarations);
-
-        for (auto&& type : classes)
-        {
-            write_component_activation(w, type);
-        }
+        write_component_activation(w, classes);
 
         auto format = R"(
 bool __stdcall %_can_unload_now() noexcept
@@ -214,7 +209,7 @@ void* __stdcall %_get_activation_factory([[maybe_unused]] std::wstring_view cons
 }
 )";
 
-        w.write(format, settings.component_lib, settings.component_lib, manifest.empty() ? 0 : 1);
+        w.write(format, settings.component_lib, settings.component_lib, components.empty() ? 0 : 1);
 
         if (settings.component_lib != "winrt")
         {
