@@ -76,14 +76,7 @@ namespace cppwinrt
             return;
         }
 
-        if (settings.component_opt)
-        {
-            auto format = R"(void* winrt_make_%();
-)";
-
-            w.write(format, get_impl_name(type.TypeNamespace(), type.TypeName()));
-        }
-        else
+        if (!settings.component_opt)
         {
             auto format = R"(#include "%.h"
 )";
@@ -105,33 +98,38 @@ namespace cppwinrt
 
         if (settings.component_opt)
         {
-            auto format = R"(
-    if (requal(name, L"%.%"))
-    {
-        return winrt_make_%();
-    }
+            auto format = R"(void* winrt_make_%();
 )";
 
-            w.write(format,
-                type_namespace,
-                type_name,
-                impl_name);
+            w.write(format, impl_name);
         }
         else
         {
-            auto format = R"(
-    if (requal(name, L"%.%"))
-    {
-        return winrt::detach_abi(winrt::make<winrt::@::factory_implementation::%>());
-    }
+            auto format = R"(void* winrt_make_%()
+{
+    return winrt::detach_abi(winrt::make<winrt::@::factory_implementation::%>());
+}
 )";
 
             w.write(format,
-                type_namespace,
-                type_name,
+                impl_name,
                 type_namespace,
                 type_name);
         }
+    }
+
+    static void add_component_manifest_entry(writer& w, TypeDef const& type, std::vector<std::string>& manifest)
+    {
+        if (!has_factory_members(w, type) || is_always_disabled(type))
+        {
+            return;
+        }
+
+        std::string name;
+        name += type.TypeNamespace();
+        name += '.';
+        name += type.TypeName();
+        manifest.push_back(std::move(name));
     }
 
     static void write_module_g_cpp(writer& w, std::vector<TypeDef> const& classes)
@@ -140,7 +138,46 @@ namespace cppwinrt
         {
             w.write_root_include("base");
         }
-        auto format = R"(%
+
+        for (auto&& type : classes)
+        {
+            write_component_include(w, type);
+        }
+
+        std::vector<std::string> manifest;
+
+        for (auto&& type : classes)
+        {
+            add_component_manifest_entry(w, type, manifest);
+        }
+
+        // Sort the strings so that binary search can be used.
+        std::sort(manifest.begin(), manifest.end());
+
+        w.write("#define WINRT_ACTIVATION_TABLE(X)\\\n");
+
+        for (std::size_t i = 0; i + 1 < manifest.size(); ++i)
+        {
+            w.write(std::string{ "    X(winrt_make_" } + get_impl_name(manifest[i]) + ", L\"" + manifest[i] + "\") \\\n");
+        }
+
+        if (!manifest.empty())
+        {
+            w.write(std::string{ "    X(winrt_make_" } + get_impl_name(manifest.back()) + ", L\"" + manifest.back() + "\")\n");
+        }
+
+        auto declarations = R"(
+#define WINRT_DECLARE_FUNC(func, name) void* func();
+WINRT_ACTIVATION_TABLE(WINRT_DECLARE_FUNC)
+)";
+        w.write(declarations);
+
+        for (auto&& type : classes)
+        {
+            write_component_activation(w, type);
+        }
+
+        auto format = R"(
 bool __stdcall %_can_unload_now() noexcept
 {
     if (winrt::get_module_lock())
@@ -154,20 +191,31 @@ bool __stdcall %_can_unload_now() noexcept
 
 void* __stdcall %_get_activation_factory([[maybe_unused]] std::wstring_view const& name)
 {
-    auto requal = [](std::wstring_view const& left, std::wstring_view const& right) noexcept
+#if %
+    static constexpr std::wstring_view names[] =
     {
-        return std::equal(left.rbegin(), left.rend(), right.rbegin(), right.rend());
+#define WINRT_NAME_LIST(func, name) name,
+        WINRT_ACTIVATION_TABLE(WINRT_NAME_LIST)
     };
-%
+
+    using make_t = void* (*)();
+    static constexpr make_t makes[] =
+    {
+#define WINRT_MAKE_LIST(func, name) func,
+        WINRT_ACTIVATION_TABLE(WINRT_MAKE_LIST)
+    };
+
+    auto it = std::lower_bound(std::begin(names), std::end(names), name);
+    if (it != std::end(names) && *it == name)
+    {
+        return makes[it - std::begin(names)]();
+    }
+#endif
     return nullptr;
 }
 )";
 
-        w.write(format,
-            bind_each<write_component_include>(classes),
-            settings.component_lib,
-            settings.component_lib,
-            bind_each<write_component_activation>(classes));
+        w.write(format, settings.component_lib, settings.component_lib, manifest.empty() ? 0 : 1);
 
         if (settings.component_lib != "winrt")
         {
@@ -379,21 +427,8 @@ catch (...) { return winrt::to_hresult(); }
     {
         auto type_name = type.TypeName();
         auto type_namespace = type.TypeNamespace();
-        auto impl_name = get_impl_name(type_namespace, type_name);
 
-        if (has_factory_members(w, type))
-        {
-            auto format = R"(void* winrt_make_%()
-{
-    return winrt::detach_abi(winrt::make<winrt::@::factory_implementation::%>());
-}
-)";
-
-            w.write(format,
-                impl_name,
-                type_namespace,
-                type_name);
-        }
+        write_component_activation(w, type);
 
         if (!settings.component_opt)
         {
