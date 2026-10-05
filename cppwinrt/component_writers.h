@@ -199,8 +199,13 @@ void* __stdcall %_get_activation_factory([[maybe_unused]] std::wstring_view cons
         WINRT_ACTIVATION_TABLE(WINRT_MAKE_LIST)
     };
 
+#if % <= 32
+    auto it = std::find(std::begin(names), std::end(names), name);
+    if (it != std::end(names))
+#else
     auto it = std::lower_bound(std::begin(names), std::end(names), name);
     if (it != std::end(names) && *it == name)
+#endif
     {
         return makes[it - std::begin(names)]();
     }
@@ -209,7 +214,7 @@ void* __stdcall %_get_activation_factory([[maybe_unused]] std::wstring_view cons
 }
 )";
 
-        w.write(format, settings.component_lib, settings.component_lib, components.empty() ? 0 : 1);
+        w.write(format, settings.component_lib, settings.component_lib, components.size(), components.size());
 
         if (settings.component_lib != "winrt")
         {
