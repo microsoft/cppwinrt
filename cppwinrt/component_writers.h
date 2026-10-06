@@ -81,7 +81,7 @@ namespace cppwinrt
         w.write(format, get_component_filename(type));
     }
 
-    static void write_component_make_definition(writer& w, TypeDef const& type)
+    static void write_component_activation(writer& w, TypeDef const& type)
     {
         if (!has_factory_members(w, type) || is_always_disabled(type))
         {
@@ -152,7 +152,7 @@ namespace cppwinrt
         {
             for (auto&& type : classes)
             {
-                write_component_make_definition(w, type);
+                write_component_activation(w, type);
             }
         }
         else
@@ -420,7 +420,7 @@ catch (...) { return winrt::to_hresult(); }
         auto type_name = type.TypeName();
         auto type_namespace = type.TypeNamespace();
 
-        write_component_make_definition(w, type);
+        write_component_activation(w, type);
 
         if (!settings.component_opt)
         {
