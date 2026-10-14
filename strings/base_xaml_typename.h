@@ -125,16 +125,28 @@ WINRT_EXPORT namespace winrt::impl
     {
         static constexpr Windows::UI::Xaml::Interop::TypeKind value = Windows::UI::Xaml::Interop::TypeKind::Primitive;
     };
+}
 
-    template <typename D>
-    auto consume_Windows_UI_Xaml_Interop_IBindableIterable<D>::begin() const
+WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Interop
+{
+    inline IBindableIterator& IBindableIterator::operator++()
     {
-        return get_begin_iterator(static_cast<D const&>(*this));
+        if (!MoveNext())
+        {
+            *this = nullptr;
+        }
+
+        return *this;
     }
-    template <typename D>
-    auto consume_Windows_UI_Xaml_Interop_IBindableIterable<D>::end() const
+
+    inline Windows::Foundation::IInspectable IBindableIterator::operator*() const
     {
-        return get_end_iterator(static_cast<D const&>(*this));
+        return Current();
+    }
+
+    inline void IBindableIterator::operator++(int)
+    {
+        ++(*this);
     }
 }
 

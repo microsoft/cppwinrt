@@ -3,17 +3,6 @@ WINRT_EXPORT namespace winrt::impl
 {
     namespace wfc = Windows::Foundation::Collections;
 
-    template <typename D, typename T>
-    auto consume_Windows_Foundation_Collections_IIterable<D, T>::begin() const
-    {
-        return get_begin_iterator(static_cast<D const&>(*this));
-    }
-    template <typename D, typename T>
-    auto consume_Windows_Foundation_Collections_IIterable<D, T>::end() const
-    {
-        return get_end_iterator(static_cast<D const&>(*this));
-    }
-
     template <typename T>
     struct key_value_pair;
 

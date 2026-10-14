@@ -227,68 +227,128 @@ WINRT_EXPORT namespace winrt::impl
     };
 #endif
 
-    template <typename D>
-    auto consume_Windows_Foundation_IAsyncAction<D>::get() const
+    inline auto direct_Windows_Foundation_IAsyncAction::get() const
     {
-        impl::wait_get(static_cast<Windows::Foundation::IAsyncAction const&>(static_cast<D const&>(*this)));
+        impl::wait_get(static_cast<Windows::Foundation::IAsyncAction const&>(*this));
     }
-    template <typename D>
-    auto consume_Windows_Foundation_IAsyncAction<D>::get_unchecked() const
+    inline auto direct_Windows_Foundation_IAsyncAction::get_unchecked() const
     {
-        impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncAction const&>(static_cast<D const&>(*this)));
+        impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncAction const&>(*this));
     }
-    template <typename D>
-    auto consume_Windows_Foundation_IAsyncAction<D>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
+    inline auto direct_Windows_Foundation_IAsyncAction::wait_for(Windows::Foundation::TimeSpan const& timeout) const
     {
-        return impl::wait_for(static_cast<Windows::Foundation::IAsyncAction const&>(static_cast<D const&>(*this)), timeout);
+        return impl::wait_for(static_cast<Windows::Foundation::IAsyncAction const&>(*this), timeout);
     }
 
-    template <typename D, typename TResult>
-    auto consume_Windows_Foundation_IAsyncOperation<D, TResult>::get() const
+    template <typename TResult>
+    auto direct_Windows_Foundation_IAsyncOperation<TResult>::get() const
     {
-        return impl::wait_get(static_cast<Windows::Foundation::IAsyncOperation<TResult> const&>(static_cast<D const&>(*this)));
+        return impl::wait_get(static_cast<Windows::Foundation::IAsyncOperation<TResult> const&>(*this));
     }
-    template <typename D, typename TResult>
-    auto consume_Windows_Foundation_IAsyncOperation<D, TResult>::get_unchecked() const
+    template <typename TResult>
+    auto direct_Windows_Foundation_IAsyncOperation<TResult>::get_unchecked() const
     {
-        return impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncOperation<TResult> const&>(static_cast<D const&>(*this)));
+        return impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncOperation<TResult> const&>(*this));
     }
-    template <typename D, typename TResult>
-    auto consume_Windows_Foundation_IAsyncOperation<D, TResult>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
+    template <typename TResult>
+    auto direct_Windows_Foundation_IAsyncOperation<TResult>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
     {
-        return impl::wait_for(static_cast<Windows::Foundation::IAsyncOperation<TResult> const&>(static_cast<D const&>(*this)), timeout);
-    }
-
-    template <typename D, typename TProgress>
-    auto consume_Windows_Foundation_IAsyncActionWithProgress<D, TProgress>::get() const
-    {
-        impl::wait_get(static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(static_cast<D const&>(*this)));
-    }
-    template <typename D, typename TProgress>
-    auto consume_Windows_Foundation_IAsyncActionWithProgress<D, TProgress>::get_unchecked() const
-    {
-        impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(static_cast<D const&>(*this)));
-    }
-    template <typename D, typename TProgress>
-    auto consume_Windows_Foundation_IAsyncActionWithProgress<D, TProgress>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
-    {
-        return impl::wait_for(static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(static_cast<D const&>(*this)), timeout);
+        return impl::wait_for(static_cast<Windows::Foundation::IAsyncOperation<TResult> const&>(*this), timeout);
     }
 
-    template <typename D, typename TResult, typename TProgress>
-    auto consume_Windows_Foundation_IAsyncOperationWithProgress<D, TResult, TProgress>::get() const
+    template <typename TProgress>
+    auto direct_Windows_Foundation_IAsyncActionWithProgress<TProgress>::get() const
     {
-        return impl::wait_get(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(static_cast<D const&>(*this)));
+        impl::wait_get(static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(*this));
     }
-    template <typename D, typename TResult, typename TProgress>
-    auto consume_Windows_Foundation_IAsyncOperationWithProgress<D, TResult, TProgress>::get_unchecked() const
+    template <typename TProgress>
+    auto direct_Windows_Foundation_IAsyncActionWithProgress<TProgress>::get_unchecked() const
     {
-        return impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(static_cast<D const&>(*this)));
+        impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(*this));
     }
-    template <typename D, typename TResult, typename TProgress>
-    auto consume_Windows_Foundation_IAsyncOperationWithProgress<D, TResult, TProgress>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
+    template <typename TProgress>
+    auto direct_Windows_Foundation_IAsyncActionWithProgress<TProgress>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
     {
-        return impl::wait_for(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(static_cast<D const&>(*this)), timeout);
+        return impl::wait_for(static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(*this), timeout);
+    }
+
+    template <typename TResult, typename TProgress>
+    auto direct_Windows_Foundation_IAsyncOperationWithProgress<TResult, TProgress>::get() const
+    {
+        return impl::wait_get(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(*this));
+    }
+    template <typename TResult, typename TProgress>
+    auto direct_Windows_Foundation_IAsyncOperationWithProgress<TResult, TProgress>::get_unchecked() const
+    {
+        return impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(*this));
+    }
+    template <typename TResult, typename TProgress>
+    auto direct_Windows_Foundation_IAsyncOperationWithProgress<TResult, TProgress>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
+    {
+        return impl::wait_for(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(*this), timeout);
+    }
+
+    // Types that require an async interface (rather than having it as their default interface) query for it first, as
+    // the forwarders that cppwinrt generates for the interface's own methods do.
+    inline auto require_Windows_Foundation_IAsyncAction::get() const
+    {
+        Windows::Foundation::IAsyncAction{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncAction>), take_ownership_from_abi }.get();
+    }
+    inline auto require_Windows_Foundation_IAsyncAction::get_unchecked() const
+    {
+        Windows::Foundation::IAsyncAction{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncAction>), take_ownership_from_abi }.get_unchecked();
+    }
+    inline auto require_Windows_Foundation_IAsyncAction::wait_for(Windows::Foundation::TimeSpan const& timeout) const
+    {
+        return Windows::Foundation::IAsyncAction{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncAction>), take_ownership_from_abi }.wait_for(timeout);
+    }
+
+    template <typename TResult>
+    auto require_Windows_Foundation_IAsyncOperation<TResult>::get() const
+    {
+        return Windows::Foundation::IAsyncOperation<TResult>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncOperation<TResult>>), take_ownership_from_abi }.get();
+    }
+    template <typename TResult>
+    auto require_Windows_Foundation_IAsyncOperation<TResult>::get_unchecked() const
+    {
+        return Windows::Foundation::IAsyncOperation<TResult>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncOperation<TResult>>), take_ownership_from_abi }.get_unchecked();
+    }
+    template <typename TResult>
+    auto require_Windows_Foundation_IAsyncOperation<TResult>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
+    {
+        return Windows::Foundation::IAsyncOperation<TResult>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncOperation<TResult>>), take_ownership_from_abi }.wait_for(timeout);
+    }
+
+    template <typename TProgress>
+    auto require_Windows_Foundation_IAsyncActionWithProgress<TProgress>::get() const
+    {
+        Windows::Foundation::IAsyncActionWithProgress<TProgress>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncActionWithProgress<TProgress>>), take_ownership_from_abi }.get();
+    }
+    template <typename TProgress>
+    auto require_Windows_Foundation_IAsyncActionWithProgress<TProgress>::get_unchecked() const
+    {
+        Windows::Foundation::IAsyncActionWithProgress<TProgress>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncActionWithProgress<TProgress>>), take_ownership_from_abi }.get_unchecked();
+    }
+    template <typename TProgress>
+    auto require_Windows_Foundation_IAsyncActionWithProgress<TProgress>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
+    {
+        return Windows::Foundation::IAsyncActionWithProgress<TProgress>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncActionWithProgress<TProgress>>), take_ownership_from_abi }.wait_for(timeout);
+    }
+
+    template <typename TResult, typename TProgress>
+    auto require_Windows_Foundation_IAsyncOperationWithProgress<TResult, TProgress>::get() const
+    {
+        return Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress>>), take_ownership_from_abi }.get();
+    }
+    template <typename TResult, typename TProgress>
+    auto require_Windows_Foundation_IAsyncOperationWithProgress<TResult, TProgress>::get_unchecked() const
+    {
+        return Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress>>), take_ownership_from_abi }.get_unchecked();
+    }
+    template <typename TResult, typename TProgress>
+    auto require_Windows_Foundation_IAsyncOperationWithProgress<TResult, TProgress>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
+    {
+        return Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress>>), take_ownership_from_abi }.wait_for(timeout);
     }
 }
 

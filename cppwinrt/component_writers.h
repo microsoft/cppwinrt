@@ -2,73 +2,6 @@
 
 namespace cppwinrt
 {
-    static void write_component_override_defaults(writer& w, TypeDef const& type)
-    {
-        std::vector<std::string> interfaces;
-
-        for (auto&& base : get_bases(type))
-        {
-            if (settings.component_filter.includes(base))
-            {
-                continue;
-            }
-
-            for (auto&&[name, info] : get_interfaces(w, base))
-            {
-                if (info.base)
-                {
-                    continue;
-                }
-
-                if (info.overridable && !is_always_disabled(info.type))
-                {
-                    interfaces.push_back(name);
-                }
-            }
-        }
-
-        bool first = true;
-
-        for (auto&& name : interfaces)
-        {
-            if (first)
-            {
-                first = false;
-                w.write(",\n        %T<D>", name);
-            }
-            else
-            {
-                w.write(", %T<D>", name);
-            }
-        }
-    }
-
-    static void write_component_class_base(writer& w, TypeDef const& type)
-    {
-        bool first = true;
-
-        for (auto&& base : get_bases(type))
-        {
-            if (settings.component_filter.includes(base))
-            {
-                return;
-            }
-
-            if (first)
-            {
-                first = false;
-                w.write(",\n        impl::base<D");
-            }
-
-            w.write(", %", base);
-        }
-
-        if (!first)
-        {
-            w.write('>');
-        }
-    }
-
     static void write_component_include(writer& w, TypeDef const& type)
     {
         if (!has_factory_members(w, type) || is_always_disabled(type))
@@ -247,7 +180,7 @@ catch (...) { return winrt::to_hresult(); }
             return;
         }
 
-        w.write(", composing");
+        w.write(", composing, impl::composing_mixins<impl::composable_%>", get_impl_name(base_type.TypeNamespace(), base_type.TypeName()));
 
         for (auto&&[interface_name, info] : get_interfaces(w, base_type))
         {
@@ -750,7 +683,7 @@ catch (...) { return winrt::to_hresult(); }
             auto format = R"(namespace winrt::@::implementation
 {
     template <typename D%, typename... I>
-    struct WINRT_IMPL_EMPTY_BASES %_base : implements<D, @::%%%, %I...>%%%%
+    struct WINRT_IMPL_EMPTY_BASES %_base : implements<D, @::%%%, %I...>
     {
         using base_type = %_base;
         using class_type = @::%;
@@ -770,9 +703,7 @@ catch (...) { return winrt::to_hresult(); }
             std::string base_type_parameter;
             std::string base_type_argument;
             std::string no_module_lock;
-            std::string external_requires;
-            std::string external_protected_requires;
-            std::string friends;
+            std::string iterable;
 
             if (base_type)
             {
@@ -780,57 +711,17 @@ catch (...) { return winrt::to_hresult(); }
 
                 if (external_base_type)
                 {
+                    // The base's consume mixins come from composing_mixins<impl::composable_Base> (see write_component_interfaces)
                     composable_base_name = w.write_temp("using composable_base = %;", base_type);
-                    auto base_interfaces = get_interfaces(w, base_type);
-                    std::uint32_t base_interfaces_count{};
-                    std::uint32_t protected_base_interfaces_count{};
-                    external_requires = ",\n        impl::require<D";
-                    external_protected_requires = ",\n        protected impl::require<D";
 
-                    for (auto&&[name, info] : base_interfaces)
+                    for (auto&&[name, info] : get_interfaces(w, base_type))
                     {
-                        if (info.overridable || is_always_disabled(info.type))
+                        if (!info.overridable && !info.is_protected && !is_always_disabled(info.type) && is_iterable(info.type))
                         {
-                            continue;
+                            iterable = w.write_temp("\n%", bind<write_iterable_members>("D", "U"));
+                            iterable.pop_back();
+                            break;
                         }
-
-                        if (info.is_protected || info.overridable)
-                        {
-                            ++protected_base_interfaces_count;
-                            external_protected_requires += ", ";
-                            external_protected_requires += name;
-
-                            friends += "\n        friend impl::consume_t<D, ";
-                            friends += name;
-                            friends += ">;";
-                            friends += "\n        friend impl::require_one<D, ";
-                            friends += name;
-                            friends += ">;";
-                        }
-                        else
-                        {
-                            ++base_interfaces_count;
-                            external_requires += ", ";
-                            external_requires += name;
-                        }
-                    }
-
-                    if (base_interfaces_count)
-                    {
-                        external_requires += '>';
-                    }
-                    else
-                    {
-                        external_requires.clear();
-                    }
-
-                    if (protected_base_interfaces_count)
-                    {
-                        external_protected_requires += '>';
-                    }
-                    else
-                    {
-                        external_protected_requires.clear();
                     }
                 }
                 else
@@ -851,16 +742,12 @@ catch (...) { return winrt::to_hresult(); }
                 bind<write_component_interfaces>(type),
                 base_type_argument,
                 no_module_lock,
-                external_requires,
-                external_protected_requires,
-                bind<write_component_class_base>(type),
-                bind<write_component_override_defaults>(type),
                 type_name,
                 type_namespace,
                 type_name,
                 type_name,
                 composable_base_name,
-                friends,
+                iterable,
                 type_namespace,
                 type_name,
                 bind<write_component_class_override_constructors>(type),

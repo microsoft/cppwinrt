@@ -119,6 +119,7 @@ namespace cppwinrt
             w.write_each<write_interface_abi>(members.interfaces);
             w.write_each<write_delegate_abi>(members.delegates);
             w.write_each<write_consume>(members.interfaces);
+            w.write_each<write_base_declaration>(members.classes);
             w.write_each<write_struct_abi>(members.structs);
         }
 
@@ -145,6 +146,10 @@ namespace cppwinrt
         {
             auto wrap_type = wrap_type_namespace(w, ns);
             w.write_each<write_interface>(members.interfaces);
+        }
+        {
+            auto wrap_impl = wrap_impl_namespace(w);
+            w.write_each<write_require_conversion>(members.interfaces);
         }
         write_namespace_special_1(w, ns);
 
@@ -179,6 +184,10 @@ namespace cppwinrt
             w.write_each<write_class>(members.classes);
             w.write_each<write_interface_override>(members.classes);
         }
+        {
+            auto wrap_impl = wrap_impl_namespace(w);
+            w.write_each<write_base_definition>(members.classes);
+        }
 
         write_close_file_guard(w);
         w.swap();
@@ -212,6 +221,7 @@ namespace cppwinrt
             w.write_each<write_delegate_implementation>(members.delegates);
             w.write_each<write_produce>(members.interfaces, c);
             w.write_each<write_dispatch_overridable>(members.classes);
+            w.write_each<write_composable_mixins>(members.classes);
         }
         {
             auto wrap_type = wrap_type_namespace(w, ns);

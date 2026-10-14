@@ -334,14 +334,6 @@ namespace cppwinrt
         }
     }
 
-    static void write_comma_generic_types(writer& w, std::pair<GenericParam, GenericParam> const& params)
-    {
-        for (auto&& param : params)
-        {
-            w.write(", %", param);
-        }
-    }
-
     static void write_forward(writer& w, TypeDef const& type)
     {
         type_name type_name(type);
@@ -1030,7 +1022,172 @@ namespace cppwinrt
         }
     }
 
-    static void write_consume_declaration(writer& w, MethodDef const& method)
+    static void write_consume_args(writer& w, method_signature const& signature);
+
+    // The consume side of an interface X is a set of non-template structs (templates only on X's own generic parameters):
+    //   impl::direct_X    - X's own methods, inherited only by X itself; they call X's ABI directly
+    //   impl::require_X   - operator X() plus forwarders that QueryInterface for X, shared by every type that requires X
+    //   impl::overrides_X - default implementations of an overridable X, shared by composable implementation types
+    //   impl::base_C      - operator C() for a class C that other classes derive from
+    // The mixins are empty and sit at offset 0 of the projected object, so they read its ABI pointer without CRTP.
+    enum class consume_kind
+    {
+        direct,
+        require,
+        overrides,
+        legacy, // the declaration style of IFooOverridesT<D> and fast class bases, which keep their CRTP form
+    };
+
+    // Turns a type name as written by the writer, e.g. "winrt::Windows::Foundation::Collections::IVector<T>", into the name of
+    // one of the structs above, e.g. "require_Windows_Foundation_Collections_IVector<T>".
+    static std::string get_consume_name(std::string_view const& prefix, std::string_view const& type_name)
+    {
+        auto const args = type_name.find('<');
+        auto name = type_name.substr(0, args);
+        constexpr std::string_view root{ "winrt::" };
+
+        if (name.substr(0, root.size()) == root)
+        {
+            name.remove_prefix(root.size());
+        }
+
+        std::string result{ prefix };
+
+        for (std::size_t i = 0; i < name.size(); ++i)
+        {
+            if (name[i] == ':')
+            {
+                result += '_';
+                ++i;
+            }
+            else
+            {
+                result += name[i];
+            }
+        }
+
+        if (args != std::string_view::npos)
+        {
+            result += type_name.substr(args);
+        }
+
+        return result;
+    }
+
+    struct consume_usage
+    {
+        bool require{};
+        bool overrides{};
+    };
+
+    // The (non-generic) interfaces that other interfaces require, e.g. an IFooStatics that IFooStatics2 requires
+    static std::set<std::pair<std::string_view, std::string_view>> const& get_required_interfaces(cache const& c)
+    {
+        static auto const required = [&]
+        {
+            std::set<std::pair<std::string_view, std::string_view>> result;
+
+            for (auto&& [type_namespace, members] : c.namespaces())
+            {
+                for (auto&& type : members.interfaces)
+                {
+                    for (auto&& impl : type.InterfaceImpl())
+                    {
+                        if (impl.Interface().type() != TypeDefOrRef::TypeSpec)
+                        {
+                            result.insert(get_type_namespace_and_name(impl.Interface()));
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }();
+
+        return required;
+    }
+
+    // An interface needs a require_X mixin if some type may require it as a non-default interface. Interfaces that are not
+    // exclusive to a class may be required by anything, and any interface may be required by another interface. Otherwise,
+    // an exclusive interface needs one if its class implements it non-defaultly (including protected interfaces), or if it
+    // is the default interface of a class that can be derived from. Statics and factory interfaces are never implemented.
+    static consume_usage get_consume_usage(TypeDef const& type)
+    {
+        auto attribute = get_attribute(type, "Windows.Foundation.Metadata", "ExclusiveToAttribute");
+
+        if (!attribute)
+        {
+            return { true, false };
+        }
+
+        auto class_type = type.get_cache().find(get_attribute_value<ElemSig::SystemType>(attribute, 0).name);
+
+        if (!class_type)
+        {
+            return { true, false };
+        }
+
+        consume_usage usage{};
+        usage.require = get_required_interfaces(type.get_cache()).count({ type.TypeNamespace(), type.TypeName() }) != 0;
+        auto const interface_name = type_name(type);
+
+        for (auto&& impl : class_type.InterfaceImpl())
+        {
+            auto const implemented = impl.Interface();
+
+            if (implemented.type() == TypeDefOrRef::TypeSpec || !(type_name(implemented) == interface_name))
+            {
+                continue;
+            }
+
+            bool const overridable = has_attribute(impl, "Windows.Foundation.Metadata", "OverridableAttribute");
+
+            if (overridable)
+            {
+                usage.overrides = true;
+            }
+
+            if (has_attribute(impl, "Windows.Foundation.Metadata", "ProtectedAttribute"))
+            {
+                usage.require = true;
+            }
+            else if (has_attribute(impl, "Windows.Foundation.Metadata", "DefaultAttribute"))
+            {
+                usage.require = usage.require || !class_type.Flags().Sealed();
+            }
+            else if (!overridable)
+            {
+                usage.require = true;
+            }
+        }
+
+        return usage;
+    }
+
+    // Classes that can be derived from get an impl::base_C conversion mixin.
+    static bool has_base_mixin(TypeDef const& type)
+    {
+        return get_default_interface(type) && !type.Flags().Sealed();
+    }
+
+    static bool is_iterable(TypeDef const& type)
+    {
+        auto const name = type_name(type);
+        return name == "Windows.Foundation.Collections.IIterable`1" || name == "Windows.UI.Xaml.Interop.IBindableIterable";
+    }
+
+    // begin() and end() choose the iterator from the most derived type that requires an iterable (a fast_iterator over
+    // the type itself when it has GetAt), so every such interface, class, and composable type gets its own.
+    static void write_iterable_members(writer& w, std::string_view const& self, std::string_view const& param = "D")
+    {
+        auto format = R"(        template <typename % = %> auto begin() const { return impl::get_begin_iterator(static_cast<% const&>(*this)); }
+        template <typename % = %> auto end() const { return impl::get_end_iterator(static_cast<% const&>(*this)); }
+)";
+
+        w.write(format, param, self, param, param, self, param);
+    }
+
+    static void write_consume_declaration(writer& w, MethodDef const& method, consume_kind kind)
     {
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
@@ -1043,23 +1200,45 @@ namespace cppwinrt
             bind<write_consume_params>(signature),
             is_noexcept(method) ? " noexcept" : "");
 
-        if (is_add_overload(method))
+        if (!is_add_overload(method) || kind == consume_kind::overrides)
         {
-            auto format = R"(        using %_revoker = impl::event_revoker<%, &impl::abi_t<%>::remove_%>;
-        [[nodiscard]] auto %(auto_revoke_t, %) const;
-)";
+            return;
+        }
 
-            w.write(format,
+        w.write("        using %_revoker = impl::event_revoker<%, &impl::abi_t<%>::remove_%>;\n",
+            method_name,
+            type,
+            type,
+            method_name);
+
+        if (kind == consume_kind::direct)
+        {
+            // auto_revoke overloads are member templates in both direct_X and require_X, so overload resolution treats a
+            // name collision between them the same way it treats one between ordinary methods
+            w.write("        template <typename R = %_revoker> [[nodiscard]] auto %(auto_revoke_t, %) const;\n",
                 method_name,
-                type,
+                method_name,
+                bind<write_consume_params>(signature));
+        }
+        else if (kind == consume_kind::require)
+        {
+            w.write("        template <typename W = %> [[nodiscard]] auto %(auto_revoke_t, %) const { return W{ impl::as_abi(*(void* const*)this, impl::guid_v<%>), take_ownership_from_abi }.%(auto_revoke, %); }\n",
                 type,
                 method_name,
+                bind<write_consume_params>(signature),
+                type,
+                method_name,
+                bind<write_consume_args>(signature));
+        }
+        else
+        {
+            w.write("        [[nodiscard]] auto %(auto_revoke_t, %) const;\n",
                 method_name,
                 bind<write_consume_params>(signature));
         }
     }
 
-    static void write_fast_consume_declarations(writer& w, TypeDef const& default_interface)
+    static void write_fast_consume_declarations(writer& w, TypeDef const& default_interface, consume_kind kind)
     {
         auto pair = settings.fastabi_cache.find(default_interface);
 
@@ -1080,7 +1259,7 @@ namespace cppwinrt
                 break;
             }
 
-            w.write_each<write_consume_declaration>(info.type.MethodList());
+            w.write_each<write_consume_declaration>(info.type.MethodList(), kind);
         }
     }
 
@@ -1168,6 +1347,9 @@ namespace cppwinrt
         auto method_name = get_name(method);
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
+        auto const generic = !empty(generics);
+        auto template_prefix = generic ? w.write_temp("template <%> ", bind<write_generic_typenames>(generics)) : std::string{};
+        auto template_args = generic ? w.write_temp("<%>", bind_list(", ", generics)) : std::string{};
 
         std::string_view format;
 
@@ -1176,65 +1358,88 @@ namespace cppwinrt
             if (is_remove_overload(method))
             {
                 // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
-                //
-                // The `noexcept` versions will crash if check_hresult throws but that is no different than previous
-                // behavior where it would not check the cast result and nullptr crash.  At least the exception will terminate
-                // immediately while preserving the error code and local variables.
-                format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
+                format = R"(    %auto direct_%%::%(%) const noexcept
     {%
-        consume_noexcept_remove_overload<%, D>(static_cast<D const*>(this), &abi_t<%>::%%);%
+        (*(abi_t<%>**)this)->%(%);%
     }
 )";
             }
             else
             {
-                format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
+                format = R"(    %auto direct_%%::%(%) const noexcept
     {%
-        consume_noexcept<%, D>(static_cast<D const*>(this), &abi_t<%>::%%);%
+        WINRT_VERIFY_(0, (*(abi_t<%>**)this)->%(%));%
     }
 )";
             }
         }
         else
         {
-            format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
+            format = R"(    %auto direct_%%::%(%) const
     {%
-        consume_general<%, D>(static_cast<D const*>(this), &abi_t<%>::%%);%
+        check_abi((*(abi_t<%>**)this)->%(%));%
     }
 )";
         }
 
         w.write(format,
-            bind<write_comma_generic_typenames>(generics),
+            generic ? template_prefix : "inline ",
             type_impl_name,
-            bind<write_comma_generic_types>(generics),
+            template_args,
             method_name,
             bind<write_consume_params>(signature),
             bind<write_consume_return_type>(signature, false),
             type,
-            type,
             get_abi_name(method),
-            bind<write_abi_args>(signature, true),
+            bind<write_abi_args>(signature, false),
             bind<write_consume_return_statement>(signature));
 
         if (is_add_overload(method))
         {
-            format = R"(    template <typename D%> auto consume_%<D%>::%(auto_revoke_t, %) const
+            format = R"(    %template <typename R> auto direct_%%::%(auto_revoke_t, %) const
     {
-        return impl::make_event_revoker<D, %_revoker>(this, %(%));
+        return R{ static_cast<% const&>(*this), %(%) };
     }
 )";
 
             w.write(format,
-                bind<write_comma_generic_typenames>(generics),
+                template_prefix,
                 type_impl_name,
-                bind<write_comma_generic_types>(generics),
+                template_args,
                 method_name,
                 bind<write_consume_params>(signature),
-                method_name,
+                type,
                 method_name,
                 bind<write_consume_args>(signature));
         }
+    }
+
+    // Forwarders of require_X (and the overridable defaults of overrides_X) QueryInterface for X and call its direct_X.
+    // Non-generic forwarders name direct_X explicitly, so a same-named member of an interface X requires can't interfere.
+    // As before, a noexcept forwarder terminates if the QueryInterface fails rather than crashing on a null pointer.
+    static void write_consume_forwarder(writer& w, TypeDef const& type, MethodDef const& method, std::pair<GenericParam, GenericParam> const& generics, std::string_view const& type_impl_name, std::string_view const& prefix)
+    {
+        auto method_name = get_name(method);
+        method_signature signature{ method };
+        auto async_types_guard = w.push_async_types(signature.is_async());
+        auto const generic = !empty(generics);
+
+        auto format = R"(    %auto %%%::%(%) const% { return %{ impl::as_abi(*(void* const*)this, impl::guid_v<%>), take_ownership_from_abi }.%%(%); }
+)";
+
+        w.write(format,
+            generic ? w.write_temp("template <%> ", bind<write_generic_typenames>(generics)) : std::string{ "inline " },
+            prefix,
+            type_impl_name,
+            generic ? w.write_temp("<%>", bind_list(", ", generics)) : std::string{},
+            method_name,
+            bind<write_consume_params>(signature),
+            is_noexcept(method) ? " noexcept" : "",
+            type,
+            type,
+            generic ? std::string{} : w.write_temp("direct_%::", type_impl_name),
+            method_name,
+            bind<write_consume_args>(signature));
     }
 
     static void write_consume_fast_base_definition(writer& w, MethodDef const& method, TypeDef const& class_type, TypeDef const& base_type)
@@ -1289,78 +1494,76 @@ namespace cppwinrt
 
         auto type_namespace = type.TypeNamespace();
         auto type_impl_name = get_impl_name(type_namespace, type_name);
+        std::vector<MethodDef> methods;
 
         for (auto&& method : type.MethodList())
+        {
+            methods.push_back(method);
+        }
+
+        // A fast default interface also exposes the methods of the class's exclusive interfaces through its vtable
+        if (settings.fastabi)
+        {
+            if (auto pair = settings.fastabi_cache.find(type); pair != settings.fastabi_cache.end())
+            {
+                for (auto&& [name, info] : get_interfaces(w, pair->second))
+                {
+                    if (info.is_default)
+                    {
+                        continue;
+                    }
+
+                    if (!info.fastabi)
+                    {
+                        break;
+                    }
+
+                    for (auto&& method : info.type.MethodList())
+                    {
+                        methods.push_back(method);
+                    }
+                }
+            }
+        }
+
+        for (auto&& method : methods)
         {
             write_consume_definition(w, type, method, generics, type_impl_name);
         }
 
-        if (!settings.fastabi)
+        auto const usage = get_consume_usage(type);
+
+        if (usage.require)
         {
-            return;
+            for (auto&& method : methods)
+            {
+                write_consume_forwarder(w, type, method, generics, type_impl_name, "require_");
+            }
         }
 
-        auto pair = settings.fastabi_cache.find(type);
-
-        if (pair == settings.fastabi_cache.end())
+        if (usage.overrides)
         {
-            return;
-        }
-
-        for (auto&& [name, info] : get_interfaces(w, pair->second))
-        {
-            if (info.is_default)
+            for (auto&& method : type.MethodList())
             {
-                continue;
-            }
-
-            if (!info.fastabi)
-            {
-                break;
-            }
-
-            for (auto&& method : info.type.MethodList())
-            {
-                write_consume_definition(w, type, method, generics, type_impl_name);
+                write_consume_forwarder(w, type, method, generics, type_impl_name, "overrides_");
             }
         }
     }
 
-    static void write_consume_extensions(writer& w, TypeDef const& type)
+    // Members that cppwinrt adds to particular interfaces. They are written into both direct_X and require_X. IIterator`1 and
+    // IBindableIterator operators are members of the interface struct instead (write_interface_extensions), and begin() and
+    // end() of IIterable`1 and IBindableIterable are members of every type that requires them (write_iterable_members).
+    static void write_consume_extensions(writer& w, TypeDef const& type, consume_kind kind)
     {
         type_name type_name(type);
 
-        if (type_name == "Windows.UI.Xaml.Interop.IBindableIterator")
-        {
-            w.write(R"(
-        auto& operator++()
-        {
-            if (!MoveNext())
-            {
-                static_cast<D&>(*this) = nullptr;
-            }
-
-            return static_cast<D&>(*this);
-        }
-
-        auto operator*() const
-        {
-            return Current();
-        }
-
-        void operator++(int)
-        {
-            ++(*this);
-        }
-)");
-        }
-        else if (type_name == "Windows.Storage.Streams.IBuffer")
+        if (type_name == "Windows.Storage.Streams.IBuffer")
         {
             w.write(R"(
         auto data() const
         {
             std::uint8_t* data{};
-            static_cast<D const&>(*this).template as<IBufferByteAccess>()->Buffer(&data);
+            reinterpret_cast<Windows::Foundation::IUnknown const&>(*this).as<IBufferByteAccess>()->Buffer(&data);
             return data;
         }
 )");
@@ -1372,32 +1575,8 @@ namespace cppwinrt
         {
             std::uint8_t* data{};
             std::uint32_t capacity{};
-            check_hresult(static_cast<D const&>(*this).template as<IMemoryBufferByteAccess>()->GetBuffer(&data, &capacity));
+            check_hresult(reinterpret_cast<Windows::Foundation::IUnknown const&>(*this).as<IMemoryBufferByteAccess>()->GetBuffer(&data, &capacity));
             return data;
-        }
-)");
-        }
-        else if (type_name == "Windows.Foundation.Collections.IIterator`1")
-        {
-            w.write(R"(
-        auto& operator++()
-        {
-            if (!MoveNext())
-            {
-                static_cast<D&>(*this) = nullptr;
-            }
-
-            return static_cast<D&>(*this);
-        }
-
-        T operator*() const
-        {
-            return Current();
-        }
-
-        void operator++(int)
-        {
-            ++(*this);
         }
 )");
         }
@@ -1417,13 +1596,24 @@ namespace cppwinrt
         }
         else if (type_name == "Windows.Foundation.Collections.IMapView`2")
         {
-            w.write(R"(
+            if (kind == consume_kind::require)
+            {
+                w.write(R"(
+        auto TryLookup(param_type<K> const& key) const
+        {
+            return Windows::Foundation::Collections::IMapView<K, V>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::Collections::IMapView<K, V>>), take_ownership_from_abi }.TryLookup(key);
+        }
+)");
+            }
+            else
+            {
+                w.write(R"(
         auto TryLookup(param_type<K> const& key) const
         {
             if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
             {
                 V result{ nullptr };
-                impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMapView<K, V>)->Lookup(get_abi(key), put_abi(result)));
+                impl::check_hresult_allow_bounds((*(abi_t<Windows::Foundation::Collections::IMapView<K, V>>**)this)->Lookup(get_abi(key), put_abi(result)));
                 return result;
             }
             else
@@ -1431,7 +1621,7 @@ namespace cppwinrt
                 std::optional<V> result;
                 V value{ empty_value<V>() };
 
-                if (0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMapView<K, V>)->Lookup(get_abi(key), put_abi(value))))
+                if (0 == impl::check_hresult_allow_bounds((*(abi_t<Windows::Foundation::Collections::IMapView<K, V>>**)this)->Lookup(get_abi(key), put_abi(value))))
                 {
                     result = std::move(value);
                 }
@@ -1440,16 +1630,33 @@ namespace cppwinrt
             }
         }
 )");
+            }
         }
         else if (type_name == "Windows.Foundation.Collections.IMap`2")
         {
-            w.write(R"(
+            if (kind == consume_kind::require)
+            {
+                w.write(R"(
+        auto TryLookup(param_type<K> const& key) const
+        {
+            return Windows::Foundation::Collections::IMap<K, V>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::Collections::IMap<K, V>>), take_ownership_from_abi }.TryLookup(key);
+        }
+
+        auto TryRemove(param_type<K> const& key) const
+        {
+            return Windows::Foundation::Collections::IMap<K, V>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::Collections::IMap<K, V>>), take_ownership_from_abi }.TryRemove(key);
+        }
+)");
+            }
+            else
+            {
+                w.write(R"(
         auto TryLookup(param_type<K> const& key) const
         {
             if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
             {
                 V result{ nullptr };
-                impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Lookup(get_abi(key), put_abi(result)));
+                impl::check_hresult_allow_bounds((*(abi_t<Windows::Foundation::Collections::IMap<K, V>>**)this)->Lookup(get_abi(key), put_abi(result)));
                 return result;
             }
             else
@@ -1457,7 +1664,7 @@ namespace cppwinrt
                 std::optional<V> result;
                 V value{ empty_value<V>() };
 
-                if (0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Lookup(get_abi(key), put_abi(value))))
+                if (0 == impl::check_hresult_allow_bounds((*(abi_t<Windows::Foundation::Collections::IMap<K, V>>**)this)->Lookup(get_abi(key), put_abi(value))))
                 {
                     result = std::move(value);
                 }
@@ -1468,9 +1675,10 @@ namespace cppwinrt
 
         auto TryRemove(param_type<K> const& key) const
         {
-            return 0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Remove(get_abi(key)));
+            return 0 == impl::check_hresult_allow_bounds((*(abi_t<Windows::Foundation::Collections::IMap<K, V>>**)this)->Remove(get_abi(key)));
         }
 )");
+            }
         }
         else if (type_name == "Windows.Foundation.IAsyncAction")
         {
@@ -1508,20 +1716,6 @@ namespace cppwinrt
         auto wait_for(Windows::Foundation::TimeSpan const& timeout) const;
 )");
         }
-        else if (type_name == "Windows.Foundation.Collections.IIterable`1")
-        {
-            w.write(R"(
-        auto begin() const;
-        auto end() const;
-)");
-        }
-        else if (type_name == "Windows.UI.Xaml.Interop.IBindableIterable")
-        {
-            w.write(R"(
-        auto begin() const;
-        auto end() const;
-)");
-        }
     }
 
     static void write_interface_extensions(writer& w, TypeDef const& type)
@@ -1537,10 +1731,31 @@ namespace cppwinrt
         using difference_type = std::ptrdiff_t;
         using pointer = void;
         using reference = T;
+
+        auto& operator++()
+        {
+            if (!this->MoveNext())
+            {
+                *this = nullptr;
+            }
+
+            return *this;
+        }
+
+        T operator*() const
+        {
+            return this->Current();
+        }
+
+        void operator++(int)
+        {
+            ++(*this);
+        }
 )");
         }
         else if (type_name == "Windows.UI.Xaml.Interop.IBindableIterator")
         {
+            // defined in base_xaml_typename.h, after MoveNext and Current
             w.write(R"(
         using iterator_concept = std::input_iterator_tag;
         using iterator_category = std::input_iterator_tag;
@@ -1548,6 +1763,10 @@ namespace cppwinrt
         using difference_type = std::ptrdiff_t;
         using pointer = void;
         using reference = Windows::Foundation::IInspectable;
+
+        IBindableIterator& operator++();
+        Windows::Foundation::IInspectable operator*() const;
+        void operator++(int);
 )");
         }
         else if (type_name == "Windows.Foundation.IReference`1")
@@ -1590,52 +1809,107 @@ namespace cppwinrt
 
         auto type_namespace = type.TypeNamespace();
         auto impl_name = get_impl_name(type_namespace, type_name);
+        auto const usage = get_consume_usage(type);
+        auto const template_head = empty(generics) ? std::string{} : w.write_temp("    template <%>\n", bind<write_generic_typenames>(generics));
 
-        if (empty(generics))
-        {
-            auto format = R"(    template <typename D>
-    struct consume_%
+        auto format = R"(%    struct direct_%
     {
 %%%    };
-    template <> struct consume<%>
-    {
-        template <typename D> using type = consume_%<D>;
-    };
 )";
 
+        w.write(format,
+            template_head,
+            impl_name,
+            bind_each<write_consume_declaration>(type.MethodList(), consume_kind::direct),
+            bind<write_fast_consume_declarations>(type, consume_kind::direct),
+            bind<write_consume_extensions>(type, consume_kind::direct));
+
+        if (usage.require)
+        {
+            format = R"(%    struct require_%
+    {
+        operator %() const noexcept;
+%%%    };
+)";
+
+            w.write(format,
+                template_head,
+                impl_name,
+                type,
+                bind_each<write_consume_declaration>(type.MethodList(), consume_kind::require),
+                bind<write_fast_consume_declarations>(type, consume_kind::require),
+                bind<write_consume_extensions>(type, consume_kind::require));
+        }
+
+        if (usage.overrides)
+        {
+            format = R"(    struct overrides_%
+    {
+%    };
+)";
 
             w.write(format,
                 impl_name,
-                bind_each<write_consume_declaration>(type.MethodList()),
-                bind<write_fast_consume_declarations>(type),
-                bind<write_consume_extensions>(type),
-                type,
-                impl_name);
+                bind_each<write_consume_declaration>(type.MethodList(), consume_kind::overrides));
         }
-        else
+    }
+
+    // operator X() of require_X, defined once X is complete
+    static void write_require_conversion(writer& w, TypeDef const& type)
+    {
+        if (!get_consume_usage(type).require)
         {
-            auto format = R"(    template <typename D, %>
-    struct consume_%
+            return;
+        }
+
+        auto generics = type.GenericParam();
+        auto guard{ w.push_generic_params(generics) };
+        auto type_name = type.TypeName();
+
+        if (!empty(generics))
+        {
+            type_name = remove_tick(type_name);
+        }
+
+        auto format = R"(    %require_%%::operator %() const noexcept { return { impl::try_as_abi(*(void* const*)this, impl::guid_v<%>), take_ownership_from_abi }; }
+)";
+
+        w.write(format,
+            empty(generics) ? std::string{ "inline " } : w.write_temp("template <%> ", bind<write_generic_typenames>(generics)),
+            get_impl_name(type.TypeNamespace(), type_name),
+            empty(generics) ? std::string{} : w.write_temp("<%>", bind_list(", ", generics)),
+            type,
+            type);
+    }
+
+    static void write_base_declaration(writer& w, TypeDef const& type)
     {
-%%%    };
-    template <%> struct consume<%>
+        if (!has_base_mixin(type))
+        {
+            return;
+        }
+
+        auto format = R"(    struct base_%
     {
-        template <typename D> using type = consume_%<D, %>;
+        operator %() const noexcept;
     };
 )";
 
+        w.write(format, get_impl_name(type.TypeNamespace(), type.TypeName()), type);
+    }
 
-            w.write(format,
-                bind<write_generic_typenames>(generics),
-                impl_name,
-                bind_each<write_consume_declaration>(type.MethodList()),
-                bind<write_fast_consume_declarations>(type),
-                bind<write_consume_extensions>(type),
-                bind<write_generic_typenames>(generics),
-                type,
-                impl_name,
-                bind_list(", ", generics));
+    // operator C() of base_C, defined once C is complete
+    static void write_base_definition(writer& w, TypeDef const& type)
+    {
+        if (!has_base_mixin(type))
+        {
+            return;
         }
+
+        auto format = R"(    inline base_%::operator %() const noexcept { return { impl::try_as_abi(*(void* const*)this, guid_of<%>()), take_ownership_from_abi }; }
+)";
+
+        w.write(format, get_impl_name(type.TypeNamespace(), type.TypeName()), type, type);
     }
 
     static void write_produce_params(writer& w, method_signature const& signature)
@@ -2157,88 +2431,81 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         }
     }
 
-    static void write_class_override_requires(writer& w, get_interfaces_t const& interfaces)
-    {
-        for (auto&& [name, info] : interfaces)
-        {
-            if (!info.overridable && !info.is_protected)
-            {
-                w.write(", %", name);
-            }
-        }
-    }
-
-    static void write_class_override_protected_requires(writer& w, get_interfaces_t const& interfaces)
-    {
-        bool first = true;
-
-        for (auto&& [name, info] : interfaces)
-        {
-            if (info.is_protected)
-            {
-                if (first)
-                {
-                    first = false;
-                    w.write(",\n        protected impl::require<D, %", name);
-                }
-                else
-                {
-                    w.write(", %", name);
-                }
-            }
-        }
-
-        if (!first)
-        {
-            w.write('>');
-        }
-    }
-
-    static void write_class_override_defaults(writer& w, get_interfaces_t const& interfaces)
-    {
-        bool first = true;
-
-        for (auto&& [name, info] : interfaces)
-        {
-            if (!info.overridable)
-            {
-                continue;
-            }
-
-            if (first)
-            {
-                first = false;
-                w.write(",\n        %T<D>", name);
-            }
-            else
-            {
-                w.write(", %T<D>", name);
-            }
-        }
-    }
-
-    static void write_class_override_bases(writer& w, TypeDef const& type)
-    {
-        for (auto&& base : get_bases(type))
-        {
-            w.write(", %", base);
-        }
-    }
-
     static void write_class_override_friends(writer& w, get_interfaces_t const& interfaces)
     {
         for (auto&& [name, info] : interfaces)
         {
-            if (info.is_protected)
-            {
-                w.write("\n        friend impl::consume_t<D, %>;", name);
-                w.write("\n        friend impl::require_one<D, %>;", name);
-            }
-            else if (info.overridable)
+            if (info.overridable && !info.is_protected)
             {
                 w.write("\n        friend impl::produce<D, %>;", name);
             }
         }
+    }
+
+    // The begin() and end() of an iterable composable class use the implementation type, as consume_IIterable<D> did
+    static void write_class_override_iterable(writer& w, get_interfaces_t const& interfaces)
+    {
+        for (auto&& [name, info] : interfaces)
+        {
+            if (!info.overridable && !info.is_protected && is_iterable(info.type))
+            {
+                write_iterable_members(w, "D", "U");
+                return;
+            }
+        }
+    }
+
+    // A composable class's consume mixins, gathered into one struct that the implementation type places over its
+    // m_inner (see composing_mixins in base_implements.h). Component types deriving from the class use it as well.
+    static void write_composable_mixins(writer& w, TypeDef const& type)
+    {
+        if (!has_composable_constructors(w, type))
+        {
+            return;
+        }
+
+        auto interfaces = get_interfaces(w, type);
+        std::vector<std::string> bases;
+
+        for (auto&& [name, info] : interfaces)
+        {
+            if (!info.overridable && !info.is_protected)
+            {
+                bases.push_back(get_consume_name("require_", name));
+            }
+        }
+
+        bases.push_back("base_" + get_impl_name(type.TypeNamespace(), type.TypeName()));
+
+        for (auto&& base : get_bases(type))
+        {
+            w.add_depends(base);
+            bases.push_back("base_" + get_impl_name(base.TypeNamespace(), base.TypeName()));
+        }
+
+        for (auto&& [name, info] : interfaces)
+        {
+            if (info.overridable)
+            {
+                bases.push_back(get_consume_name("overrides_", name));
+            }
+        }
+
+        for (auto&& [name, info] : interfaces)
+        {
+            if (info.is_protected)
+            {
+                bases.push_back("protected " + get_consume_name("require_", name));
+            }
+        }
+
+        w.write(R"(    struct WINRT_IMPL_EMPTY_BASES composable_% :
+        %
+    {
+    };
+)",
+            get_impl_name(type.TypeNamespace(), type.TypeName()),
+            bind_list(",\n        ", bases));
     }
 
     static void write_call_factory(writer& w, TypeDef const& type, TypeDef const& factory)
@@ -2356,7 +2623,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                     type_name,
                     type_name,
                     info.type,
-                    bind_each<write_consume_declaration>(info.type.MethodList()));
+                    bind_each<write_consume_declaration>(info.type.MethodList(), consume_kind::legacy));
             }
         }
     }
@@ -2382,10 +2649,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
             for (auto&& [interface_name, info] : interfaces)
             {
-                w.write(info.overridable
-                        ? "        using %T<D>::%;\n"
-                        : "        using impl::consume_t<D, %>::%;\n",
-                    interface_name,
+                w.write("        using impl::%::%;\n",
+                    get_consume_name(info.overridable ? "overrides_" : "require_", interface_name),
                     method_name);
             }
         }
@@ -2393,73 +2658,65 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_class_override(writer& w, TypeDef const& type)
     {
-        auto factories = get_factories(w, type);
-        bool has_composable_factories{};
-
-        for (auto&& [interface_name, factory] : factories)
-        {
-            if (factory.composable && !empty(factory.type.MethodList()))
-            {
-                has_composable_factories = true;
-                break;
-            }
-        }
-
-        if (!has_composable_factories)
+        if (!has_composable_constructors(w, type))
         {
             return;
         }
 
         auto format = R"(    template <typename D, typename... Interfaces>
     struct %T :
-        implements<D%, composing, Interfaces...>,
-        impl::require<D%>%,
-        impl::base<D, %%>%
+        implements<D, impl::composing_mixins<impl::composable_%>%, composing, Interfaces...>
     {
         using composable = %;%
-    protected:
+%    protected:
 %%    };
 )";
 
         auto type_name = type.TypeName();
+        auto factories = get_factories(w, type);
         auto interfaces = get_interfaces(w, type);
 
         w.write(format,
             type_name,
+            get_impl_name(type.TypeNamespace(), type_name),
             bind<write_class_override_implements>(interfaces),
-            bind<write_class_override_requires>(interfaces),
-            bind<write_class_override_protected_requires>(interfaces),
-            type_name,
-            bind<write_class_override_bases>(type),
-            bind<write_class_override_defaults>(interfaces),
             type_name,
             bind<write_class_override_friends>(interfaces),
+            bind<write_class_override_iterable>(interfaces),
             bind<write_class_override_constructors>(type, factories),
             bind<write_class_override_usings>(interfaces));
     }
 
     static void write_interface_requires(writer& w, TypeDef const& type)
     {
-        auto interfaces = get_interfaces(w, type);
+        auto separator = ",\n        impl::";
 
-        if (interfaces.empty())
+        for (auto&& [name, info] : get_interfaces(w, type))
         {
-            return;
+            w.write("%%", separator, get_consume_name("require_", name));
+            separator = ", impl::";
+        }
+    }
+
+    static void write_interface_iterable(writer& w, TypeDef const& type, std::string_view const& self)
+    {
+        bool iterable = is_iterable(type);
+
+        for (auto&& [name, info] : get_interfaces(w, type))
+        {
+            iterable = iterable || is_iterable(info.type);
         }
 
-        w.write(",\n        impl::require<%", type);
-
-        for (auto&& [name, info] : interfaces)
+        if (iterable)
         {
-            w.write(", %", name);
+            write_iterable_members(w, self);
         }
-
-        w.write('>');
     }
 
     static void write_interface_usings(writer& w, TypeDef const& type)
     {
         auto type_name = type.TypeName();
+        auto self_name = w.write_temp("%", type);
         auto interfaces_plus_self = get_interfaces(w, type);
         interfaces_plus_self.emplace_back(type_name, interface_info{ type });
         std::map<std::string_view, std::set<std::string>> method_usage;
@@ -2481,9 +2738,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
             for (auto&& interface_name : interfaces)
             {
-                w.write("        using impl::consume_t<%, %>::%;\n",
-                    type_name,
-                    interface_name,
+                w.write("        using impl::%::%;\n",
+                    interface_name == type_name ? get_consume_name("direct_", self_name) : get_consume_name("require_", interface_name),
                     method_name);
             }
         }
@@ -2491,7 +2747,6 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_class_usings(writer& w, TypeDef const& type)
     {
-        auto type_name = type.TypeName();
         auto default_interface = get_default_interface(type);
         auto default_interface_name = w.write_temp("%", default_interface);
         std::map<std::string_view, std::set<std::string>> method_usage;
@@ -2534,9 +2789,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 }
                 else
                 {
-                    w.write("        using impl::consume_t<%, %>::%;\n",
-                        type_name,
-                        interface_name,
+                    w.write("        using impl::%::%;\n",
+                        get_consume_name("require_", interface_name),
                         method_name);
                 }
             }
@@ -2553,20 +2807,21 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         {
             auto format = R"(    struct WINRT_IMPL_EMPTY_BASES % :
         winrt::Windows::Foundation::IInspectable,
-        impl::consume_t<%>%
+        impl::%%
     {
         %(std::nullptr_t = nullptr) noexcept {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : winrt::Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
-%%    };
+%%%    };
 )";
 
             w.write(format,
                 type_name,
-                type_name,
+                get_consume_name("direct_", w.write_temp("%", type)),
                 bind<write_interface_requires>(type),
                 type_name,
                 type_name,
                 bind<write_interface_usings>(type),
+                bind<write_interface_iterable>(type, type_name),
                 bind<write_interface_extensions>(type));
         }
         else
@@ -2576,22 +2831,23 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             auto format = R"(    template <%>
     struct WINRT_IMPL_EMPTY_BASES % :
         winrt::Windows::Foundation::IInspectable,
-        impl::consume_t<%>%
+        impl::%%
     {%
         %(std::nullptr_t = nullptr) noexcept {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : winrt::Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
-%%    };
+%%%    };
 )";
 
             w.write(format,
                 bind<write_generic_typenames>(generics),
                 type_name,
-                type,
+                get_consume_name("direct_", w.write_temp("%", type)),
                 bind<write_interface_requires>(type),
                 bind<write_generic_asserts>(generics),
                 type_name,
                 type_name,
                 bind<write_interface_usings>(type),
+                bind<write_interface_iterable>(type, type_name),
                 bind<write_interface_extensions>(type));
         }
     }
@@ -2987,70 +3243,68 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_class_requires(writer& w, TypeDef const& type)
     {
-        bool first = true;
+        auto separator = ",\n        impl::";
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
             if ((!info.defaulted || info.base) && (!info.is_protected && !info.overridable))
             {
-                if (first)
-                {
-                    first = false;
-                    w.write(",\n        impl::require<%", type.TypeName());
-                }
-
-                w.write(", %", interface_name);
+                w.write("%%", separator, get_consume_name("require_", interface_name));
+                separator = ", impl::";
             }
-        }
-
-        if (!first)
-        {
-            w.write('>');
         }
     }
 
+    // Interfaces reached through the default interface are inherited from it rather than repeated, so that the class
+    // doesn't derive from the same require_X mixin twice.
     static void write_fast_class_requires(writer& w, TypeDef const& type)
     {
-        bool first = true;
+        auto separator = ",\n        impl::";
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
-            if (!info.exclusive)
+            if (!info.exclusive && (!info.defaulted || info.base))
             {
-                if (first)
-                {
-                    first = false;
-                    w.write(",\n        impl::require<%", type.TypeName());
-                }
-
-                w.write(", %", interface_name);
+                w.write("%%", separator, get_consume_name("require_", interface_name));
+                separator = ", impl::";
             }
-        }
-
-        if (!first)
-        {
-            w.write('>');
         }
     }
 
     static void write_class_base(writer& w, TypeDef const& type)
     {
-        bool first = true;
+        auto separator = ",\n        impl::";
 
         for (auto&& base : get_bases(type))
         {
-            if (first)
-            {
-                first = false;
-                w.write(",\n        impl::base<%", type.TypeName());
-            }
-
-            w.write(", %", base);
+            w.add_depends(base);
+            w.write("%base_%", separator, get_impl_name(base.TypeNamespace(), base.TypeName()));
+            separator = ", impl::";
         }
+    }
 
-        if (!first)
+    // A class gets its own begin() and end() if it requires an iterable interface other than through its default interface
+    static void write_class_iterable(writer& w, TypeDef const& type)
+    {
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
-            w.write('>');
+            if ((!info.defaulted || info.base) && (!info.is_protected && !info.overridable) && is_iterable(info.type))
+            {
+                write_iterable_members(w, type.TypeName());
+                return;
+            }
+        }
+    }
+
+    static void write_fast_class_iterable(writer& w, TypeDef const& type)
+    {
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
+        {
+            if (!info.exclusive && (!info.defaulted || info.base) && is_iterable(info.type))
+            {
+                write_iterable_members(w, type.TypeName());
+                return;
+            }
         }
     }
 
@@ -3070,7 +3324,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                     break;
                 }
 
-                w.write_each<write_consume_declaration>(info.type.MethodList());
+                w.write_each<write_consume_declaration>(info.type.MethodList(), consume_kind::legacy);
             }
         }
     }
@@ -3372,7 +3626,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
     {
         %(std::nullptr_t) noexcept {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : %(ptr, take_ownership_from_abi) {}
-%%%    };
+%%%%    };
 )";
 
         w.write(format,
@@ -3385,6 +3639,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             base_type,
             bind<write_constructor_declarations>(type, factories),
             bind<write_class_usings>(type),
+            bind<write_class_iterable>(type),
             bind_each<write_static_declaration>(factories, type));
     }
 
@@ -3397,7 +3652,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
     {
         %(std::nullptr_t) noexcept {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : %(ptr, take_ownership_from_abi) {}
-%%%    };
+%%%%    };
 )";
 
         w.write(format,
@@ -3409,6 +3664,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             base_type,
             bind<write_constructor_declarations>(type, factories),
             bind<write_fast_class_base_declarations>(type),
+            bind<write_fast_class_iterable>(type),
             bind_each<write_static_declaration>(factories, type));
     }
 
