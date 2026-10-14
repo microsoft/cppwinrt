@@ -546,6 +546,47 @@ WINRT_EXPORT namespace winrt::impl
         }
         return result;
     }
+
+    // Shared, non-template helpers called by the consume mixins of the projection (see code_writers.h)
+    inline void check_abi(std::int32_t const result)
+    {
+        if (result < 0)
+        {
+            check_hresult(result);
+        }
+    }
+
+    inline void* try_as_abi(void* const ptr, guid const& id) noexcept
+    {
+#ifdef WINRT_DIAGNOSTICS
+        get_diagnostics_info().add_query(id);
+#endif
+
+        void* result{};
+
+        if (ptr)
+        {
+            static_cast<unknown_abi*>(ptr)->QueryInterface(id, &result);
+        }
+
+        return result;
+    }
+
+    inline void* as_abi(void* const ptr, guid const& id)
+    {
+#ifdef WINRT_DIAGNOSTICS
+        get_diagnostics_info().add_query(id);
+#endif
+
+        if (!ptr)
+        {
+            return nullptr;
+        }
+
+        void* result{};
+        check_hresult(static_cast<unknown_abi*>(ptr)->QueryInterface(id, &result));
+        return result;
+    }
 }
 
 #undef WINRT_IMPL_RETURNADDRESS

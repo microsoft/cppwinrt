@@ -771,7 +771,29 @@ WINRT_EXPORT namespace winrt::impl
         std::atomic<std::uint32_t> m_weak{ 1 };
     };
 
-    template <bool>
+    // An implementation type composing a projected class passes the class's consume mixins as composing_mixins<M> in its
+    // implements list. M (impl::composable_X, generated with the class) becomes an empty base of the composing outer,
+    // where it shares the address of m_inner, so the mixins reach the inner object without knowing the implementation type.
+    template <typename Mixins>
+    struct composing_mixins : marker {};
+
+    template <typename... I>
+    struct find_composing_mixins
+    {
+        using type = void;
+    };
+
+    template <typename Mixins, typename... I>
+    struct find_composing_mixins<composing_mixins<Mixins>, I...>
+    {
+        using type = Mixins;
+    };
+
+    template <typename T, typename... I>
+    struct find_composing_mixins<T, I...> : find_composing_mixins<I...> {};
+
+    // MSVC only honors empty_bases on a partial specialization when the primary template also has it
+    template <bool, typename Mixins = void>
     struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer
     {
     protected:
@@ -780,7 +802,7 @@ WINRT_EXPORT namespace winrt::impl
     };
 
     template <>
-    struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer<true>
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer<true, void>
     {
         template <typename Qi>
         auto try_as() const noexcept
@@ -806,6 +828,11 @@ WINRT_EXPORT namespace winrt::impl
         {
             return m_inner.try_as_with_reason<Qi>(code);
         }
+    };
+
+    template <typename Mixins>
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer<true, Mixins> : root_implements_composing_outer<true, void>, Mixins
+    {
     };
 
     template <typename D, bool>
@@ -835,7 +862,7 @@ WINRT_EXPORT namespace winrt::impl
 
     template <typename D, typename... I>
     struct WINRT_IMPL_NOVTABLE root_implements
-        : root_implements_composing_outer<std::disjunction_v<std::is_same<composing, I>...>>
+        : root_implements_composing_outer<std::disjunction_v<std::is_same<composing, I>...>, typename find_composing_mixins<I...>::type>
         , root_implements_composable_inner<D, std::disjunction_v<std::is_same<composable, I>...>>
         , module_lock_updater<!std::disjunction_v<std::is_same<no_module_lock, I>...>>
     {
