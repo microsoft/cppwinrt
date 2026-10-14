@@ -20,8 +20,8 @@ TEST_CASE("Simple")
     REQUIRE(info.factories[name_of<Simple>()].requests == 1);
 
     REQUIRE(info.queries.size() == 4);
-    REQUIRE(info.queries[L"IAgileObject"] == 1);
-    REQUIRE(info.queries[name_of<Simple>()] == 1);
-    REQUIRE(info.queries[name_of<ISimple2>()] == 1);
-    REQUIRE(info.queries[name_of<ISimple3>()] == 1);
+    REQUIRE(info.queries[guid_of<impl::IAgileObject>()] == 1);
+    REQUIRE(info.queries[guid_of<Simple>()] == 1);
+    REQUIRE(info.queries[guid_of<ISimple2>()] == 1);
+    REQUIRE(info.queries[guid_of<ISimple3>()] == 1);
 }
