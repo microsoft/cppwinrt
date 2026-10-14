@@ -76,12 +76,6 @@ WINRT_EXPORT namespace winrt::impl
     template <typename T>
     using abi_t = typename abi<T>::type;
 
-    template <typename T>
-    struct consume;
-
-    template <typename D, typename I = D>
-    using consume_t = typename consume<I>::template type<D>;
-
     template <typename T, typename H>
     struct delegate;
 
@@ -157,32 +151,6 @@ WINRT_EXPORT namespace winrt::impl
 
     template <typename T>
     inline constexpr bool is_implements_v = is_implements<T>::value;
-
-    template <typename D, typename I>
-    struct require_one : consume_t<D, I>
-    {
-        operator I() const noexcept
-        {
-            return static_cast<D const*>(this)->template try_as<I>();
-        }
-    };
-
-    template <typename D, typename... I>
-    struct WINRT_IMPL_EMPTY_BASES require : require_one<D, I>...
-    {};
-
-    template <typename D, typename I>
-    struct base_one
-    {
-        operator I() const noexcept
-        {
-            return static_cast<D const*>(this)->template try_as<I>();
-        }
-    };
-
-    template <typename D, typename... I>
-    struct WINRT_IMPL_EMPTY_BASES base : base_one<D, I>...
-    {};
 
     template <typename T>
     T empty_value() noexcept
