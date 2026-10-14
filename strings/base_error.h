@@ -547,7 +547,7 @@ WINRT_EXPORT namespace winrt::impl
         return result;
     }
 
-    // Shared, non-template helpers called by the consume mixins of the projection (see code_writers.h)
+    // Shared helpers called by the consume mixins of the projection (see code_writers.h)
     inline void check_abi(std::int32_t const result)
     {
         if (result < 0)
@@ -558,10 +558,6 @@ WINRT_EXPORT namespace winrt::impl
 
     inline void* try_as_abi(void* const ptr, guid const& id) noexcept
     {
-#ifdef WINRT_DIAGNOSTICS
-        get_diagnostics_info().add_query(id);
-#endif
-
         void* result{};
 
         if (ptr)
@@ -574,10 +570,6 @@ WINRT_EXPORT namespace winrt::impl
 
     inline void* as_abi(void* const ptr, guid const& id)
     {
-#ifdef WINRT_DIAGNOSTICS
-        get_diagnostics_info().add_query(id);
-#endif
-
         if (!ptr)
         {
             return nullptr;
@@ -586,6 +578,28 @@ WINRT_EXPORT namespace winrt::impl
         void* result{};
         check_hresult(static_cast<unknown_abi*>(ptr)->QueryInterface(id, &result));
         return result;
+    }
+
+    // To names the interface or class being queried for, so that WINRT_DIAGNOSTICS can count queries by name. The
+    // consume mixins compile these for every interface they require, so each instantiation only forwards.
+    template <typename To>
+    void* try_as_abi(void* const ptr, guid const& id) noexcept
+    {
+#ifdef WINRT_DIAGNOSTICS
+        get_diagnostics_info().add_query<To>();
+#endif
+
+        return try_as_abi(ptr, id);
+    }
+
+    template <typename To>
+    void* as_abi(void* const ptr, guid const& id)
+    {
+#ifdef WINRT_DIAGNOSTICS
+        get_diagnostics_info().add_query<To>();
+#endif
+
+        return as_abi(ptr, id);
     }
 }
 

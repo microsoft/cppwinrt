@@ -1222,10 +1222,11 @@ namespace cppwinrt
         }
         else if (kind == consume_kind::require)
         {
-            w.write("        template <typename W = %> [[nodiscard]] auto %(auto_revoke_t, %) const { return W{ impl::as_abi(*(void* const*)this, impl::guid_v<%>), take_ownership_from_abi }.%(auto_revoke, %); }\n",
+            w.write("        template <typename W = %> [[nodiscard]] auto %(auto_revoke_t, %) const { return W{ impl::as_abi<%>(*(void* const*)this, impl::guid_v<%>), take_ownership_from_abi }.%(auto_revoke, %); }\n",
                 type,
                 method_name,
                 bind<write_consume_params>(signature),
+                type,
                 type,
                 method_name,
                 bind<write_consume_args>(signature));
@@ -1424,7 +1425,7 @@ namespace cppwinrt
         auto async_types_guard = w.push_async_types(signature.is_async());
         auto const generic = !empty(generics);
 
-        auto format = R"(    %auto %%%::%(%) const% { return %{ impl::as_abi(*(void* const*)this, impl::guid_v<%>), take_ownership_from_abi }.%%(%); }
+        auto format = R"(    %auto %%%::%(%) const% { return %{ impl::as_abi<%>(*(void* const*)this, impl::guid_v<%>), take_ownership_from_abi }.%%(%); }
 )";
 
         w.write(format,
@@ -1435,6 +1436,7 @@ namespace cppwinrt
             method_name,
             bind<write_consume_params>(signature),
             is_noexcept(method) ? " noexcept" : "",
+            type,
             type,
             type,
             generic ? std::string{} : w.write_temp("direct_%::", type_impl_name),
@@ -1601,7 +1603,7 @@ namespace cppwinrt
                 w.write(R"(
         auto TryLookup(param_type<K> const& key) const
         {
-            return Windows::Foundation::Collections::IMapView<K, V>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::Collections::IMapView<K, V>>), take_ownership_from_abi }.TryLookup(key);
+            return Windows::Foundation::Collections::IMapView<K, V>{ impl::as_abi<Windows::Foundation::Collections::IMapView<K, V>>(*(void* const*)this, impl::guid_v<Windows::Foundation::Collections::IMapView<K, V>>), take_ownership_from_abi }.TryLookup(key);
         }
 )");
             }
@@ -1639,12 +1641,12 @@ namespace cppwinrt
                 w.write(R"(
         auto TryLookup(param_type<K> const& key) const
         {
-            return Windows::Foundation::Collections::IMap<K, V>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::Collections::IMap<K, V>>), take_ownership_from_abi }.TryLookup(key);
+            return Windows::Foundation::Collections::IMap<K, V>{ impl::as_abi<Windows::Foundation::Collections::IMap<K, V>>(*(void* const*)this, impl::guid_v<Windows::Foundation::Collections::IMap<K, V>>), take_ownership_from_abi }.TryLookup(key);
         }
 
         auto TryRemove(param_type<K> const& key) const
         {
-            return Windows::Foundation::Collections::IMap<K, V>{ impl::as_abi(*(void* const*)this, impl::guid_v<Windows::Foundation::Collections::IMap<K, V>>), take_ownership_from_abi }.TryRemove(key);
+            return Windows::Foundation::Collections::IMap<K, V>{ impl::as_abi<Windows::Foundation::Collections::IMap<K, V>>(*(void* const*)this, impl::guid_v<Windows::Foundation::Collections::IMap<K, V>>), take_ownership_from_abi }.TryRemove(key);
         }
 )");
             }
@@ -1871,13 +1873,14 @@ namespace cppwinrt
             type_name = remove_tick(type_name);
         }
 
-        auto format = R"(    %require_%%::operator %() const noexcept { return { impl::try_as_abi(*(void* const*)this, impl::guid_v<%>), take_ownership_from_abi }; }
+        auto format = R"(    %require_%%::operator %() const noexcept { return { impl::try_as_abi<%>(*(void* const*)this, impl::guid_v<%>), take_ownership_from_abi }; }
 )";
 
         w.write(format,
             empty(generics) ? std::string{ "inline " } : w.write_temp("template <%> ", bind<write_generic_typenames>(generics)),
             get_impl_name(type.TypeNamespace(), type_name),
             empty(generics) ? std::string{} : w.write_temp("<%>", bind_list(", ", generics)),
+            type,
             type,
             type);
     }
@@ -1906,10 +1909,10 @@ namespace cppwinrt
             return;
         }
 
-        auto format = R"(    inline base_%::operator %() const noexcept { return { impl::try_as_abi(*(void* const*)this, guid_of<%>()), take_ownership_from_abi }; }
+        auto format = R"(    inline base_%::operator %() const noexcept { return { impl::try_as_abi<%>(*(void* const*)this, guid_of<%>()), take_ownership_from_abi }; }
 )";
 
-        w.write(format, get_impl_name(type.TypeNamespace(), type.TypeName()), type, type);
+        w.write(format, get_impl_name(type.TypeNamespace(), type.TypeName()), type, type, type);
     }
 
     static void write_produce_params(writer& w, method_signature const& signature)

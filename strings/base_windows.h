@@ -11,23 +11,17 @@ WINRT_EXPORT namespace winrt::impl
 
     struct diagnostics_info
     {
-        // QueryInterface calls by interface id
-        std::map<guid, std::uint32_t> queries;
+        std::map<std::wstring_view, std::uint32_t> queries;
         std::map<std::wstring_view, factory_diagnostics_info> factories;
     };
 
     struct diagnostics_cache
     {
-        void add_query(guid const& id)
-        {
-            slim_lock_guard const guard(m_lock);
-            ++m_info.queries[id];
-        }
-
         template <typename T>
         void add_query()
         {
-            add_query(guid_of<T>());
+            slim_lock_guard const guard(m_lock);
+            ++m_info.queries[name_of<T>()];
         }
 
         template <typename T>
