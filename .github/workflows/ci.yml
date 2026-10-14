@@ -71,7 +71,7 @@ jobs:
           cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.sln /t:cppwinrt
 
       - name: Upload built executables
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolchain.platform_toolset }}-bin
           path: |
@@ -243,7 +243,7 @@ jobs:
 
       - name: Upload arm64 test executables
         if: matrix.arch == 'arm64'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: msvc-tests-${{ matrix.test_exe }}-${{ matrix.compiler }}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolchain.platform_toolset }}-bin
           path: |
@@ -282,7 +282,7 @@ jobs:
           cmake --build build/cross_x64/ --target install -j2
 
       - name: Upload cppwinrt.exe
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: cross-build-${{ matrix.arch }}-bin
           path: install/bin/cppwinrt.exe
@@ -399,7 +399,7 @@ jobs:
           }
 
       - name: Upload nuget package artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: package
           path: "*.nupkg"
