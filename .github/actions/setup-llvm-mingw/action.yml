@@ -19,7 +19,7 @@ runs:
     - name: Cache llvm-mingw (Windows)
       id: cache-llvm
       if: runner.os == 'Windows'
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
       with:
         path: .llvm-mingw
         key: llvm-mingw-${{ runner.os }}-${{ inputs.llvm-mingw-version }}-${{ inputs.host-arch }}
@@ -50,7 +50,7 @@ runs:
     - name: Cache llvm-mingw (Linux)
       id: cache-llvm-linux
       if: runner.os == 'Linux'
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
       with:
         path: /opt/llvm-mingw
         key: llvm-mingw-${{ runner.os }}-${{ inputs.llvm-mingw-version }}-${{ inputs.host-arch }}

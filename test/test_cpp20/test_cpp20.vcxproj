@@ -239,6 +239,7 @@
     <ClCompile Include="custom_error.cpp" />
     <ClCompile Include="format.cpp" />
     <ClCompile Include="hstring.cpp" />
+    <ClCompile Include="hstring_literal.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
