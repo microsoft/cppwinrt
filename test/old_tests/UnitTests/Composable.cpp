@@ -184,3 +184,93 @@ TEST_CASE("Composable get_interfaces")
     REQUIRE(std::find(iids.begin(), iids.end(), guid_of<IBaseOverrides>()) != iids.end());
     REQUIRE(std::find(iids.begin(), iids.end(), guid_of<IStringable>()) != iids.end());
 }
+
+namespace
+{
+    // A base class unrelated to C++/WinRT, with state and virtual functions, ahead of the composable base
+    struct OtherBase
+    {
+        virtual ~OtherBase() = default;
+
+        virtual int32_t OtherValue() const
+        {
+            return m_value;
+        }
+
+        int32_t m_value{ 7 };
+        void* m_pointers[3]{};
+    };
+
+    struct OtherFirstBase : OtherBase, BaseT<OtherFirstBase>
+    {
+        hstring OverridableMethod() const
+        {
+            return L"OtherFirstBase";
+        }
+
+        int32_t CallProtectedMethod()
+        {
+            return ProtectedMethod();
+        }
+    };
+
+    struct OtherFirstDerived : OtherBase, DerivedT<OtherFirstDerived>
+    {
+        OtherFirstDerived() : DerivedT<OtherFirstDerived>(L"OtherFirstDerived")
+        {
+        }
+    };
+
+    // A class template between the implementation type and its composable base
+    template <typename T>
+    struct Intermediate : OtherBase, T
+    {
+        int32_t IntermediateValue() const
+        {
+            return this->OtherValue() + 1;
+        }
+    };
+
+    struct IntermediateBase : Intermediate<BaseT<IntermediateBase>>
+    {
+    };
+}
+
+TEST_CASE("Composable other bases")
+{
+    // The members that BaseT<D> and DerivedT<D> provide find the composed object at the address of their own subobject,
+    // so they must reach it whatever else the implementation type derives from, and in whichever order.
+    {
+        auto self = make_self<OtherFirstBase>();
+        REQUIRE(self->OtherValue() == 7);
+        REQUIRE(self->VirtualMethod() == Base_VirtualMethod);
+        REQUIRE(self->CallOverridableMethod() == L"OtherFirstBase");
+        REQUIRE(self->OverridableVirtualMethod() == Base_OverridableVirtualMethod);
+        REQUIRE(self->OverridableNoexceptMethod() == Base_OverridableNoexceptMethod);
+        REQUIRE(self->CallProtectedMethod() == Base_ProtectedMethod);
+
+        Base base = *self;
+        REQUIRE(base.CallOverridableMethod() == L"OtherFirstBase");
+        IBase ibase = *self;
+        REQUIRE(ibase.VirtualMethod() == Base_VirtualMethod);
+    }
+    {
+        auto self = make_self<OtherFirstDerived>();
+        REQUIRE(self->OtherValue() == 7);
+        REQUIRE(self->Name() == L"OtherFirstDerived");
+        REQUIRE(self->VirtualMethod() == Derived_VirtualMethod);
+        REQUIRE(self->CallOverridableVirtualMethod() == Derived_OverridableVirtualMethod);
+        REQUIRE(self->CallProtectedMethod() == Base_ProtectedMethod);
+
+        Derived derived = *self;
+        REQUIRE(derived.Name() == L"OtherFirstDerived");
+        Base base = *self;
+        REQUIRE(base.VirtualMethod() == Derived_VirtualMethod);
+    }
+    {
+        auto self = make_self<IntermediateBase>();
+        REQUIRE(self->IntermediateValue() == 8);
+        REQUIRE(self->VirtualMethod() == Base_VirtualMethod);
+        REQUIRE(self->CallOverridableMethod() == Base_OverridableMethod);
+    }
+}

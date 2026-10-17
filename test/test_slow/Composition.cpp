@@ -8,6 +8,8 @@ using namespace winrt::test_component_fast::Composition;
 
 TEST_CASE("Composition")
 {
+    winrt::impl::get_diagnostics_info().detach();
+
     // IActivationFactory::ActivateInstance is called for the default constructor.
     // Under the slowabi, the ActivateInstance method returns IInspectable so each
     // caller must QI for the default interface.
@@ -17,14 +19,14 @@ TEST_CASE("Composition")
     SpriteVisual v2 = compositor.CreateSpriteVisual();
 
     // Under the slowabi, this needs a QI for ICompositionObject.
-    assert(v1.Compositor() == compositor);
+    REQUIRE(v1.Compositor() == compositor);
 
     // Under the slowabi, this needs a QI for ICompositionObject2.
     v1.StartAnimationGroup();
 
     // Under the slowabi, this needs a QI for IVisual for each call.
     v1.Offset(123);
-    assert(v1.Offset() == 123);
+    REQUIRE(v1.Offset() == 123);
 
     // Under the slowabi, this needs a QI for IVisual2 to call ParentForTransform
     // *and* the v2 parameter needs a QI for IVisual.
@@ -39,4 +41,19 @@ TEST_CASE("Composition")
 
     // Non exclusive interface requires QI as usual.
     v1.Close();
+
+    auto info = winrt::impl::get_diagnostics_info().get();
+
+    // The 8 QIs that the fastabi avoids (see test_fast), plus the agility check of the cached activation factory and
+    // the non exclusive interface.
+    REQUIRE(info.queries.size() == 9);
+    REQUIRE(info.queries[L"IAgileObject"] == 1);
+    REQUIRE(info.queries[winrt::name_of<Compositor>()] == 1);
+    REQUIRE(info.queries[winrt::name_of<ICompositionObject>()] == 1);
+    REQUIRE(info.queries[winrt::name_of<ICompositionObject2>()] == 1);
+    REQUIRE(info.queries[winrt::name_of<IVisual>()] == 2);
+    REQUIRE(info.queries[winrt::name_of<IVisual2>()] == 1);
+    REQUIRE(info.queries[winrt::name_of<Visual>()] == 1);
+    REQUIRE(info.queries[winrt::name_of<ISpriteVisual2>()] == 1);
+    REQUIRE(info.queries[winrt::name_of<winrt::Windows::Foundation::IClosable>()] == 1);
 }
