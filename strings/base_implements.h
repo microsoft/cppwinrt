@@ -833,6 +833,22 @@ WINRT_EXPORT namespace winrt::impl
     template <typename Mixins>
     struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer<true, Mixins> : root_implements_composing_outer<true, void>, Mixins
     {
+    protected:
+        root_implements_composing_outer() noexcept
+        {
+            // The mixins read the inner object's pointer at their own address (*(void* const*)this), which is only correct
+            // if they all share the address of m_inner. These checks turn a layout that breaks that into a build error.
+            // Bases of the implementation type don't matter: this subobject's layout is the same wherever it is placed.
+            static_assert(std::is_empty_v<Mixins> && sizeof(Mixins) == 1,
+                "The consume mixins of a composable class must be stateless and all at offset 0.");
+            // A standard-layout class has its first member and all of its base class subobjects at its own address.
+            static_assert(std::is_standard_layout_v<root_implements_composing_outer>,
+                "The consume mixins of a composable class must share the address of the composed object.");
+            // MSVC doesn't place several empty bases by the standard-layout rules without __declspec(empty_bases)
+            // (WINRT_IMPL_EMPTY_BASES), and any other state could move m_inner, so the outer must be no larger than m_inner.
+            static_assert(sizeof(root_implements_composing_outer) == sizeof(Windows::Foundation::IInspectable),
+                "The composing outer must hold nothing but the composed object.");
+        }
     };
 
     template <typename D, bool>

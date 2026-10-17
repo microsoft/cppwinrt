@@ -3707,6 +3707,24 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         }
     }
 
+    static bool has_class_layout_check(TypeDef const& type)
+    {
+        return static_cast<bool>(get_default_interface(type));
+    }
+
+    // The consume mixins of a class are empty base classes that read the interface pointer at their own address, so they
+    // must all share the address of the class's IUnknown::m_ptr. A standard-layout class has all of its base class
+    // subobjects at its own address (as long as MSVC applies WINRT_IMPL_EMPTY_BASES, which the size check confirms), so a
+    // layout that breaks this, such as a mixin inherited twice, is a build error rather than a call through the wrong pointer.
+    static void write_class_layout_check(writer& w, TypeDef const& type)
+    {
+        if (has_class_layout_check(type))
+        {
+            auto type_name = type.TypeName();
+            w.write("    static_assert(std::is_standard_layout_v<%> && sizeof(%) == sizeof(void*));\n", type_name, type_name);
+        }
+    }
+
     static void write_std_hash(writer& w, TypeDef const& type)
     {
         auto generics = type.GenericParam();

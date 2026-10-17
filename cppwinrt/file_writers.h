@@ -189,6 +189,12 @@ namespace cppwinrt
             w.write_each<write_base_definition>(members.classes);
         }
 
+        if (std::any_of(members.classes.begin(), members.classes.end(), has_class_layout_check))
+        {
+            auto wrap_type = wrap_type_namespace_without_export(w, ns);
+            w.write_each<write_class_layout_check>(members.classes);
+        }
+
         write_close_file_guard(w);
         w.swap();
         write_preamble(w);
