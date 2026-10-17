@@ -28,11 +28,14 @@ headers that the `pch.h` of Visual Studio's *Blank App (C++/WinRT)* template inc
 | Blank App PCH, Debug: time / size / peak memory | 22.4 s / 1,130 MB / 1,229 MB | 17.8 s / 798 MB / 895 MB | -20% / -29% / -27% |
 | Blank App PCH, Release `/O2 /GL`: time / size + `pch.obj` / peak memory | 21.2 s / 1,118 + 135 MB / 1,138 MB | 16.6 s / 785 + 102 MB / 811 MB | -22% / -29% / -29% |
 | `Windows.UI.Xaml.Controls.h` TU, Debug: time / peak memory | 17.5 s / 991 MB | 12.9 s / 696 MB | -26% / -30% |
+| PCH of the 62 headers of the `Windows.ApplicationModel` module (non-XAML), Debug: time / size / peak memory | 17.3 s / 750 MB / 832 MB | 15.7 s / 641 MB / 715 MB | -9% / -15% / -14% |
 | C++20 modules, Blank App import closure (67 modules), Debug: IFC bytes / critical path / peak memory | 229 MB / 58-59 s / 1,230 MB | 176 MB / 51-52 s / 1,034 MB | -23% / -12% / -16% |
 | clang-cl 22, Blank App PCH: time / size / peak memory | 11.0 s / 163 MB / 1,454 MB | 9.2 s / 112 MB / 853 MB | -17% / -31% / -41% |
 
 No new warnings (MSVC `/Wall` x64 and x86, `/analyze`, clang `-Wall -Wextra`), identical runtime behavior under MSVC
-and clang, and no runtime regressions (see [Results](#results)).
+and clang, no runtime regressions, and the test matrix of CI passes, including component authoring and fast ABI (see
+[Results](#results) and [Validation](#validation)). Every runtime class and composable implementation type checks the
+layout the mixins rely on at compile time (see [Layout guarantees](#layout-guarantees-and-their-checks)).
 
 ## Motivation
 
@@ -421,6 +424,83 @@ type, so the mixins would work there too. This is untested, as is all consumptio
 compilers: cppwinrt's CI only builds `cppwinrt.exe` itself with MinGW GCC, and the MinGW test jobs added in #1216 and
 #1245 were removed in #1348.
 
+### Layout guarantees and their checks
+
+The mixins replace the compiler's pointer adjustment (`static_cast<D const*>(this)`) with an assumption about layout, so
+the assumption is checked at compile time: a layout that breaks it is a build error, not a call through the wrong
+pointer.
+
+**What is assumed.** Every mixin of a projected interface or class is at the address of the object's `IUnknown::m_ptr`.
+Every mixin of a composable implementation type is at the address of `m_inner`, the composed object (see
+[Composable implementation types](#composable-implementation-types)).
+
+**What guarantees it.** C++20 [class.mem]: "If a standard-layout class object has any non-static data members, its
+address is the same as the address of its first non-static data member if that member is not a bit-field. Its address
+is also the same as the address of each of its base class subobjects." A projected type is standard-layout as long as
+no mixin appears twice and no mixin has state, and its first non-static data member is `m_ptr` (`IUnknown` is
+standard-layout with `m_ptr` as its only member). MSVC doesn't follow this rule for several empty bases unless the class
+has `__declspec(empty_bases)` (`WINRT_IMPL_EMPTY_BASES`); otherwise it gives each additional empty base its own bytes,
+and the class grows. So *standard-layout and the size of a pointer* is exactly the property the mixins need.
+
+**Other bases of an implementation type don't matter.** In `struct MyButton : Helper, ButtonT<MyButton>`, `Helper`
+moves `ButtonT<MyButton>` within `MyButton`, but not the mixins relative to `m_inner`. Both are inside the
+`root_implements_composing_outer` base subobject, and a non-virtual base class subobject has the same layout wherever it
+is placed. When `MyButton` calls `Width(100)`, the compiler converts `this` to the `require_..._IFrameworkElement`
+subobject along its unique path, as it converts to any base, wherever that subobject is.
+
+**The checks.**
+
+| where | check | instances |
+|-|-|-|
+| `impl/<ns>.2.h`, generated, one per runtime class | `static_assert(std::is_standard_layout_v<C> && sizeof(C) == sizeof(void*))` | 4,248 in the Windows projection |
+| `base_implements.h`, constructor of `root_implements_composing_outer<true, Mixins>` | `std::is_empty_v<Mixins> && sizeof(Mixins) == 1`; the outer is standard-layout; the outer is the size of `IInspectable` | one per composable class that an implementation type derives from |
+| `test/test/generic_types.cpp` | the class check, for 13 generic interface instantiations | test only |
+
+The generated checks are in a namespace block at the end of each `.2.h`, which isn't exported from a module:
+
+```cpp
+namespace winrt::Windows::UI::Xaml
+{
+    static_assert(std::is_standard_layout_v<AdaptiveTrigger> && sizeof(AdaptiveTrigger) == sizeof(void*));
+    static_assert(std::is_standard_layout_v<Application> && sizeof(Application) == sizeof(void*));
+    // ...
+}
+```
+
+Interfaces aren't checked one by one. An interface derives only from `IInspectable`, its own `direct_X`, and a
+`require_R` for each interface it requires, so a mixin can't appear twice; and a systematic error in the interface
+writer (such as a missing `WINRT_IMPL_EMPTY_BASES`) makes every class built on those interfaces fail its check. All
+8,065 non-generic interfaces of the Windows projection pass the same check.
+
+**Cost** (Blank App PCH, MSVC Debug, median of 3, variants alternated run by run): checking every class adds 5.2 MB
+(+0.65%), and the time differences are within noise. Checking every interface as well would add 16.9 MB (+2.1%) and
+0.99 s (+5%). The compiler intrinsic `__is_standard_layout(C)` instead of the trait halves the size cost (2.5 MB for
+classes, 7.1 MB for all types), which wasn't worth giving up the standard trait.
+
+**Verified to fire.** Each case patched one header of the generated projection, then compiled
+`struct MyButton : ButtonT<MyButton> {}` and `make<MyButton>()` with MSVC and clang-cl:
+
+| broken layout | MSVC and clang-cl |
+|-|-|
+| `FrameworkElement` without `WINRT_IMPL_EMPTY_BASES` | the class check fails (`sizeof`) |
+| a class inherits a mixin twice (`DependencyObjectCollection` also lists `require_..._IIterable<DependencyObject>`, which it reaches through its default interface) | the class check fails (`is_standard_layout_v`) |
+| a composable aggregate with state | "The consume mixins of a composable class must be stateless and all at offset 0." |
+| a composable aggregate without `WINRT_IMPL_EMPTY_BASES` | the same, from `sizeof(Mixins) == 1` (MSVC also fails the outer's size check) |
+| a field before `m_inner` in the composing outer | "The composing outer must hold nothing but the composed object." |
+| a virtual function in the composing outer | the outer's standard-layout and size checks |
+
+Removing `WINRT_IMPL_EMPTY_BASES` from the composing outer itself (from its partial specialization, its primary
+template, or both) leaves the layout correct, and no check fires. That's because the outer's only empty base is
+`Mixins`, and both compilers place a single empty base at offset 0 anyway.
+
+**Aliasing.** The mixins read `m_ptr`, declared `impl::unknown_abi*`, through a `void*` lvalue (`*(void* const*)this`),
+and `direct_X` reads it through an `abi_t<X>*` lvalue. Strictly, the standard doesn't allow accessing an object through
+an lvalue of an unrelated pointer type ([basic.lval]), and no `static_assert` can check this. cppwinrt has always relied
+on it: `get_abi`, `put_abi`, every argument passed as `*(void**)(&value)`, and master's `consume_general`
+(`*(abi_t<Base>**)d`) do the same. It's safe with the supported compilers because neither does type-based alias
+analysis by default: MSVC never does, and clang-cl passes `-relaxed-aliasing` unless `-fstrict-aliasing` is given
+(checked with clang-cl 22 `-###` at `/O2` and `/Od`). This change adds no new kind of access.
+
 ### Which interfaces get mixins
 
 **Before.** `consume_X<D>` was generated for every interface. A class template costs little until something
@@ -672,8 +752,8 @@ auto require_Windows_Foundation_IAsyncOperation<TResult>::get() const
 The same applies to:
 
 - `get_unchecked()` and `wait_for()` of the four `IAsync*` interfaces, in `base_coroutine_foundation.h`;
-- `IMap`/`IMapView` `TryLookup` and `TryRemove`, which call the ABI directly in `direct_X` and forward through a query in
-  `require_X`;
+- `IMap`/`IMapView` `TryLookup` and `TryRemove`, which call the ABI directly in `direct_X` and forward through a query
+  in `require_X`;
 - `IBuffer::data()` and `IMemoryBufferReference::data()`, which reinterpret the object as `IUnknown` to query for the
   byte access interface.
 
@@ -815,8 +895,10 @@ friend declarations are needed, because the mixins don't cast to `D`. A componen
 class of another component passes `impl::composing_mixins<impl::composable_Base>` the same way. `IXxxOverridesT<D>` is
 still generated for source compatibility, but `XxxT<D>` no longer uses it. Object layout is unchanged.
 
-MSVC ignores `__declspec(empty_bases)` on a partial specialization unless the primary template declares it too, so the
-primary `root_implements_composing_outer` carries `WINRT_IMPL_EMPTY_BASES`.
+The aggregate needs `WINRT_IMPL_EMPTY_BASES` to keep all of its mixins at offset 0; the composing outer, whose only
+empty base is the aggregate, doesn't, but carries it too, on the primary template as well, because MSVC ignores
+`__declspec(empty_bases)` on a partial specialization unless the primary template declares it.
+[Layout guarantees](#layout-guarantees-and-their-checks) describes the checks for both.
 
 ### QueryInterface helpers and error reporting
 
@@ -1056,6 +1138,30 @@ dependency order. The consumer TUs replace `#include "pch.h"` with `import std;`
 | 10 mixed / 10 `Button`-derived controls (`/Yu`) | 1.79 / 1.77 s, 7.8 / 8.6 MB | 1.17 / 1.12 s, 5.8 / 6.2 MB | -35% / -37% |
 | `/Yu` peak memory (maps the PCH) | 1.1 GB | 0.8 GB | -29% |
 
+#### Smaller and non-XAML headers
+
+TUs and PCHs of other headers, measured like those of `Windows.UI.Xaml.Controls.h`; median of 7 runs (3 for the last
+row), with master and consume mixins alternated run by run:
+
+| headers | TU | PCH | PCH size | PCH peak memory |
+|-|-|-|-|-|
+| `Windows.Foundation.h` and `Windows.Foundation.Collections.h` | 3.82 → 3.83 s (0%) | 3.88 → 3.93 s (+1%) | 173.8 → 171.2 MB (-1.5%) | 209 → 201 MB |
+| `Windows.Storage.h` | 2.64 → 2.50 s (-5%) | 2.80 → 2.56 s (-9%) | 143.8 → 133.8 MB (-7%) | 169 → 154 MB |
+| `Windows.ApplicationModel.h` | 2.58 → 2.45 s (-5%) | 2.64 → 2.56 s (-3%) | 148.8 → 137.4 MB (-8%) | 173 → 162 MB |
+| the 62 headers of the `winrt.Windows.ApplicationModel` module | 16.80 → 15.39 s (-8%) | 17.26 → 15.67 s (-9%) | 750.2 → 641.2 MB (-15%) | 832 → 715 MB (-14%) |
+
+A namespace header has the definitions of its own namespace only, and just the declarations (`impl/<ns>.2.h`) of the
+namespaces it depends on, so `Windows.Storage.h` and `Windows.ApplicationModel.h` on their own are small.
+`Windows.Foundation.h` and `Windows.Foundation.Collections.h` take longer because they also define cppwinrt's coroutine
+support and its collection implementations (`single_threaded_vector` and others), which this change doesn't affect.
+
+The `winrt.Windows.ApplicationModel` module of [C++20 modules](#c20-modules) is not one namespace: it is a cycle of 62
+namespaces that depend on one another (`ApplicationModel`, `Storage`, `System`, `Networking`, `Devices`,
+`UI.Composition`, `Web`, and others), which a module has to compile together. The last row includes the same 62 headers.
+Large non-XAML closures gain too, but less than XAML (-25% time and -30% PCH for `Windows.UI.Xaml.Controls.h`): most of
+the savings come from deep hierarchies of unsealed classes with many interfaces each, which XAML has and these
+namespaces mostly don't.
+
 ### MSVC, Release (`/O2 /Oi /GL /Gy /MD`), C++17
 
 The Blank App PCH, the code-behind and 20 custom controls with `/Yu`, and an LTCG link of them:
@@ -1130,10 +1236,66 @@ makes one fewer `QueryInterface` call (see [Events and auto_revoke](#events-and-
 
 ## Validation
 
-- All 341 namespace headers compile on their own at `/W4` in C++17 and C++20 with no warnings.
-- `build_test_all.cmd x64 Release` (all 15 builds, including natvis and the NuGet module tests) and
-  `test_cpp20_module` pass; all tests pass except `test_old`'s privilege test, which fails the same way on master in a
-  non-elevated shell.
+### Test suites
+
+The test executables of CI's matrix (`.github/workflows/ci.yml`), built from clean output directories with msbuild
+the way CI builds them (`/t:fast_fwd`, `/t:cppwinrt`, then `/t:test\<name>` for each test), with the 999.999.999.999
+build version:
+
+| compiler | platform | configuration | builds | test executables |
+|-|-|-|-|-|
+| MSVC 14.51 (v145) | x64 | Debug | 12 of 12, no warnings | 10 run; all tests pass except `Security` |
+| MSVC 14.51 (v145) | x64 | Release | 12 of 12, no warnings; natvis (both deployments) and `test\nuget\NugetTest.sln` also build | 10 run; all tests pass except `Security` |
+| MSVC 14.51 (v145) | x86 | Debug | 12 of 12, no warnings | 10 run; all tests pass except `Security` |
+| MSVC 14.51 (v145) | x86 | Release | 12 of 12, no warnings | 10 run; all tests pass except `Security` |
+| MSVC 14.51 (v145) | arm64 | Release | 12 of 12, no warnings | built only: this machine is x64 (CI also builds them without running them) |
+| clang-cl 22.1.3 | x64 | Debug | 11 of 11, no warnings | 9 run; all tests pass except `Security` |
+| clang-cl 22.1.3 | x86 | Debug | 11 of 11, no warnings | 9 run; all tests pass except `Security` |
+
+The only failing test case, `test_old`'s `Security`, needs a privilege that a non-elevated shell doesn't have, and fails
+the same way on master. clang-cl has no `test_cpp20_module` (C++20 named modules need MSVC, as in CI), and runs fewer
+test cases, as in CI. The NuGet test solution's only warnings are MSBuild's (MSB3277 assembly version conflicts in its
+C# component, and one MSB8019).
+
+These tests cover component authoring as well as consumption: `test` builds `test_component` and
+`test_component_no_pch`; `test_module_lock_none` builds `test_component_base` and `test_component_derived`, whose
+classes derive from `test_component_base`'s composable classes, so their generated bases use `composing_mixins`;
+`test_fast` and `test_slow` build the fast ABI component `test_component_fast`; and `test_old` builds the `Component` and
+`Composable` components. The NuGet tests build a chain of components and C++20 modules through the NuGet targets.
+
+New tests, which also hold on master:
+
+- `test_fast` and `test_slow`: the `Composition` test now checks every `QueryInterface` by name (see
+  [Fast ABI](#fast-abi)), and uses `REQUIRE` instead of `assert`, which did nothing in Release builds.
+- `test_old`: `Composable other bases` calls the members, overridable defaults, protected members, and conversions of
+  implementation types whose composable base isn't their first base: one derives from an unrelated class with state and
+  virtual functions first, for `BaseT<D>` and for `DerivedT<D>`, and one reaches `BaseT<D>` through a class template.
+- `test`: `generic_types.cpp` checks the layout of 13 generic interface instantiations.
+
+### Fast ABI
+
+With `-fastabi`, a class's exclusive interfaces are called through the extended vtable of its default interface, and
+its base classes are reached through the `base_X()` slots of that vtable, both without `QueryInterface`. The generated
+code for `test_component_fast` is the same as master's apart from the mixins themselves: the fast default interface's
+`direct_X` has the methods of the class's fast interfaces, called through its own vtable, and the fast base declarations
+(`operator impl::producer_ref<Base>`, and the base class methods that use it) are generated as before.
+
+A probe ran the scenario of `test_fast`'s `Composition` test (the three-level fast ABI hierarchy `CompositionObject`,
+`Visual`, `SpriteVisual`), plus conversions to the base classes, and recorded every `QueryInterface` by name. Master and
+consume mixins gave identical traces, under MSVC and clang-cl, both with `-fastabi` and without it:
+
+| | queries |
+|-|-|
+| `-fastabi` | `IAgileObject` (the factory cache's agility check) and `IClosable` (not exclusive to the class, so not in the fast vtable) |
+| without `-fastabi` | the same, plus `Compositor`, `ICompositionObject`, `ICompositionObject2`, `IVisual` (2), `IVisual2`, `Visual` (2), `ISpriteVisual2`, and `CompositionObject`: 12 in all |
+
+The `Composition` tests of `test_fast` and `test_slow` now check these counts for the original scenario.
+
+### Other checks
+
+- All 341 namespace headers compile on their own at `/W4` in C++17 and C++20 with no warnings. With the layout checks,
+  one TU including all 341 headers and two composable implementation types (`ButtonT<D>`, `PageT<D>`) compiles with
+  MSVC and clang-cl in C++17 and C++20.
 - Warnings, using the recipe of #1620 (`/Wall` with its `/wd` list) on #1620's repro, a runtime test, the code-behind and
   authoring TUs, and one TU including all 341 headers: identical warning sets to master on x64 (8,317 locations) and x86
   (8,326); `/analyze` identical (no analyzer findings); clang identical (8,850 locations, almost all
@@ -1141,8 +1303,6 @@ makes one fewer `QueryInterface` call (see [Events and auto_revoke](#events-and-
 - A runtime test on real objects (collections, `PropertySet`, `ValueSet`, `StringMap`, JSON, `Uri`, streams, async,
   events, iterators, errors, in-process `QueryInterface` counts) produces identical output to master under MSVC and
   clang. With `WINRT_DIAGNOSTICS`, the query counts by name are identical except for the `auto_revoke` case above.
-- The composable tests (`old_tests/UnitTests/Composable.cpp`: overrides, protected members, overridable defaults,
-  derived classes) pass with MSVC (in `test_old`) and with clang-cl against the generated projection.
 
 ## Compatibility
 
@@ -1161,6 +1321,11 @@ makes one fewer `QueryInterface` call (see [Events and auto_revoke](#events-and-
 - **Modules.** Module structure is unchanged. A consumer that names a type from a module it does not import
   (`winrt::Windows::UI::Color` with only the XAML modules imported) happened to compile against the new modules but not
   master's; this is not a supported pattern either way.
+- **Fast ABI.** Unchanged. With `-fastabi`, a class's exclusive interfaces are called through the extended vtable of its
+  default interface, and its base classes are reached through the `base_X()` slots of that vtable
+  (`operator impl::producer_ref<Base>`), both without `QueryInterface`. The fast default interface's `direct_X` has the
+  methods of the class's fast interfaces, as `consume_X<D>` did, and the fast base declarations are generated as before.
+  See [Validation](#validation).
 - **Generated files** are 2.6% larger on disk (62.5 vs 60.9 MB), mostly forwarder definitions.
 
 ## Future work
@@ -1182,24 +1347,31 @@ makes one fewer `QueryInterface` call (see [Events and auto_revoke](#events-and-
   derived from; it could use the default interface's `impl::guid_v<I>` directly (well under 1%).
 - **Nested aggregates.** `composable_C` could derive from its base class's aggregate instead of listing every mixin, as
   long as no mixin appears twice.
+- **Fast ABI base class events (existing bug).** For a fast ABI class whose fast ABI base class has an event,
+  `write_consume_fast_base_definition` emits `impl::make_event_revoker<D, ...>` in a non-template inline function, where
+  `D` is undeclared, so the header doesn't compile. Master has the same code; no test has such an event.
 
 ## PR staging plan
 
 The branch's first code commit (`WINRT_DIAGNOSTICS` keyed by IID) and its last (restoring name-keyed diagnostics)
 cancel out and should be dropped, folding the templated helpers into the first PR:
 
-1. **QueryInterface helpers and `composing_mixins`** (`strings/base_error.h`, `strings/base_implements.h`). Additive;
-   no generated-code change, so reviewable on its own.
-2. **Consume mixins in the generator** (`cppwinrt/code_writers.h`, `component_writers.h`, `file_writers.h`; the strings
-   whose definitions move with the generated code: `base_collections.h`, `base_coroutine_foundation.h`,
-   `base_xaml_typename.h`; `test/old_tests/UnitTests/casts.cpp`; this document). This has to be one change: removing the
-   CRTP bases from classes also requires moving `XxxT<D>` and component bases, or else generating both shapes in the
-   interim.
+0. **Tests that hold before and after** (`test/test_fast/Composition.cpp`, `test/test_slow/Composition.cpp`,
+   `test/old_tests/UnitTests/Composable.cpp`, `test/test/generic_types.cpp`). The `QueryInterface` counts of the fast and
+   ordinary ABI, composable implementation types with other bases, and the layout of generic interfaces. They don't
+   depend on this change, so they can land first and show that the later PRs keep the behavior.
+1. **QueryInterface helpers and `composing_mixins`** (`strings/base_error.h`, `strings/base_implements.h`, with the
+   layout checks of the composing outer). Additive; no generated-code change, so reviewable on its own.
+2. **Consume mixins in the generator** (`cppwinrt/code_writers.h`, `component_writers.h`, `file_writers.h`, with the
+   per-class layout checks; the strings whose definitions move with the generated code: `base_collections.h`,
+   `base_coroutine_foundation.h`, `base_xaml_typename.h`; `test/old_tests/UnitTests/casts.cpp`; this document). This has
+   to be one change: removing the CRTP bases from classes also requires moving `XxxT<D>` and component bases, or else
+   generating both shapes in the interim.
 3. **Remove the CRTP consume machinery** (`strings/base_meta.h`, `base_windows.h`, `base_macros.h`).
 
-Size: generator +563/-407 lines (mostly `code_writers.h`), strings +199/-147, tests +2/-2.
+Size: generator +587/-407 lines (mostly `code_writers.h`), strings +215/-147, tests +2/-2 in the change itself, and
+tests +134/-4 in PR 0.
 
-Validation still to do before opening PRs: the v143 (VS 2022) toolset; ARM64 and full x86 test runs; the WinUI 3
-(`Microsoft.UI.Xaml`) projection, both for correctness and to confirm the gains; and the Windows SDK metadata
-(`cppwinrt -in sdk`) that projects normally use, which is expected to give the same results as the OS metadata
-measured here.
+Validation still to do before opening PRs: the v143 (VS 2022) toolset; the WinUI 3 (`Microsoft.UI.Xaml`) projection,
+both for correctness and to confirm the gains; and the Windows SDK metadata (`cppwinrt -in sdk`) that projects normally
+use, which is expected to give the same results as the OS metadata measured here.
