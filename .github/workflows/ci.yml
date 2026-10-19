@@ -26,7 +26,7 @@ jobs:
             config: Release
     runs-on: ${{ matrix.toolchain.image }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Download nuget
         run: |
@@ -71,7 +71,7 @@ jobs:
           cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.sln /t:cppwinrt
 
       - name: Upload built executables
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolchain.platform_toolset }}-bin
           path: |
@@ -113,18 +113,18 @@ jobs:
             test_exe: test_cpp20_module
     runs-on: ${{ matrix.toolchain.image }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Fetch cppwinrt executables
         if: matrix.arch != 'arm64'
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolchain.platform_toolset }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
 
       - name: Fetch x86 cppwinrt executables (arm64 only)
         if: matrix.arch == 'arm64'
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: msvc-build-${{ matrix.compiler}}-x86-Release-${{ matrix.toolchain.platform_toolset }}-bin
           path: _build/x86/Release/
@@ -243,7 +243,7 @@ jobs:
 
       - name: Upload arm64 test executables
         if: matrix.arch == 'arm64'
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: msvc-tests-${{ matrix.test_exe }}-${{ matrix.compiler }}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolchain.platform_toolset }}-bin
           path: |
@@ -263,7 +263,7 @@ jobs:
       CMAKE_COLOR_DIAGNOSTICS: 1
       CLICOLOR_FORCE: 1
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install cross compiler
         run: |
@@ -282,7 +282,7 @@ jobs:
           cmake --build build/cross_x64/ --target install -j2
 
       - name: Upload cppwinrt.exe
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: cross-build-${{ matrix.arch }}-bin
           path: install/bin/cppwinrt.exe
@@ -296,7 +296,7 @@ jobs:
         Deployment: [Component, Standalone]
     runs-on: windows-2025-vs2026
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Download nuget
         run: |
@@ -339,10 +339,10 @@ jobs:
             platform_toolset: v145
     runs-on: ${{ matrix.toolchain.image }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Fetch cppwinrt executables
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolchain.platform_toolset }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
@@ -384,7 +384,7 @@ jobs:
     name: Build nuget package with MSVC
     runs-on: windows-2025-vs2026
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Package
         run: |
@@ -399,7 +399,7 @@ jobs:
           }
 
       - name: Upload nuget package artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: package
           path: "*.nupkg"

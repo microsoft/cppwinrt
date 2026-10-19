@@ -2,6 +2,7 @@
 
 using namespace winrt;
 using namespace Windows::Foundation;
+using namespace Windows::Storage;
 
 template<typename TResult>
 struct async_completion_source : implements<async_completion_source<TResult>, IAsyncOperation<TResult>, IAsyncInfo>
@@ -71,4 +72,43 @@ TEST_CASE("get")
     worker.detach();
 
     REQUIRE(acs.as<IAsyncOperation<uint32_t>>().get() == 0xDEADBEEF);
+}
+
+TEST_CASE("get_unchecked")
+{
+    // Call a real WinRT async operation from an STA thread.
+    // This is the scenario the new API is designed for: an STA that is not
+    // presenting UI, where a synchronous blocking wait is safe.
+    std::exception_ptr failure{};
+    bool content_available = false;
+    std::thread sta_thread([&failure, &content_available]
+    {
+        try
+        {
+            winrt::init_apartment(winrt::apartment_type::single_threaded);
+            struct apartment_guard
+            {
+                ~apartment_guard()
+                {
+                    winrt::uninit_apartment();
+                }
+            } guard;
+
+            auto content = PathIO::ReadTextAsync(L"C:\\Windows\\win.ini").get_unchecked();
+            content_available = content.size() > 0;
+        }
+        catch (...)
+        {
+            failure = std::current_exception();
+        }
+    });
+
+    sta_thread.join();
+
+    if (failure)
+    {
+        std::rethrow_exception(failure);
+    }
+
+    REQUIRE(content_available);
 }

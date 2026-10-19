@@ -155,6 +155,24 @@ WINRT_EXPORT namespace winrt::impl
             return nullptr;
         }
     };
+
+    template <std::size_t N>
+    struct hstring_literal_storage
+    {
+        static constexpr std::size_t size = N;
+        wchar_t value[N];
+
+        constexpr hstring_literal_storage(wchar_t const (&str)[N]) noexcept
+        {
+            for (std::size_t i = 0; i != N; ++i)
+            {
+                value[i] = str[i];
+            }
+        }
+    };
+
+    template <std::size_t N>
+    hstring_literal_storage(wchar_t const (&)[N]) -> hstring_literal_storage<N>;
 }
 
 WINRT_EXPORT namespace winrt
@@ -386,6 +404,30 @@ WINRT_EXPORT namespace winrt
         handle_type<impl::hstring_traits> m_handle;
     };
 
+    struct hstring_reference
+    {
+        constexpr hstring_reference() noexcept = default;
+
+        constexpr explicit hstring_reference(impl::hstring_header const* header) noexcept :
+            m_handle(const_cast<impl::hstring_header*>(header))
+        {
+        }
+
+        operator hstring const&() const noexcept
+        {
+            return *reinterpret_cast<hstring const*>(this);
+        }
+
+    private:
+
+        [[maybe_unused]] void* m_handle{};
+    };
+
+    inline void* get_abi(hstring_reference const& object) noexcept
+    {
+        return *(void**)(&object);
+    }
+
     inline void* get_abi(hstring const& object) noexcept
     {
         return *(void**)(&object);
@@ -436,6 +478,44 @@ WINRT_EXPORT namespace winrt
         return impl::create_hstring_on_heap(value, static_cast<std::uint32_t>(std::wcslen(value)));
     }
 }
+
+#if defined(__cpp_nontype_template_args) && __cpp_nontype_template_args >= 201911L
+
+WINRT_EXPORT namespace winrt::impl
+{
+    template <hstring_literal_storage Literal>
+    inline constexpr hstring_header hstring_literal_header
+    {
+        hstring_reference_flag,
+        static_cast<std::uint32_t>(Literal.size - 1),
+        0,
+        0,
+        Literal.value
+    };
+}
+
+WINRT_EXPORT namespace winrt
+{
+    inline namespace literals
+    {
+        template <impl::hstring_literal_storage Literal>
+        constexpr hstring_reference operator ""_hs() noexcept
+        {
+            static_assert(Literal.value[Literal.size - 1] == L'\0', "_hs requires a null-terminated wide string literal");
+
+            if constexpr (Literal.size <= 1)
+            {
+                return hstring_reference{};
+            }
+            else
+            {
+                return hstring_reference{ &impl::hstring_literal_header<Literal> };
+            }
+        }
+    }
+}
+
+#endif
 
 #ifdef __cpp_lib_format
 template<>

@@ -324,6 +324,7 @@
     <ClCompile Include="main.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="reference_boxing.cpp" />
     <ClCompile Include="memory_buffer.cpp" />
     <ClCompile Include="missing_required_interfaces.cpp" />
     <ClCompile Include="module_lock_dll.cpp">
