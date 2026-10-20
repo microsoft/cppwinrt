@@ -30,7 +30,10 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTCommandModules Condition="'$(CppWinRTBuildModule)'=='true'">-modules</CppWinRTCommandModules>
         <CppWinRTCommandModuleFilter Condition="'$(CppWinRTModuleInclude)' != ''">-module_include $(CppWinRTModuleInclude.Replace(';', ' '))</CppWinRTCommandModuleFilter>
         <CppWinRTCommandModuleFilter Condition="'$(CppWinRTModuleExclude)' != ''">$(CppWinRTCommandModuleFilter) -module_exclude $(CppWinRTModuleExclude.Replace(';', ' '))</CppWinRTCommandModuleFilter>
-        <CppWinRTPath Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)bin\"</CppWinRTPath>
+        <CppWinRTExeArch>$(PROCESSOR_ARCHITECTURE)</CppWinRTExeArch>
+        <!-- Even if MSBuild runs as x86, the x64 binary is still used -->
+        <CppWinRTExeArch Condition="'$(CppWinRTExeArch)' == 'x86'">x64</CppWinRTExeArch>
+        <CppWinRTPath Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)bin\$(CppWinRTExeArch)\"</CppWinRTPath>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)"</CppWinRTPath>
         <!-- By default enable C++/WinRT to include target platform winmds if we didn't override sdk references and the C++ Project system isn't already adding them -->
         <!-- _PrepareForReferenceResolution adds the references if TargetPlatformIdentifier is UAP -->
