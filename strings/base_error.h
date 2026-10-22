@@ -329,6 +329,13 @@ WINRT_EXPORT namespace winrt
         hresult_illegal_delegate_assignment(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_illegal_delegate_assignment, take_ownership_from_abi, sourceInformation) {}
     };
 
+    struct hresult_no_task_queue : hresult_error
+    {
+        hresult_no_task_queue(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_no_task_queue, sourceInformation) {}
+        hresult_no_task_queue(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_no_task_queue, message, sourceInformation) {}
+        hresult_no_task_queue(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_no_task_queue, take_ownership_from_abi, sourceInformation) {}
+    };
+
     struct hresult_canceled : hresult_error
     {
         hresult_canceled(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_canceled, sourceInformation) {}
@@ -407,6 +414,11 @@ WINRT_EXPORT namespace winrt
         if (result == impl::error_illegal_delegate_assignment)
         {
             throw hresult_illegal_delegate_assignment(take_ownership_from_abi, sourceInformation);
+        }
+        
+        if (result == impl::error_no_task_queue)
+        {
+            throw hresult_no_task_queue(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_canceled)
