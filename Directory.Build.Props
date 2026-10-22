@@ -46,7 +46,7 @@
     <OutDir>$(SolutionDir)_build\$(CppWinRTPlatform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)_build\$(CppWinRTPlatform)\$(Configuration)\temp\$(MSBuildProjectName)\</IntDir>
     <CppWinRTDir>$(OutDir)</CppWinRTDir>
-    <CppWinRTDir Condition="'$(Platform)'=='ARM64'">$(SolutionDir)_build\x86\$(Configuration)\</CppWinRTDir>
+    <CppWinRTDir Condition="'$(Platform)'=='ARM64'">$(SolutionDir)_build\x64\$(Configuration)\</CppWinRTDir>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
