@@ -1,7 +1,16 @@
 #pragma once
 
+#include "winmd_signature.h"
+
 namespace cppwinrt
 {
+    using winmd_signature::guid_value;
+    using winmd_signature::extract_guid;
+    using winmd_signature::format_guid_signature;
+    using winmd_signature::compute_guid_from_signature;
+    using winmd_signature::type_arg_stack;
+    using winmd_signature::signature_builder;
+
     static auto get_start_time()
     {
         return std::chrono::high_resolution_clock::now();
@@ -1144,5 +1153,316 @@ namespace cppwinrt
         }
 
         return settings.component_filter.includes(class_name);
+    }
+
+    struct generic_inst_info
+    {
+        guid_value guid;
+    };
+
+    // ---- Recursive collection of concrete generic instantiations ----
+    // Walks InterfaceImpl chains and method signatures, carrying concrete TypeSig args to resolve GenericTypeIndex.
+
+    static void collect_generic_inst_recursive(
+        writer& w,
+        GenericTypeInstSig const& type,
+        type_arg_stack const& outer_resolve,
+        std::map<std::string, generic_inst_info>& instantiations);
+
+    // Helper: if a TypeSig contains a GenericTypeInstSig (directly or via TypeSpec), collect it.
+    static void collect_from_type_sig(
+        writer& w,
+        TypeSig const& sig,
+        type_arg_stack const& resolve,
+        std::map<std::string, generic_inst_info>& instantiations)
+    {
+        call(sig.Type(),
+            [](ElementType) {},
+            [&](GenericTypeIndex idx)
+            {
+                // Resolve and recurse if the resolved type is itself a generic instantiation
+                if (!resolve.empty() && idx.index < resolve.back().size())
+                {
+                    type_arg_stack parent_resolve(resolve.begin(), resolve.end() - 1);
+                    collect_from_type_sig(w, resolve.back()[idx.index], parent_resolve, instantiations);
+                }
+            },
+            [](GenericMethodTypeIndex) {},
+            [&](coded_index<TypeDefOrRef> const& t)
+            {
+                if (t.type() == TypeDefOrRef::TypeSpec)
+                {
+                    collect_generic_inst_recursive(w, t.TypeSpec().Signature().GenericTypeInst(), resolve, instantiations);
+                }
+            },
+            [&](GenericTypeInstSig const& t)
+            {
+                collect_generic_inst_recursive(w, t, resolve, instantiations);
+            });
+    }
+
+    static void collect_generic_inst_recursive(
+        writer& w,
+        GenericTypeInstSig const& type,
+        type_arg_stack const& outer_resolve,
+        std::map<std::string, generic_inst_info>& instantiations)
+    {
+        // Build the resolution context for this instantiation:
+        // The args of 'type' may themselves contain GenericTypeIndex references
+        // that need resolving through outer_resolve.
+        // Collect the concrete TypeSig args after resolution.
+        std::vector<TypeSig> concrete_args;
+        for (auto&& arg : type.GenericArgs())
+        {
+            if (auto* idx = std::get_if<GenericTypeIndex>(&arg.Type()))
+            {
+                // Resolve through the outer stack
+                if (outer_resolve.empty() || idx->index >= outer_resolve.back().size())
+                {
+                    return; // Can't resolve — open generic, skip
+                }
+                concrete_args.push_back(outer_resolve.back()[idx->index]);
+            }
+            else
+            {
+                concrete_args.push_back(arg);
+            }
+        }
+
+        // Use cpp_name as the dedup key. Only do expensive work if this is a new entry.
+        auto cpp_name = w.write_temp("%", type);
+        auto [it, inserted] = instantiations.try_emplace(std::move(cpp_name));
+        if (!inserted)
+        {
+            return;
+        }
+
+        it->second.guid = compute_guid_from_signature(signature_builder::get_signature(type, outer_resolve));
+
+        // Recurse into generic args that are themselves generic instantiations
+        for (auto&& arg : concrete_args)
+        {
+            if (auto* spec = std::get_if<coded_index<TypeDefOrRef>>(&arg.Type()))
+            {
+                if (spec->type() == TypeDefOrRef::TypeSpec)
+                {
+                    collect_generic_inst_recursive(w, spec->TypeSpec().Signature().GenericTypeInst(), outer_resolve, instantiations);
+                }
+            }
+            else if (auto* inst = std::get_if<GenericTypeInstSig>(&arg.Type()))
+            {
+                collect_generic_inst_recursive(w, *inst, outer_resolve, instantiations);
+            }
+        }
+
+        // Build a resolution stack with our concrete args appended
+        type_arg_stack resolve = outer_resolve;
+        resolve.push_back(concrete_args);
+
+        // Push the writer's generic_param_stack so write_temp resolves GenericTypeIndex in nested calls
+        auto writer_guard = w.push_generic_params(type);
+
+        // Recurse into the generic type's required interfaces (e.g., IMap : IIterable, etc.)
+        auto base_type = find_required(type.GenericType());
+
+        for (auto&& impl : base_type.InterfaceImpl())
+        {
+            auto iface = impl.Interface();
+            if (iface.type() == TypeDefOrRef::TypeSpec)
+            {
+                // This TypeSpec may have GenericTypeIndex references to base_type's params.
+                // 'resolve' has our concrete args at the back, so signature_builder can resolve them.
+                collect_generic_inst_recursive(w, iface.TypeSpec().Signature().GenericTypeInst(), resolve, instantiations);
+            }
+        }
+
+        // Walk method signatures to find generic types in return types and parameters.
+        // E.g., IIterable<T>.First() returns IIterator<T>, so IIterable<IKeyValuePair<K,V>>
+        // produces IIterator<IKeyValuePair<K,V>> which needs name_v/guid_v.
+        for (auto&& method : base_type.MethodList())
+        {
+            auto sig = method.Signature();
+            if (sig.ReturnType())
+            {
+                collect_from_type_sig(w, sig.ReturnType().Type(), resolve, instantiations);
+            }
+            for (auto&& param : sig.Params())
+            {
+                collect_from_type_sig(w, param.Type(), resolve, instantiations);
+            }
+        }
+    }
+
+    // Entry point: collect all concrete generic instantiations from a namespace's members.
+    static void collect_generic_instantiations(
+        writer& w,
+        cache::namespace_members const& members,
+        std::map<std::string, generic_inst_info>& instantiations)
+    {
+        auto collect_from_type = [&](TypeDef const& type)
+        {
+            for (auto&& impl : type.InterfaceImpl())
+            {
+                auto iface = impl.Interface();
+                if (iface.type() == TypeDefOrRef::TypeSpec)
+                {
+                    collect_generic_inst_recursive(w, iface.TypeSpec().Signature().GenericTypeInst(), {}, instantiations);
+                }
+            }
+
+            // Also walk the type's own methods for concrete generic return/param types.
+            for (auto&& method : type.MethodList())
+            {
+                auto sig = method.Signature();
+                if (sig.ReturnType())
+                {
+                    collect_from_type_sig(w, sig.ReturnType().Type(), {}, instantiations);
+                }
+                for (auto&& param : sig.Params())
+                {
+                    collect_from_type_sig(w, param.Type(), {}, instantiations);
+                }
+            }
+        };
+
+        for (auto&& type : members.classes)
+        {
+            collect_from_type(type);
+            for (auto&& base : get_bases(type))
+            {
+                collect_from_type(base);
+            }
+        }
+
+        for (auto&& type : members.interfaces)
+        {
+            if (empty(type.GenericParam()))
+            {
+                collect_from_type(type);
+            }
+        }
+    }
+
+    // Add well-known IReference<T> and IReferenceArray<T> instantiations for standard primitive
+    // and Windows.Foundation struct types. These are emitted into Windows.Foundation.0.h so that
+    // consumers who only include Windows.Foundation.h (e.g. for boxing) still get precomputed GUIDs
+    // without requiring a header from a namespace that happens to use IReference<int32_t> etc.
+    //
+    // Uses the same code path as metadata-discovered instantiations by constructing
+    // GenericTypeInstSig objects and feeding them through collect_generic_inst_recursive.
+    // This ensures cpp_name, guard names, and signatures are always consistent.
+    static void add_well_known_ireference_instantiations(
+        writer& w,
+        cache::namespace_members const& members,
+        std::map<std::string, generic_inst_info>& instantiations)
+    {
+        auto find_type = [&](std::string_view name) -> TypeDef
+        {
+            auto it = members.types.find(name);
+            return it != members.types.end() ? it->second : TypeDef{};
+        };
+
+        auto iref = find_type("IReference`1");
+        auto iref_arr = find_type("IReferenceArray`1");
+        if (!iref || !iref_arr) return;
+
+        // Find the System.Guid TypeRef via IPropertyValue.GetGuid's return type.
+        // There is no TypeDef for System.Guid, only scattered TypeRefs.
+        // IPropertyValue is in Windows.Foundation, so it's available in members.
+        // The GetGuid method is at a stable ABI vtable position (index 14, 0-based
+        // within MethodList), but we fall back to a name search if that doesn't match.
+        coded_index<TypeDefOrRef> guid_type_ref{};
+        auto ipv = find_type("IPropertyValue");
+        if (ipv)
+        {
+            // Find the GetGuid method — try index 14 first (stable ABI vtable position),
+            // then fall back to linear search.
+            auto methods = ipv.MethodList();
+            MethodDef get_guid_method{};
+
+            if (size(methods) > 14 && methods.first[14].Name() == "GetGuid")
+            {
+                get_guid_method = methods.first[14];
+            }
+            else
+            {
+                for (auto&& m : methods)
+                {
+                    if (m.Name() == "GetGuid")
+                    {
+                        get_guid_method = m;
+                        break;
+                    }
+                }
+            }
+
+            if (get_guid_method)
+            {
+                auto method_sig = get_guid_method.Signature();
+                auto const& ret_type = method_sig.ReturnType().Type().Type();
+                if (std::holds_alternative<coded_index<TypeDefOrRef>>(ret_type))
+                {
+                    guid_type_ref = std::get<coded_index<TypeDefOrRef>>(ret_type);
+                }
+            }
+        }
+
+        // Collect TypeSig args for all well-known type arguments.
+        // Primitives use ElementType directly; WinRT structs use their TypeDef;
+        // Guid uses the TypeRef found above; Object uses ElementType::Object.
+        std::vector<TypeSig> type_args;
+        type_args.reserve(20);
+
+        // Fundamental types
+        type_args.emplace_back(ElementType::U1);
+        type_args.emplace_back(ElementType::I2);
+        type_args.emplace_back(ElementType::U2);
+        type_args.emplace_back(ElementType::I4);
+        type_args.emplace_back(ElementType::U4);
+        type_args.emplace_back(ElementType::I8);
+        type_args.emplace_back(ElementType::U8);
+        type_args.emplace_back(ElementType::R4);
+        type_args.emplace_back(ElementType::R8);
+        type_args.emplace_back(ElementType::Char);
+        type_args.emplace_back(ElementType::Boolean);
+        type_args.emplace_back(ElementType::String);
+
+        // Guid (only if we found the TypeRef)
+        if (guid_type_ref)
+        {
+            type_args.emplace_back(guid_type_ref);
+        }
+
+        // Windows.Foundation struct types
+        static constexpr std::string_view struct_names[] = { "DateTime", "TimeSpan", "Point", "Size", "Rect" };
+        for (auto name : struct_names)
+        {
+            auto td = find_type(name);
+            if (td)
+            {
+                type_args.emplace_back(td.coded_index<TypeDefOrRef>());
+            }
+        }
+
+        auto iref_coded = iref.coded_index<TypeDefOrRef>();
+        auto iref_arr_coded = iref_arr.coded_index<TypeDefOrRef>();
+
+        for (auto const& type_arg : type_args)
+        {
+            // IReference<T>
+            auto ireference_inst = GenericTypeInstSig{ iref_coded, std::vector<TypeSig>{ type_arg } };
+            collect_generic_inst_recursive(w, ireference_inst, {}, instantiations);
+
+            // IReferenceArray<T>
+            auto ireference_array_inst = GenericTypeInstSig{ iref_arr_coded, std::vector<TypeSig>{ type_arg } };
+            collect_generic_inst_recursive(w, ireference_array_inst, {}, instantiations);
+        }
+
+        // IReferenceArray<Object> is valid (for passing arrays of inspectable objects),
+        // but IReference<Object> is not (IReference boxes value types; Object is a
+        // reference type). So Object is not in the shared type_args list above.
+        auto object_arg = TypeSig{ ElementType::Object };
+        auto ireference_array_object_inst = GenericTypeInstSig{ iref_arr_coded, std::vector<TypeSig>{ object_arg } };
+        collect_generic_inst_recursive(w, ireference_array_object_inst, {}, instantiations);
     }
 }

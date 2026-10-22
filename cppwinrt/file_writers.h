@@ -116,10 +116,30 @@ namespace cppwinrt
             w.write_each<write_guid>(members.interfaces);
             w.write_each<write_guid>(members.delegates);
             w.write_each<write_default_interface>(members.classes);
+
             w.write_each<write_interface_abi>(members.interfaces);
             w.write_each<write_delegate_abi>(members.delegates);
             w.write_each<write_consume>(members.interfaces);
             w.write_each<write_struct_abi>(members.structs);
+        }
+
+        // Emit pinterface_guid specializations AFTER the wrap_impl_namespace block
+        // so they don't break the WINRT_EXPORT attribute on subsequent declarations.
+        // The function writes a self-contained extern "C++" block.
+        {
+            std::map<std::string, generic_inst_info> instantiations;
+            collect_generic_instantiations(w, members, instantiations);
+
+            // For Windows.Foundation, also inject well-known IReference<T>/IReferenceArray<T>
+            // specializations for standard primitive and struct types. These ensure that
+            // consumers who only include Windows.Foundation.h get precomputed GUIDs for
+            // boxing types, without depending on other namespace headers.
+            if (ns == "Windows.Foundation")
+            {
+                add_well_known_ireference_instantiations(w, members, instantiations);
+            }
+
+            write_generic_inst_specializations(w, instantiations);
         }
 
         write_close_file_guard(w);
