@@ -76,20 +76,9 @@ namespace cppwinrt
             return;
         }
 
-        if (settings.component_opt)
-        {
-            auto format = R"(void* winrt_make_%();
+        auto format = R"(#include "%.h"
 )";
-
-            w.write(format, get_impl_name(type.TypeNamespace(), type.TypeName()));
-        }
-        else
-        {
-            auto format = R"(#include "%.h"
-)";
-
-            w.write(format, get_component_filename(type));
-        }
+        w.write(format, get_component_filename(type));
     }
 
     static void write_component_activation(writer& w, TypeDef const& type)
@@ -103,35 +92,16 @@ namespace cppwinrt
         auto type_namespace = type.TypeNamespace();
         auto impl_name = get_impl_name(type_namespace, type_name);
 
-        if (settings.component_opt)
-        {
-            auto format = R"(
-    if (requal(name, L"%.%"))
-    {
-        return winrt_make_%();
-    }
+        auto format = R"(void* winrt_make_%()
+{
+    return winrt::detach_abi(winrt::make<winrt::@::factory_implementation::%>());
+}
 )";
 
-            w.write(format,
-                type_namespace,
-                type_name,
-                impl_name);
-        }
-        else
-        {
-            auto format = R"(
-    if (requal(name, L"%.%"))
-    {
-        return winrt::detach_abi(winrt::make<winrt::@::factory_implementation::%>());
-    }
-)";
-
-            w.write(format,
-                type_namespace,
-                type_name,
-                type_namespace,
-                type_name);
-        }
+        w.write(format,
+            impl_name,
+            type_namespace,
+            type_name);
     }
 
     static void write_module_g_cpp(writer& w, std::vector<TypeDef> const& classes)
@@ -140,7 +110,61 @@ namespace cppwinrt
         {
             w.write_root_include("base");
         }
-        auto format = R"(%
+
+        if (!settings.component_opt)
+        {
+            for (auto&& type : classes)
+            {
+                write_component_include(w, type);
+            }
+        }
+
+        std::vector<std::string> components;
+
+        for (auto&& type : classes)
+        {
+            if (!has_factory_members(w, type) || is_always_disabled(type))
+            {
+                continue;
+            }
+
+            std::string name{type.TypeNamespace()};
+            name += '.';
+            name += type.TypeName();
+            components.push_back(std::move(name));
+        }
+
+        // Sort the strings so that binary search can be used.
+        std::sort(components.begin(), components.end());
+        w.write("#define WINRT_ACTIVATION_TABLE(X)\\\n");
+
+        for (std::size_t i = 0; i + 1 < components.size(); ++i)
+        {
+            w.write("    X(winrt_make_%, L\"%\") \\\n", get_impl_name(components[i]), components[i]);
+        }
+
+        if (!components.empty())
+        {
+            w.write("    X(winrt_make_%, L\"%\") \n", get_impl_name(components.back()), components.back());
+        }
+
+        if (!settings.component_opt)
+        {
+            for (auto&& type : classes)
+            {
+                write_component_activation(w, type);
+            }
+        }
+        else
+        {
+            auto declarations = R"(
+#define WINRT_DECLARE_FUNC(func, name) void* func();
+WINRT_ACTIVATION_TABLE(WINRT_DECLARE_FUNC)
+)";
+            w.write(declarations);
+        }
+
+        auto format = R"(
 bool __stdcall %_can_unload_now() noexcept
 {
     if (winrt::get_module_lock())
@@ -154,20 +178,36 @@ bool __stdcall %_can_unload_now() noexcept
 
 void* __stdcall %_get_activation_factory([[maybe_unused]] std::wstring_view const& name)
 {
-    auto requal = [](std::wstring_view const& left, std::wstring_view const& right) noexcept
+#if %
+    static constexpr std::wstring_view names[] =
     {
-        return std::equal(left.rbegin(), left.rend(), right.rbegin(), right.rend());
+#define WINRT_NAME_LIST(func, name) name,
+        WINRT_ACTIVATION_TABLE(WINRT_NAME_LIST)
     };
-%
+
+    using make_t = void* (*)();
+    static constexpr make_t makes[] =
+    {
+#define WINRT_MAKE_LIST(func, name) func,
+        WINRT_ACTIVATION_TABLE(WINRT_MAKE_LIST)
+    };
+
+#if % <= 32
+    auto it = std::find(std::begin(names), std::end(names), name);
+    if (it != std::end(names))
+#else
+    auto it = std::lower_bound(std::begin(names), std::end(names), name);
+    if (it != std::end(names) && *it == name)
+#endif
+    {
+        return makes[it - std::begin(names)]();
+    }
+#endif
     return nullptr;
 }
 )";
 
-        w.write(format,
-            bind_each<write_component_include>(classes),
-            settings.component_lib,
-            settings.component_lib,
-            bind_each<write_component_activation>(classes));
+        w.write(format, settings.component_lib, settings.component_lib, components.size(), components.size());
 
         if (settings.component_lib != "winrt")
         {
@@ -379,21 +419,8 @@ catch (...) { return winrt::to_hresult(); }
     {
         auto type_name = type.TypeName();
         auto type_namespace = type.TypeNamespace();
-        auto impl_name = get_impl_name(type_namespace, type_name);
 
-        if (has_factory_members(w, type))
-        {
-            auto format = R"(void* winrt_make_%()
-{
-    return winrt::detach_abi(winrt::make<winrt::@::factory_implementation::%>());
-}
-)";
-
-            w.write(format,
-                impl_name,
-                type_namespace,
-                type_name);
-        }
+        write_component_activation(w, type);
 
         if (!settings.component_opt)
         {
@@ -1210,14 +1237,7 @@ namespace winrt::@::implementation
 
     static void write_component_cpp(writer& w, TypeDef const& type)
     {
-        {
-            auto filename = get_component_filename(type);
-
-            auto format = R"(#include "%.h"
-)";
-
-            w.write(format, filename);
-        }
+        write_component_include(w, type);
 
         if (settings.component_opt)
         {
