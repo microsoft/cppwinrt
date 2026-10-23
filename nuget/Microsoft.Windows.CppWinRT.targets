@@ -1,4 +1,4 @@
-﻿<!--
+<!--
 ***********************************************************************************************
 Copyright (C) Microsoft Corporation. All rights reserved.
 ***********************************************************************************************
@@ -901,6 +901,53 @@ $(XamlMetaDataProviderPch)
             <AdditionalDependencies Condition="'$(CppWinRTFastAbi)'=='true'">%(AdditionalDependencies);$(CppWinRTPackageDir)build\native\lib\$(Platform)\cppwinrt_fast_forwarder.lib</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
+
+    <!--
+      Tell the debug visualizer where to find .winmd that this project consumes.
+      Compute all referenced Metadatas into a semicolon-separated string, escape it,
+      write it to a response file, and attach that response file only to the
+      pch source or to winrt_base.ixx when building C++/WinRT modules.
+      
+      Since only one variable provides this information, different definitions will
+      overwrite each other, so only Application is suitable for enabling.
+    -->
+    <Target Name="CppWinRTEmbedNatvisWinmds"
+            Condition="'$(ConfigurationType)' == 'Application'"
+            DependsOnTargets="CppWinRTResolveReferences"
+            BeforeTargets="ClCompile">
+        <ItemGroup>
+            <_CppWinRTNatvisWinmdFileItemsRaw Include="@(CppWinRTPlatformWinMDReferences->'%(RootDir)%(Directory)%(Filename)%(Extension)')" />
+            <_CppWinRTNatvisWinmdFileItemsRaw Include="@(CppWinRTDirectWinMDReferences->'%(RootDir)%(Directory)%(Filename)%(Extension)')" />
+            <_CppWinRTNatvisWinmdFileItemsRaw Include="@(CppWinRTDynamicProjectWinMDReferences->'%(RootDir)%(Directory)%(Filename)%(Extension)')" />
+            <_CppWinRTNatvisWinmdFileItemsRaw Include="@(CppWinRTStaticProjectWinMDReferences->'%(RootDir)%(Directory)%(Filename)%(Extension)')" />
+            <_CppWinRTNatvisWinmdFileItemsRaw Condition="'$(CppWinRTProjectWinMD)' != ''" Include="$([System.IO.Path]::GetFullPath('$(CppWinRTProjectWinMD)'))" />
+            <_CppWinRTNatvisWinmdFileItems Include="@(_CppWinRTNatvisWinmdFileItemsRaw->Distinct())" />
+        </ItemGroup>
+
+        <PropertyGroup>
+            <_CppWinRTNatvisWinmdFilesJoined>@(_CppWinRTNatvisWinmdFileItems->'%(Identity)', ';')</_CppWinRTNatvisWinmdFilesJoined>
+            <_CppWinRTNatvisWinmdFilesEscaped>$([System.String]::Copy('$(_CppWinRTNatvisWinmdFilesJoined)').Replace('\','\\').Replace(';','%3B'))</_CppWinRTNatvisWinmdFilesEscaped>
+            <_CppWinRTNatvisWinmdRspFile>$(IntDir)$(MSBuildProjectFile).winrt_natvis_winmds.rsp</_CppWinRTNatvisWinmdRspFile>
+        </PropertyGroup>
+
+        <WriteLinesToFile
+            File="$(_CppWinRTNatvisWinmdRspFile)"
+            Lines="/DWINRT_KNOWN_WINMDS=&quot;L\&quot;$(_CppWinRTNatvisWinmdFilesEscaped)\&quot;&quot;"
+            Overwrite="true"
+			WriteOnlyWhenDifferent="true"
+            Condition="'$(_CppWinRTNatvisWinmdFilesEscaped)' != ''" />
+
+        <ItemGroup>
+            <ClCompile Update="@(ClCompile->WithMetadataValue('PrecompiledHeader','Create'))"
+                       Condition="'$(_CppWinRTNatvisWinmdFilesEscaped)' != '' and '$(CppWinRTBuildModule)' != 'true'">
+                <AdditionalOptions>%(ClCompile.AdditionalOptions) @&quot;$(_CppWinRTNatvisWinmdRspFile)&quot;</AdditionalOptions>
+            </ClCompile>
+            <ClCompile Update="$(GeneratedFilesDir)winrt\winrt_base.ixx"
+                       Condition="'$(_CppWinRTNatvisWinmdFilesEscaped)' != '' and '$(CppWinRTBuildModule)' == 'true'">
+                <AdditionalOptions>%(ClCompile.AdditionalOptions) @&quot;$(_CppWinRTNatvisWinmdRspFile)&quot;</AdditionalOptions>
+            </ClCompile>
+        </ItemGroup>
+    </Target>
 
     <!--
       When CppWinRTBuildModule is true, discover generated .ixx module interface units
