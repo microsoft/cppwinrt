@@ -1321,11 +1321,25 @@ WINRT_EXPORT namespace winrt::impl
     };
 
     template<typename T, typename... Args>
+    class has_initializer_with_args
+    {
+        template <typename U, typename = decltype(std::declval<U>().InitializeComponent(std::declval<Args>()...))> static constexpr bool get_value(int) { return true; }
+        template <typename> static constexpr bool get_value(...) { return false; }
+
+    public:
+        static constexpr bool value = get_value<T>(0);
+    };
+
+    template<typename T, typename... Args>
     T* create_and_initialize(Args&&... args)
     {
         com_ptr<T> instance{ new heap_implements<T>(std::forward<Args>(args)...), take_ownership_from_abi };
-
-        if constexpr (has_initializer<T>::value)
+        
+        if constexpr ((sizeof...(Args) != 0) && has_initializer_with_args<T, Args...>::value)
+        {
+            instance->InitializeComponent(std::forward<Args>(args)...);
+        }
+        else if constexpr (has_initializer<T>::value)
         {
             instance->InitializeComponent();
         }
