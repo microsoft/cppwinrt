@@ -430,13 +430,13 @@ WINRT_EXPORT namespace winrt
 
     inline void* get_abi(hstring const& object) noexcept
     {
-        return *(void**)(&object);
+        return *impl::abi_cast(object);
     }
 
     inline void** put_abi(hstring& object) noexcept
     {
         object.clear();
-        return reinterpret_cast<void**>(&object);
+        return impl::abi_cast(object);
     }
 
     inline void attach_abi(hstring& object, void* value) noexcept
@@ -448,7 +448,7 @@ WINRT_EXPORT namespace winrt
     inline void* detach_abi(hstring& object) noexcept
     {
         void* temp = get_abi(object);
-        *reinterpret_cast<void**>(&object) = nullptr;
+        *impl::abi_cast(object) = nullptr;
         return temp;
     }
 
@@ -607,7 +607,7 @@ WINRT_EXPORT namespace winrt::impl
                 object = nullptr;
             }
 
-            return (void**)(&object);
+            return impl::abi_cast(object);
         }
 
         template <typename R>
