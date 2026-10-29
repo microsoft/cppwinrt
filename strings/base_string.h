@@ -5,13 +5,13 @@ WINRT_EXPORT namespace winrt::impl
     {
         atomic_ref_count() noexcept = default;
 
-        explicit atomic_ref_count(std::uint32_t count) noexcept : m_count(count)
+        explicit atomic_ref_count(std::uint32_t count) noexcept : m_count(static_cast<std::int32_t>(count))
         {
         }
 
         std::uint32_t operator=(std::uint32_t count) noexcept
         {
-            return m_count = count;
+            return static_cast<std::uint32_t>(m_count = static_cast<std::int32_t>(count));
         }
 
         std::uint32_t operator++() noexcept
@@ -639,7 +639,7 @@ WINRT_EXPORT namespace winrt::impl
         }
         WINRT_ASSERT(result.ec == std::errc{});
         wchar_t buffer[32];
-        auto end = std::copy(std::begin(temp), result.ptr, buffer);
+        auto end = std::transform(std::begin(temp), result.ptr, buffer, [](char value) noexcept { return static_cast<wchar_t>(value); });
         return hstring{ std::wstring_view{ buffer, static_cast<std::size_t>(end - buffer)} };
     }
 
@@ -785,7 +785,7 @@ WINRT_EXPORT namespace winrt
             return{};
         }
 
-        impl::hstring_builder result(size);
+        impl::hstring_builder result(static_cast<std::uint32_t>(size));
         WINRT_VERIFY_(size, WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<std::int32_t>(view.size()), result.data(), size));
         return result.to_hstring();
     }
@@ -800,15 +800,15 @@ WINRT_EXPORT namespace winrt
         }
 
 #if defined(__cpp_lib_string_resize_and_overwrite) && __cpp_lib_string_resize_and_overwrite >= 202110L
-    	std::string result;
-    	result.resize_and_overwrite(size, [value](char* buffer, std::size_t size) -> std::size_t
-    		{
-    			auto bytes_written = WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<std::int32_t>(value.size()), buffer, static_cast<std::int32_t>(size), nullptr, nullptr);
-    			WINRT_VERIFY_(size, static_cast<std::size_t>(bytes_written));
-    			return bytes_written;
-    		});
+        std::string result;
+        result.resize_and_overwrite(size, [value](char* buffer, std::size_t size) -> std::size_t
+            {
+                auto bytes_written = WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<std::int32_t>(value.size()), buffer, static_cast<std::int32_t>(size), nullptr, nullptr);
+                WINRT_VERIFY_(size, static_cast<std::size_t>(bytes_written));
+                return bytes_written;
+            });
 #else
-        std::string result(size, '?');
+        std::string result(static_cast<std::size_t>(size), '?');
         WINRT_VERIFY_(size, WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<std::int32_t>(value.size()), result.data(), size, nullptr, nullptr));
 #endif
         return result;

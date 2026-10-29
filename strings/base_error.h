@@ -60,7 +60,7 @@ WINRT_EXPORT namespace winrt::impl
 
         std::uint32_t const size = WINRT_IMPL_FormatMessageW(0x00001300, // FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS
             nullptr,
-            code,
+            static_cast<std::uint32_t>(code),
             0x00000400, // MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT)
             reinterpret_cast<wchar_t*>(message.put()),
             0,

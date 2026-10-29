@@ -149,7 +149,7 @@ WINRT_EXPORT namespace winrt::impl
 
             std::uint32_t const actual = (std::min)(static_cast<std::uint32_t>(m_values.size() - startIndex), values.size());
 
-            std::transform(m_values.begin() + startIndex, m_values.begin() + startIndex + actual, values.begin(), [&](auto && value)
+            std::transform(m_values.begin() + static_cast<std::ptrdiff_t>(startIndex), m_values.begin() + static_cast<std::ptrdiff_t>(startIndex) + static_cast<std::ptrdiff_t>(actual), values.begin(), [&](auto && value)
                 {
                     return box_value(value);
                 });
@@ -274,12 +274,12 @@ WINRT_EXPORT namespace winrt::impl
                 check_version(*m_owner);
                 std::uint32_t const actual = (std::min)(static_cast<std::uint32_t>(std::distance(m_current, m_end)), values.size());
 
-                std::transform(m_current, m_current + actual, values.begin(), [&](auto && value)
+                std::transform(m_current, m_current + static_cast<std::ptrdiff_t>(actual), values.begin(), [&](auto && value)
                     {
                         return box_value(value);
                     });
 
-                std::advance(m_current, actual);
+                std::advance(m_current, static_cast<std::ptrdiff_t>(actual));
                 return actual;
             }
 
