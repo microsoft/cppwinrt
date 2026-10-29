@@ -48,7 +48,7 @@ WINRT_EXPORT namespace winrt::impl
             std::uint8_t  Data4[8];
             inline bool operator!=(guid const& right) const noexcept
             {
-                return std::memcmp(this, &right, sizeof(guid));
+                return std::memcmp(this, &right, sizeof(guid)) != 0;
             }
         };
 
