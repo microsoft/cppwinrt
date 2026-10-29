@@ -45,7 +45,7 @@ jobs:
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
           $target_version = "999.999.999.999"
-          $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
+          $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version,CppWinRTEnableAllWarnings=true"
           if ("${{ matrix.compiler }}" -eq "clang-cl") {
             $props += ",Clang=1,PlatformToolset=ClangCl"
           } else {
@@ -146,7 +146,7 @@ jobs:
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
           $target_version = "999.999.999.999"
-          $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
+          $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version,CppWinRTEnableAllWarnings=true"
           if ("${{ matrix.compiler }}" -eq "clang-cl") {
             $props += ",Clang=1,PlatformToolset=ClangCl"
           } else {
@@ -315,7 +315,7 @@ jobs:
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
           $target_version = "999.999.999.999"
-          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version,PlatformToolset=v145"
+          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version,CppWinRTEnableAllWarnings=true,PlatformToolset=v145"
 
       - name: Restore nuget packages
         run: |
@@ -364,7 +364,7 @@ jobs:
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
           $target_version = "999.999.999.999"
-          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version,PlatformToolset=${{ matrix.toolchain.platform_toolset }}"
+          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version,CppWinRTEnableAllWarnings=true,PlatformToolset=${{ matrix.toolchain.platform_toolset }}"
 
       - name: Restore nuget packages
         run: |
