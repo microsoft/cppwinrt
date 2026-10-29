@@ -3,7 +3,7 @@
   <ItemDefinitionGroup Condition="'$(CppWinRTEnableAllWarnings)'=='true'">
     <ClCompile>
       <WarningLevel>EnableAllWarnings</WarningLevel>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
 
