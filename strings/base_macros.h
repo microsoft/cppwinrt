@@ -22,18 +22,6 @@
 
 #define WINRT_IMPL_SHIM(...) (*(abi_t<__VA_ARGS__>**)&static_cast<__VA_ARGS__ const&>(static_cast<D const&>(*this)))
 
-#ifdef _MSC_VER
-// Note: this is a workaround for a false-positive warning produced by the Visual C++ 15.9 compiler.
-#pragma warning(disable : 5046)
-
-// Note: this is a workaround for a false-positive warning produced by the Visual C++ 16.3 compiler.
-#pragma warning(disable : 4268)
-
-// C++ module warnings by /W4
-#pragma warning(disable : 4499)
-#pragma warning(disable : 4630)
-#endif // _MSC_VER
-
 #ifndef WINRT_EXPORT
 #ifdef WINRT_IMPL_BUILD_MODULE
 #define WINRT_EXPORT export extern "C++"
