@@ -140,6 +140,14 @@ WINRT_EXPORT namespace winrt
 
         guid() noexcept = default;
 
+        constexpr guid(std::uint32_t const Data1, std::uint16_t const Data2, std::uint16_t const Data3, std::uint8_t const (&Data4)[8]) noexcept :
+            Data1(Data1),
+            Data2(Data2),
+            Data3(Data3),
+            Data4{ Data4[0], Data4[1], Data4[2], Data4[3], Data4[4], Data4[5], Data4[6], Data4[7] }
+        {
+        }
+
         constexpr guid(std::uint32_t const Data1, std::uint16_t const Data2, std::uint16_t const Data3, std::array<std::uint8_t, 8> const& Data4) noexcept :
             Data1(Data1),
             Data2(Data2),
