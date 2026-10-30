@@ -275,13 +275,13 @@ WINRT_EXPORT namespace winrt
     template <typename I, typename D>
     impl::abi_t<I>* to_abi(impl::producer<D, I> const* from) noexcept
     {
-        return impl::abi_cast<impl::abi_t<I>>(const_cast<impl::producer<D, I>*>(from));
+        return const_cast<impl::abi_t<I>*>(impl::abi_cast<impl::abi_t<I> const>(from));
     }
 
     template <typename I, typename D>
     impl::abi_t<I>* to_abi(impl::producer_convert<D, I> const* from) noexcept
     {
-        return impl::abi_cast<impl::abi_t<I>>(const_cast<impl::producer<D, default_interface<I>>*>(static_cast<impl::producer<D, default_interface<I>> const*>(from)));
+        return const_cast<impl::abi_t<I>*>(impl::abi_cast<impl::abi_t<I> const>(from));
     }
 }
 
