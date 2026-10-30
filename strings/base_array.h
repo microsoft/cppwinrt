@@ -382,13 +382,11 @@ WINRT_EXPORT namespace winrt
             std::memset(&result, 0, sizeof(result));
             result.first = this->size();
             result.second = *reinterpret_cast<impl::arg_out<T>*>(this);
-            this->m_data = nullptr;
-            this->m_size = 0;
 #else
             std::pair<std::uint32_t, impl::arg_out<T>> result(this->size(), *reinterpret_cast<impl::arg_out<T>*>(this));
+#endif
             this->m_data = nullptr;
             this->m_size = 0;
-#endif
             return result;
         }
 
