@@ -275,13 +275,13 @@ WINRT_EXPORT namespace winrt
     template <typename I, typename D>
     impl::abi_t<I>* to_abi(impl::producer<D, I> const* from) noexcept
     {
-        return impl::abi_cast<impl::abi_t<I>>(const_cast<impl::producer<D, I>*>(from));
+        return const_cast<impl::abi_t<I>*>(impl::abi_cast<impl::abi_t<I> const>(from));
     }
 
     template <typename I, typename D>
     impl::abi_t<I>* to_abi(impl::producer_convert<D, I> const* from) noexcept
     {
-        return impl::abi_cast<impl::abi_t<I>>(const_cast<impl::producer<D, default_interface<I>>*>(static_cast<impl::producer<D, default_interface<I>> const*>(from)));
+        return const_cast<impl::abi_t<I>*>(impl::abi_cast<impl::abi_t<I> const>(from));
     }
 }
 
@@ -1281,8 +1281,7 @@ WINRT_EXPORT namespace winrt::impl
         static bool is_weak_ref(std::uintptr_t const value) noexcept
         {
             static_assert(is_weak_ref_source::value, "Weak references are not supported because no_weak_ref was specified.");
-            constexpr std::uintptr_t pointer_flag = static_cast<std::uintptr_t>(1) << ((sizeof(std::uintptr_t) * 8) - 1);
-            return (value & pointer_flag) != 0;
+            return static_cast<std::intptr_t>(value) < 0;
         }
 
         static weak_ref_t* decode_weak_ref(std::uintptr_t const value) noexcept
