@@ -18,7 +18,8 @@
   </metadata>
   <files>
     <file src="..\LICENSE"/>
-    <file src="$cppwinrt_exe$" target="bin"/>
+    <file src="$cppwinrt_exe_arm64$" target="bin\arm64"/>
+    <file src="$cppwinrt_exe_amd64$" target="bin\amd64"/>
     <file src="$cppwinrt_fast_fwd_x86$" target="build\native\lib\win32"/>
     <file src="$cppwinrt_fast_fwd_x64$" target="build\native\lib\x64"/>
     <file src="$cppwinrt_fast_fwd_arm64$" target="build\native\lib\arm64"/>

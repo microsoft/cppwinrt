@@ -61,10 +61,10 @@ jobs:
         run: |
           cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.sln /t:fast_fwd
 
-      - name: Build x86 prebuild tool
+      - name: Build x64 prebuild tool
         if: matrix.arch == 'arm64'
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" /p:Platform=x86 cppwinrt.sln /t:cppwinrt
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" /p:Platform=x64 cppwinrt.sln /t:cppwinrt
 
       - name: Build cppwinrt
         run: |
@@ -97,7 +97,7 @@ jobs:
         compiler: [MSVC, clang-cl]
         arch: [x86, x64, arm64]
         config: [Debug, Release]
-        test_exe: [test, test_nocoro, test_cpp20, test_cpp20_no_sourcelocation, test_cpp20_module, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
+        test_exe: [test, test_nocoro, test_cpp20, test_cpp20_no_sourcelocation, test_cpp20_module, test_cpp23, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
         toolchain:
           - image: windows-2025-vs2026
             platform_toolset: v145
@@ -122,12 +122,12 @@ jobs:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolchain.platform_toolset }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
 
-      - name: Fetch x86 cppwinrt executables (arm64 only)
+      - name: Fetch x64 cppwinrt executables (arm64 only)
         if: matrix.arch == 'arm64'
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: msvc-build-${{ matrix.compiler}}-x86-Release-${{ matrix.toolchain.platform_toolset }}-bin
-          path: _build/x86/Release/
+          name: msvc-build-${{ matrix.compiler}}-x64-Release-${{ matrix.toolchain.platform_toolset }}-bin
+          path: _build/x64/Release/
 
       - name: Download nuget
         run: |
@@ -183,7 +183,7 @@ jobs:
           $target_platform = "${{ matrix.arch }}"
           $cppwinrt_path = "_build\$target_platform\$target_configuration\cppwinrt.exe"
           if ($target_platform -eq "arm64") {
-            $cppwinrt_path = "_build\x86\Release\cppwinrt.exe"
+            $cppwinrt_path = "_build\x64\Release\cppwinrt.exe"
           }
           & $cppwinrt_path -in local -out _build\$target_platform\$target_configuration -verbose
 
@@ -378,7 +378,9 @@ jobs:
 
       - name: Run nuget test
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" test\nuget\NugetTest.sln
+          $target_configuration = "${{ matrix.config }}"
+          $target_platform = "${{ matrix.arch }}"
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "/p:CppWinRTPath=$(Resolve-Path "_build\$target_platform\$target_configuration")\" "$env:msbuild_config_props" test\nuget\NugetTest.sln
 
   build-nuget:
     name: Build nuget package with MSVC
