@@ -4,6 +4,7 @@
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <MinimalCoreWin>true</MinimalCoreWin>
+    <MultiProcMIDL>true</MultiProcMIDL>
     <ProjectGuid>{$guid1$}</ProjectGuid>
     <ProjectName>$projectname$</ProjectName>
     <RootNamespace>$safeprojectname$</RootNamespace>
@@ -74,6 +75,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
