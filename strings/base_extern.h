@@ -25,7 +25,11 @@ WINRT_EXPORT __declspec(selectany) std::int32_t(__stdcall* winrt_activation_hand
 #endif
 #endif
 
-export extern "C"
+// Windows.Foundation.ixx needs to access them.
+#ifdef WINRT_IMPL_BUILD_MODULE
+export
+#endif
+extern "C"
 {
     std::int32_t __stdcall WINRT_IMPL_RoGetActivationFactory(void* classId, winrt::guid const& iid, void** factory) noexcept WINRT_IMPL_LINK(RoGetActivationFactory, 12);
     std::int32_t __stdcall WINRT_IMPL_RoGetAgileReference(std::uint32_t options, winrt::guid const& iid, void* object, void** reference) noexcept WINRT_IMPL_LINK(RoGetAgileReference, 16);
