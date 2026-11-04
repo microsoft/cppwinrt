@@ -95,7 +95,7 @@ namespace cppwinrt
             w.write_each<write_forward>(members.contracts);
         }
         {
-            auto wrap_impl = wrap_impl_namespace(w);
+            auto wrap_impl = wrap_impl_namespace_without_export(w);
             w.write_each<write_category>(members.interfaces, "interface_category");
             w.write_each<write_category>(members.classes, "class_category");
             w.write_each<write_category>(members.enums, "enum_category");
@@ -119,7 +119,16 @@ namespace cppwinrt
             w.write_each<write_interface_abi>(members.interfaces);
             w.write_each<write_delegate_abi>(members.delegates);
             w.write_each<write_consume>(members.interfaces);
-            w.write_each<write_struct_abi>(members.structs);
+        }
+
+        {
+            auto wrap_impl = wrap_impl_namespace(w);
+            w.write_each<write_struct_abi_type>(members.structs);
+        }
+
+        {
+            auto wrap_impl = wrap_impl_namespace_without_export(w);
+            w.write_each<write_struct_abi_specialization>(members.structs);
         }
 
         write_close_file_guard(w);
