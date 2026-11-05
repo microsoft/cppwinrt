@@ -56,3 +56,11 @@ TEST_CASE("module_async_cancel")
     op.Cancel();
     REQUIRE(op.Status() == AsyncStatus::Canceled);
 }
+
+TEST_CASE("module_async_when_any")
+{
+    auto a = do_nothing_async();
+    auto b = do_nothing_async();
+    auto c = winrt::when_any(a, b);
+    c.get();
+}
