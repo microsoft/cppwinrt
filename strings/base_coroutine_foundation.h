@@ -895,7 +895,13 @@ WINRT_EXPORT namespace winrt
             {
                 auto sender_abi = *(impl::unknown_abi**)&sender;
 
+#if defined(__cpp_lib_atomic_ref) && __cpp_lib_atomic_ref >= 201806L
+                void* expected = nullptr;
+                std::atomic_ref<void*> ref{ *reinterpret_cast<void**>(&result) };
+                if (ref.compare_exchange_strong(expected, static_cast<void*>(sender_abi)))
+#else
                 if (nullptr == _InterlockedCompareExchangePointer(reinterpret_cast<void**>(&result), sender_abi, nullptr))
+#endif
                 {
                     sender_abi->AddRef();
                     status = operation_status;
