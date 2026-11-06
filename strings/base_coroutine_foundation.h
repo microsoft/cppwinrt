@@ -895,7 +895,6 @@ WINRT_EXPORT namespace winrt
             {
                 auto sender_abi = *(impl::unknown_abi**)&sender;
 
-
 #if defined(__cpp_lib_atomic_ref) && __cpp_lib_atomic_ref >= 201806L
                 void* expected = nullptr;
                 std::atomic_ref<void*> ref{ *reinterpret_cast<void**>(&result) };
