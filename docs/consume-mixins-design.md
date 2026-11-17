@@ -18,10 +18,12 @@ shared by every type that exposes the interface. Object layout and the public su
 behavior differs only by one fewer `QueryInterface` call in one case, and name collisions remain ambiguous exactly as
 before (see [Compatibility](#compatibility)).
 
-Projection of the Windows platform metadata, MSVC 14.51 (VS 2026), C++17, median of 3 runs. The rows are defined in
-[Measurement setup](#measurement-setup). In brief: the *Blank App PCH* is a precompiled header of the ten `winrt/`
-headers that the `pch.h` of Visual Studio's *Blank App (C++/WinRT)* template includes, and the
-*`Windows.UI.Xaml.Controls.h` TU* is a source file that includes only that header, compiled without a PCH.
+Projection of the Windows platform metadata, MSVC 14.51 (VS 2026), C++17, median of 3 runs, except the Windows
+Terminal rows, which are builds of a real app (C++20; median of 3 Release and 2 Debug builds), described in
+[Windows Terminal](#windows-terminal). The other rows are defined in [Measurement setup](#measurement-setup). In brief:
+the *Blank App PCH* is a precompiled header of the ten `winrt/` headers that the `pch.h` of Visual Studio's *Blank App
+(C++/WinRT)* template includes, and the *`Windows.UI.Xaml.Controls.h` TU* is a source file that includes only that
+header, compiled without a PCH.
 
 | | master | consume mixins | change |
 |-|-|-|-|
@@ -31,11 +33,15 @@ headers that the `pch.h` of Visual Studio's *Blank App (C++/WinRT)* template inc
 | PCH of the 62 headers of the `Windows.ApplicationModel` module (non-XAML), Debug: time / size / peak memory | 17.3 s / 750 MB / 832 MB | 15.7 s / 641 MB / 715 MB | -9% / -15% / -14% |
 | C++20 modules, Blank App import closure (67 modules), Debug: IFC bytes / critical path / peak memory | 229 MB / 58-59 s / 1,230 MB | 176 MB / 51-52 s / 1,034 MB | -23% / -12% / -16% |
 | clang-cl 22, Blank App PCH: time / size / peak memory | 11.0 s / 163 MB / 1,454 MB | 9.2 s / 112 MB / 853 MB | -17% / -31% / -41% |
+| Windows Terminal, full Release build (`OpenConsole.slnx`, 16 parallel builds): time / peak memory of the build / build outputs | 931 s / 16.7 GB / 41.3 GB | 867 s / 13.7 GB / 36.1 GB | -7% / -18% / -12% |
+| Windows Terminal, full Debug build: time / peak memory of the build / build outputs | 834 s / 17.7 GB / 40.6 GB | 768 s / 14.0 GB / 35.2 GB | -8% / -21% / -13% |
 
 No new warnings (MSVC `/Wall` x64 and x86, `/analyze`, clang `-Wall -Wextra`), identical runtime behavior under MSVC
 and clang, no runtime regressions, and the test matrix of CI passes, including component authoring and fast ABI (see
-[Results](#results) and [Validation](#validation)). Every runtime class and composable implementation type checks the
-layout the mixins rely on at compile time (see [Layout guarantees](#layout-guarantees-and-their-checks)).
+[Results](#results) and [Validation](#validation)). Windows Terminal, which authors XAML controls on top of WinUI 2,
+builds without source changes and passes the same unit tests (see [Windows Terminal](#windows-terminal)). Every runtime
+class and composable implementation type checks the layout the mixins rely on at compile time (see
+[Layout guarantees](#layout-guarantees-and-their-checks)).
 
 ## Motivation
 
@@ -1203,6 +1209,105 @@ purview are compiled into its object file.
 | Blank App PCH | 11.0 s, 163 MB, 1,454 MB peak | 9.2 s, 112 MB, 853 MB peak | -17% / -31% / -41% |
 | code-behind / 10 mixed / 10 `Button`-derived controls (`/Yu`) | 1.53 / 1.96 / 2.03 s | 1.33 / 1.52 / 1.58 s | -13% / -22% / -22% |
 
+### Windows Terminal
+
+[Windows Terminal](https://github.com/microsoft/terminal) is a large real-world consumer and author of C++/WinRT. Its
+solution has 72 C++ projects, besides 6 C# projects and a packaging project. 17 of them use C++/WinRT: they author
+runtime classes (105 IDL files) and XAML UI (43 XAML files) on top of `Windows.UI.Xaml` and WinUI 2.8 (the
+`Microsoft.UI.Xaml` 2.8.4 package, whose controls are composable classes that derive from `Windows.UI.Xaml` classes),
+with C++20, `WINRT_LEAN_AND_MEAN`, and a precompiled header per project. Each of these projects generates its own
+projection of the Windows SDK 10.0.26100 contracts, WinUI 2, WebView2, and the Terminal components it references.
+
+**Setup.**
+
+- Terminal at `4447e8ffe`, the `main` branch of microsoft/terminal on 2026-11-16 (built from a fork that was
+  identical), which uses the C++/WinRT 3.0.260818.1 package.
+- Two local NuGet packages, built from `856eaff7` (master: 3.0.260818.1 plus four commits) and from this branch the way
+  `build_nuget.cmd` builds the official package, including its optimized (Release) x86 `cppwinrt.exe`. The only changes
+  to Terminal are the package version (in `dep/nuget/packages.config`, `src/common.nugetversions.props` and `.targets`,
+  and the `packages.config` files of two scratch projects) and a local package source in `NuGet.Config`; no source
+  changes.
+- `msbuild OpenConsole.slnx /m /p:Configuration=Release /p:Platform=x64` (and `Debug`): the whole solution, as CI
+  builds it, with MSBuild's default parallelism (up to 16 projects at a time on this machine, each compiling with
+  `/MP`), toolset v145 (MSVC 14.51). Every build started from a clean tree (`git clean` of everything except the
+  restored NuGet and vcpkg packages, then `nuget restore`) and ran in a job object, which records the peak commit
+  charge of all the build's processes together. 3 Release and 2 Debug builds per variant, alternated.
+
+**Full builds.** Medians; the ranges of master and consume mixins don't overlap for the times or the peak memory of the
+build. GB and MB are 2^30 and 2^20 bytes.
+
+| | Release: master | consume mixins | change | Debug: master | consume mixins | change |
+|-|-|-|-|-|-|-|
+| build time | 931 s | 867 s | -6.9% | 834 s | 768 s | -7.9% |
+| CPU time, all processes | 4,777 s | 4,551 s | -4.7% | 3,229 s | 3,091 s | -4.3% |
+| peak commit, all processes together | 16.7 GB | 13.7 GB | -18.0% | 17.7 GB | 14.0 GB | -20.9% |
+| peak commit of the largest single process | 2.9 GB | 2.8 GB | -1.3% | 2.5 GB | 1.9 GB | -22.1% |
+| `.pch` | 27.2 GB | 23.3 GB | -14.3% | 27.8 GB | 23.9 GB | -13.9% |
+| `.pdb` | 6.0 GB | 4.8 GB | -20.8% | 7.2 GB | 5.8 GB | -18.9% |
+| `.obj` | 2.62 GB | 2.73 GB | +4.2% | 1.47 GB | 1.36 GB | -7.3% |
+| `.lib` | 1.30 GB | 1.35 GB | +3.8% | 0.73 GB | 0.69 GB | -5.8% |
+| `.iobj` and `.ipdb` (incremental LTCG) | 2.41 GB | 2.27 GB | -5.9% | | | |
+| generated projection headers (17 copies) | 1.05 GB | 1.09 GB | +3.9% | 1.05 GB | 1.09 GB | +3.9% |
+| DLLs and EXEs | 310 MB | 310 MB | +0.2% | 1,005 MB | 988 MB | -1.7% |
+| all build outputs | 41.3 GB | 36.1 GB | -12.5% | 40.6 GB | 35.2 GB | -13.4% |
+
+Much of the build doesn't depend on the projection's headers (the console host, C# projects, LTCG code generation, the
+XAML compiler, MIDL), which is why its time improves by 7-8% while the XAML PCH compiles improve by 18% (below). Peak
+memory improves more, because the largest compiles, which dominate it when they run in parallel, are the ones that use
+the XAML projection.
+
+**PCH compiles per project.** Release; each project's PCH compile rerun alone with the exact command MSBuild ran (from
+the CL tracking logs, outputs redirected); median of 3, alternated:
+
+| project | compile time | PCH size | peak memory |
+|-|-|-|-|
+| `TerminalAppLib` | 41.3 → 34.3 s (-17%) | 1,721 → 1,293 MB (-25%) | 1,965 → 1,482 MB (-25%) |
+| `Microsoft.Terminal.Control.Lib` | 34.8 → 29.2 s (-16%) | 1,514 → 1,154 MB (-24%) | 1,739 → 1,312 MB (-25%) |
+| `Microsoft.Terminal.Settings.Editor` | 34.2 → 28.7 s (-16%) | 1,483 → 1,127 MB (-24%) | 1,712 → 1,282 MB (-25%) |
+| `UnitTests_SettingsModel` | 32.4 → 26.9 s (-17%) | 1,452 → 1,110 MB (-24%) | 1,655 → 1,265 MB (-24%) |
+| `LocalTests_TerminalApp` | 32.5 → 27.1 s (-16%) | 1,444 → 1,106 MB (-23%) | 1,645 → 1,260 MB (-23%) |
+| `WindowsTerminal` | 30.5 → 25.1 s (-18%) | 1,395 → 1,047 MB (-25%) | 1,595 → 1,204 MB (-25%) |
+| `Microsoft.Terminal.Settings.Model.Lib` | 29.5 → 24.3 s (-18%) | 1,354 → 1,004 MB (-26%) | 1,546 → 1,150 MB (-26%) |
+| `Microsoft.Terminal.UI` | 28.6 → 23.5 s (-18%) | 1,328 → 982 MB (-26%) | 1,521 → 1,129 MB (-26%) |
+| `Microsoft.Terminal.UI.Markdown` | 28.6 → 23.5 s (-18%) | 1,324 → 979 MB (-26%) | 1,517 → 1,130 MB (-26%) |
+| `UnitTests_TerminalCore` | 18.6 → 14.6 s (-21%) | 926 → 697 MB (-25%) | 1,077 → 810 MB (-25%) |
+| `UnitTests_Control` | 18.1 → 13.8 s (-24%) | 912 → 678 MB (-26%) | 1,061 → 788 MB (-26%) |
+| `TerminalSettingsAppAdapterLib` | 17.3 → 13.2 s (-24%) | 888 → 656 MB (-26%) | 1,041 → 763 MB (-27%) |
+| `UnitTests_TerminalApp` | 9.8 → 9.4 s (-3%) | 474 → 445 MB (-6%) | 545 → 519 MB (-5%) |
+| `WinRTUtils` | 9.4 → 9.0 s (-4%) | 453 → 433 MB (-4%) | 533 → 503 MB (-6%) |
+| `TerminalConnection` | 9.2 → 8.9 s (-3%) | 451 → 430 MB (-5%) | 528 → 504 MB (-5%) |
+| `TerminalCore` | 7.4 → 7.4 s (+1%) | 362 → 358 MB (-1%) | 425 → 420 MB (-1%) |
+| `Host` (console host, no C++/WinRT) | 5.7 → 5.8 s (+1%) | 326 → 326 MB (0%) | 389 → 389 MB (0%) |
+
+The first 12 PCHs contain the XAML projection (directly, or through the headers of Terminal's own XAML components):
+together, they compile in 284 s instead of 347 s (-18%) and take 11.6 GB instead of 15.4 GB. C++/WinRT projects without
+XAML gain 3-6%, and projects that don't use C++/WinRT are unchanged. Debug gives the same picture: the three largest PCH
+compiles are 16-17% faster with 23% less peak memory (`TerminalAppLib`: 47.4 → 39.4 s, 1,746 → 1,321 MB, 2,043 →
+1,564 MB peak).
+
+**Object files and binaries.** In Debug, object files, libraries, and every C++/WinRT binary get smaller (DLLs and EXEs
+by 0.6-4.9% each; `TerminalApp.dll` 22.6 → 21.9 MB), and so does `pch.obj` (by about 40% for the three largest
+projects). In Release, `/GL` object files hold the compiler's intermediate language, and they're 4% larger (+114 MB,
+against 3.9 GB less PCH). 48 MB of that is the `pch.obj` of the nine projects that include the XAML headers directly,
+which grows by 7-11% each. The Release binaries are the same size overall (+0.2%), but the two most XAML-heavy
+DLLs have 1.0-1.2% more code (`.text` +25.6 KB in `TerminalApp.dll` and +32.6 KB in
+`Microsoft.Terminal.Settings.Editor.dll`); the other DLLs change by -0.4% to +0.2%. The PDB of `TerminalApp.dll` shows
+why. The out-of-line C++/WinRT functions halve: 234 consume template, `consume_general`, `require_one`, and `base_one`
+functions with 40.8 KB of code become 157 `direct_X`, `require_X`, `overrides_X`, and `base_C` functions with 19.4 KB.
+But the functions that call many projected methods grow, such as `TerminalPage::_PopulateContextMenu` (+1,005 bytes):
+the optimizer inlines more of the simpler mixin bodies into their callers.
+
+**Projection generation.** The x86 Release `cppwinrt.exe` of each package, run 10 times alternately on the response
+files of `TerminalAppLib`'s build: the platform projection (the Windows SDK, 1,258 files) takes 0.85 s instead of
+0.76 s and writes 59.6 MB instead of 57.5 MB; the reference projection (WinUI 2, WebView2, and Terminal's components)
+takes 0.34 s instead of 0.45 s. Generation stays about 1.2 s per project, while the project's PCH compile takes 7-41 s.
+
+**Correctness.** Both variants build with no errors and the same 206 warnings (all from C# analyzers). Terminal's unit
+tests (`tools/tests.xml`, type `unit`, run with TAEF) give identical results: 6,932 tests pass and 2 are skipped in each
+build, including the C++/WinRT tests of `TerminalApp` (51), `TerminalCore` (55), `SettingsModel` (158), and `Control`
+(29). The 76 tests of `TerminalApp.LocalTests`, which run in a packaged XAML test host, are blocked in both, because
+TAEF couldn't start that host on this machine.
+
 ### Runtime
 
 Release (`/O2 /GL`, LTCG), in-process objects, nanoseconds per operation, median of 3 interleaved rounds:
@@ -1303,6 +1408,9 @@ The `Composition` tests of `test_fast` and `test_slow` now check these counts fo
 - A runtime test on real objects (collections, `PropertySet`, `ValueSet`, `StringMap`, JSON, `Uri`, streams, async,
   events, iterators, errors, in-process `QueryInterface` counts) produces identical output to master under MSVC and
   clang. With `WINRT_DIAGNOSTICS`, the query counts by name are identical except for the `auto_revoke` case above.
+- Windows Terminal (17 C++/WinRT projects that author XAML controls and runtime classes on top of WinUI 2, with C++20
+  and `WINRT_LEAN_AND_MEAN`) builds in Release and Debug with no source changes, no errors, and the same warnings as
+  with master, and its unit tests give identical results (see [Windows Terminal](#windows-terminal)).
 
 ## Compatibility
 
@@ -1372,6 +1480,6 @@ cancel out and should be dropped, folding the templated helpers into the first P
 Size: generator +587/-407 lines (mostly `code_writers.h`), strings +215/-147, tests +2/-2 in the change itself, and
 tests +134/-4 in PR 0.
 
-Validation still to do before opening PRs: the v143 (VS 2022) toolset; the WinUI 3 (`Microsoft.UI.Xaml`) projection,
-both for correctness and to confirm the gains; and the Windows SDK metadata (`cppwinrt -in sdk`) that projects normally
-use, which is expected to give the same results as the OS metadata measured here.
+Validation still to do before opening PRs: the v143 (VS 2022) toolset, and the WinUI 3 (`Microsoft.UI.Xaml` of the
+Windows App SDK) projection, both for correctness and to confirm the gains. Windows Terminal covers WinUI 2 and the
+Windows SDK metadata that projects normally use (its projections are generated from the SDK 10.0.26100 contracts).
