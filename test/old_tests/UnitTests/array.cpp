@@ -1079,6 +1079,19 @@ TEST_CASE("com_array,move")
     REQUIRE(b.empty());
 }
 
+TEST_CASE("com_array,detach")
+{
+    com_array<int> a{ 1, 2, 3 };
+    auto detached = detach_abi(a);
+    com_array<int> b(detached.second, detached.first, take_ownership_from_abi);
+
+    REQUIRE(a.empty());
+    REQUIRE(3 == b.size());
+    REQUIRE(b[0] == 1);
+    REQUIRE(b[1] == 2);
+    REQUIRE(b[2] == 3);
+}
+
 //
 // Now some tests covering producing and consuming arrays
 //
