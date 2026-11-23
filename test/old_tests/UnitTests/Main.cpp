@@ -1,5 +1,5 @@
-#include <crtdbg.h>
 #include "pch.h"
+#include <crtdbg.h>
 
 #define CATCH_CONFIG_RUNNER
 

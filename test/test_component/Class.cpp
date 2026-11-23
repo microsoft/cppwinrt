@@ -519,14 +519,7 @@ namespace winrt::test_component::implementation
 
 namespace
 {
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-function"
-#endif
-    void ValidateStaticEventAutoRevoke() {
+    [[maybe_unused]] void ValidateStaticEventAutoRevoke() {
         auto x = winrt::test_component::Simple::StaticEvent(winrt::auto_revoke, [](auto&&, auto&&) {});
     }
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
 }

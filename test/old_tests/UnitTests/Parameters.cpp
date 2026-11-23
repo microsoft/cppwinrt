@@ -44,7 +44,7 @@ TEST_CASE("Parameters")
 
         std::array<int, 3> view;
         params.CopyInt32Array(view);
-        REQUIRE(view == std::array<int, 3>{1, 2, 3});
+        REQUIRE(view == std::array<int, 3>{{ 1, 2, 3 }});
     }
 
     {

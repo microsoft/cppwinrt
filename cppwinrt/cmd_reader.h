@@ -383,7 +383,7 @@ namespace cppwinrt
 
         bool exists(std::string_view const& name) const noexcept
         {
-            return m_options.count(name);
+            return m_options.count(name) != 0;
         }
 
         auto const& values(std::string_view const& name) const noexcept

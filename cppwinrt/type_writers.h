@@ -271,6 +271,18 @@ namespace cppwinrt
             case ConstantType::UInt32:
                 write_value(value.ValueUInt32());
                 break;
+            case ConstantType::Boolean:
+            case ConstantType::Char:
+            case ConstantType::Int8:
+            case ConstantType::UInt8:
+            case ConstantType::Int16:
+            case ConstantType::UInt16:
+            case ConstantType::Int64:
+            case ConstantType::UInt64:
+            case ConstantType::Float32:
+            case ConstantType::Float64:
+            case ConstantType::String:
+            case ConstantType::Class:
             default:
                 throw std::invalid_argument("Unexpected constant type");
             }

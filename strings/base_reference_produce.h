@@ -134,7 +134,7 @@ WINRT_EXPORT namespace winrt::impl
 
                 if (is_guid_of<IAgileObject>(id))
                 {
-                    auto unknown = reinterpret_cast<unknown_abi*>(to_abi<Interface>(derived()));
+                    auto unknown = abi_cast<unknown_abi>(to_abi<Interface>(derived()));
                     unknown->AddRef();
                     *object = unknown;
                     return error_ok;

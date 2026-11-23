@@ -721,6 +721,10 @@ namespace cppwinrt
                         w.write("%.size(), put_abi(%)", param_name, param_name);
                     }
                     break;
+                case param_category::generic_type:
+                case param_category::object_type:
+                case param_category::string_type:
+                case param_category::struct_type:
                 default:
                     w.write("impl::bind_out(%)", param_name);
                     break;
