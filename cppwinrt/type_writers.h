@@ -516,7 +516,18 @@ namespace cppwinrt
                 },
                 [&](GenericTypeIndex var)
                 {
-                    write(generic_param_stack.back()[var.index]);
+                    if (generic_param_stack.empty())
+                    {
+                        throw_invalid("Invalid generic type parameter index ", std::to_string(var.index), ": no generic parameter context is active");
+                    }
+
+                    auto const& generic_params = generic_param_stack.back();
+                    if (var.index >= generic_params.size())
+                    {
+                        throw_invalid("Invalid generic type parameter index ", std::to_string(var.index), ": only ", std::to_string(generic_params.size()), " generic parameters are available");
+                    }
+
+                    write(generic_params[var.index]);
                 },
                     [&](auto&& type)
                 {

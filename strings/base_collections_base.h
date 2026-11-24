@@ -123,7 +123,7 @@ WINRT_EXPORT namespace winrt
             }
             else
             {
-                return std::transform(first, std::next(first, count), result, [&](auto&& value)
+                return std::transform(first, std::next(first, static_cast<std::ptrdiff_t>(count)), result, [&](auto&& value)
                 {
                     if constexpr (!impl::is_key_value_pair<T>::value)
                     {
@@ -217,7 +217,7 @@ WINRT_EXPORT namespace winrt
             {
                 std::uint32_t const actual = (std::min)(static_cast<std::uint32_t>(m_end - m_current), values.size());
                 m_owner->copy_n(m_current, actual, values.begin());
-                m_current += actual;
+                m_current += static_cast<std::ptrdiff_t>(actual);
                 return actual;
             }
 
@@ -254,7 +254,7 @@ WINRT_EXPORT namespace winrt
                 throw hresult_out_of_bounds();
             }
 
-            return static_cast<D const&>(*this).unwrap_value(*std::next(static_cast<D const&>(*this).get_container().begin(), index));
+            return static_cast<D const&>(*this).unwrap_value(*std::next(static_cast<D const&>(*this).get_container().begin(), static_cast<std::ptrdiff_t>(index)));
         }
 
         std::uint32_t Size() const noexcept
@@ -284,7 +284,7 @@ WINRT_EXPORT namespace winrt
             }
 
             std::uint32_t const actual = (std::min)(container_size() - startIndex, values.size());
-            this->copy_n(static_cast<D const&>(*this).get_container().begin() + startIndex, actual, values.begin());
+            this->copy_n(static_cast<D const&>(*this).get_container().begin() + static_cast<std::ptrdiff_t>(startIndex), actual, values.begin());
             return actual;
         }
 
@@ -329,7 +329,7 @@ WINRT_EXPORT namespace winrt
             }
 
             this->increment_version();
-            static_cast<D&>(*this).get_container().insert(static_cast<D const&>(*this).get_container().begin() + index, static_cast<D const&>(*this).wrap_value(value));
+            static_cast<D&>(*this).get_container().insert(static_cast<D const&>(*this).get_container().begin() + static_cast<std::ptrdiff_t>(index), static_cast<D const&>(*this).wrap_value(value));
         }
 
         void RemoveAt(std::uint32_t const index)
@@ -343,7 +343,7 @@ WINRT_EXPORT namespace winrt
             }
 
             this->increment_version();
-            auto itr = static_cast<D&>(*this).get_container().begin() + index;
+            auto itr = static_cast<D&>(*this).get_container().begin() + static_cast<std::ptrdiff_t>(index);
             removedValue.assign(*itr);
             static_cast<D&>(*this).get_container().erase(itr);
         }

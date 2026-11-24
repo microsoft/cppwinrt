@@ -232,6 +232,24 @@ WINRT_EXPORT namespace winrt::impl
             std::memset(ptr, 0, sizeof(T));
         }
     }
+
+    // Converts between an implementation type and the ABI type it is layout compatible with.
+    // Classic COM interfaces derive from ::IUnknown rather than from unknown_abi, and producer
+    // holds its vtable by value for WinRT interfaces, so the two types are often unrelated and
+    // only a reinterpret_cast will do. Where they are related, a reinterpret_cast is both
+    // unnecessary and reported as C4946, so prefer the checked conversion when one exists.
+    template <typename To, typename From>
+    To* abi_cast(From* from) noexcept
+    {
+        if constexpr (std::is_convertible_v<From*, To*>)
+        {
+            return static_cast<To*>(from);
+        }
+        else
+        {
+            return reinterpret_cast<To*>(from);
+        }
+    }
 }
 
 WINRT_EXPORT namespace winrt
@@ -257,13 +275,13 @@ WINRT_EXPORT namespace winrt
     template <typename I, typename D>
     impl::abi_t<I>* to_abi(impl::producer<D, I> const* from) noexcept
     {
-        return reinterpret_cast<impl::abi_t<I>*>(const_cast<impl::producer<D, I>*>(from));
+        return impl::abi_cast<impl::abi_t<I>>(const_cast<impl::producer<D, I>*>(from));
     }
 
     template <typename I, typename D>
     impl::abi_t<I>* to_abi(impl::producer_convert<D, I> const* from) noexcept
     {
-        return reinterpret_cast<impl::abi_t<I>*>((impl::producer<D, default_interface<I>>*)from);
+        return impl::abi_cast<impl::abi_t<I>>(const_cast<impl::producer<D, default_interface<I>>*>(static_cast<impl::producer<D, default_interface<I>> const*>(from)));
     }
 }
 
@@ -1260,10 +1278,11 @@ WINRT_EXPORT namespace winrt::impl
             }
         }
 
-        static bool is_weak_ref(std::intptr_t const value) noexcept
+        static bool is_weak_ref(std::uintptr_t const value) noexcept
         {
             static_assert(is_weak_ref_source::value, "Weak references are not supported because no_weak_ref was specified.");
-            return value < 0;
+            constexpr std::uintptr_t pointer_flag = static_cast<std::uintptr_t>(1) << ((sizeof(std::uintptr_t) * 8) - 1);
+            return (value & pointer_flag) != 0;
         }
 
         static weak_ref_t* decode_weak_ref(std::uintptr_t const value) noexcept
@@ -1567,7 +1586,7 @@ WINRT_EXPORT namespace winrt
 
         impl::unknown_abi* get_unknown() const noexcept override
         {
-            return reinterpret_cast<impl::unknown_abi*>(to_abi<typename impl::implements_default_interface<D>::type>(this));
+            return impl::abi_cast<impl::unknown_abi>(to_abi<typename impl::implements_default_interface<D>::type>(this));
         }
 
         hstring GetRuntimeClassName() const override
