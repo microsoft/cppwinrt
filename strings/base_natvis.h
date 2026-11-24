@@ -100,4 +100,21 @@ decltype(winrt::impl::natvis::get_val) & WINRT_get_val = winrt::impl::natvis::ge
 #pragma comment(linker, "/include:WINRT_get_val")
 #endif
 
+#ifdef WINRT_KNOWN_WINMDS
+extern "C"
+__declspec(selectany)
+wchar_t const* WINRT_Known_Winmds = WINRT_KNOWN_WINMDS;
+extern "C"
+__declspec(selectany)
+unsigned long WINRT_Known_Winmds_Size = sizeof(WINRT_KNOWN_WINMDS);
+
+#ifdef _M_IX86
+#pragma comment(linker, "/include:_WINRT_Known_Winmds")
+#pragma comment(linker, "/include:_WINRT_Known_Winmds_Size")
+#else
+#pragma comment(linker, "/include:WINRT_Known_Winmds")
+#pragma comment(linker, "/include:WINRT_Known_Winmds_Size")
+#endif
+#endif
+
 #endif
