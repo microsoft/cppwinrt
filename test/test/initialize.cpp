@@ -65,6 +65,56 @@ namespace
             m_initialize_called = true;
         }
     };
+
+    template<typename D>
+    struct InitializeTWithArgs : implements<D, IStringable>
+    {
+        InitializeTWithArgs([[maybe_unused]] bool& initialize_called)
+        {
+        }
+
+        ~InitializeTWithArgs()
+        {
+        }
+
+        void InitializeComponent(bool& initialize_called)
+        {
+            initialize_called = true;
+            throw some_exception();
+        }
+
+        hstring ToString()
+        {
+            return {};
+        }
+    };
+
+    struct InitializeWithArgs : InitializeTWithArgs<InitializeWithArgs>
+    {
+        InitializeWithArgs(bool& initialize_called) : InitializeTWithArgs(initialize_called)
+        {
+        }
+    };
+
+    struct ThrowingDerivedWithArgs : InitializeTWithArgs<ThrowingDerivedWithArgs>
+    {
+        ThrowingDerivedWithArgs(bool& initialize_called) : InitializeTWithArgs(initialize_called)
+        {
+            throw some_exception();
+        }
+    };
+
+    struct OverriddenInitializeWithArgs : InitializeTWithArgs<OverriddenInitializeWithArgs>
+    {
+        OverriddenInitializeWithArgs(bool& initialize_called) : InitializeTWithArgs(initialize_called)
+        {
+        }
+
+        void InitializeComponent(bool& initialize_called)
+        {
+            initialize_called = true;
+        }
+    };
 }
 
 TEST_CASE("initialize")
@@ -108,6 +158,54 @@ TEST_CASE("initialize")
         try
         {
             make<OverriddenInitialize>(initialize_called);
+        }
+        catch (some_exception const&)
+        {
+            exception_caught = true;
+        }
+        REQUIRE(initialize_called);
+        REQUIRE(!exception_caught);
+    }
+
+    // Ensure that failure to initialize is failure to instantiate, with no side effects
+    {
+        bool initialize_called{};
+        bool exception_caught{};
+        try
+        {
+            make<InitializeWithArgs>(initialize_called);
+        }
+        catch (some_exception const&)
+        {
+            exception_caught = true;
+        }
+        REQUIRE(initialize_called);
+        REQUIRE(exception_caught);
+    }
+
+    // Ensure that base is never initialized if exception thrown from derived/base constructor
+    {
+        bool initialize_called{};
+        bool exception_caught{};
+        try
+        {
+            make<ThrowingDerivedWithArgs>(initialize_called);
+        }
+        catch (some_exception const&)
+        {
+            exception_caught = true;
+        }
+        REQUIRE(!initialize_called);
+        REQUIRE(exception_caught);
+    }
+
+    // Support for overriding initialization for post-processing (e.g., accessing Xaml properties)
+    {
+        bool initialize_called{};
+        bool exception_caught{};
+        try
+        {
+            make<OverriddenInitializeWithArgs>(initialize_called);
         }
         catch (some_exception const&)
         {
