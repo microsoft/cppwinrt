@@ -30,7 +30,13 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTCommandModules Condition="'$(CppWinRTBuildModule)'=='true'">-modules</CppWinRTCommandModules>
         <CppWinRTCommandModuleFilter Condition="'$(CppWinRTModuleInclude)' != ''">-module_include $(CppWinRTModuleInclude.Replace(';', ' '))</CppWinRTCommandModuleFilter>
         <CppWinRTCommandModuleFilter Condition="'$(CppWinRTModuleExclude)' != ''">$(CppWinRTCommandModuleFilter) -module_exclude $(CppWinRTModuleExclude.Replace(';', ' '))</CppWinRTCommandModuleFilter>
-        <CppWinRTPath Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)bin\"</CppWinRTPath>
+        <CppWinRTExeArch>$(PreferredToolArchitecture)</CppWinRTExeArch>
+        <!-- If MSBuild is running under WOW64, the 64-bit binary is used. -->
+        <CppWinRTExeArch Condition="'$(CppWinRTExeArch)' == '' and '$(PROCESSOR_ARCHITEW6432)' != ''">$(PROCESSOR_ARCHITEW6432)</CppWinRTExeArch>
+        <CppWinRTExeArch Condition="'$(CppWinRTExeArch)' == '' and '$(PROCESSOR_ARCHITECTURE)' != ''">$(PROCESSOR_ARCHITECTURE)</CppWinRTExeArch>
+        <!-- The environment variable outputs AMD64, while PreferredToolArchitecture uses x64; unify them as x64. -->
+        <CppWinRTExeArch Condition="'$(CppWinRTExeArch)' == 'AMD64'">x64</CppWinRTExeArch>
+        <CppWinRTPath Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)bin\$(CppWinRTExeArch)\"</CppWinRTPath>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)"</CppWinRTPath>
         <!-- By default enable C++/WinRT to include target platform winmds if we didn't override sdk references and the C++ Project system isn't already adding them -->
         <!-- _PrepareForReferenceResolution adds the references if TargetPlatformIdentifier is UAP -->
