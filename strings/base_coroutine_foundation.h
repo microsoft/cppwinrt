@@ -169,6 +169,11 @@ WINRT_EXPORT namespace winrt::impl
         template<typename T>
         await_adapter(T&& async) : async(std::forward<T>(async)) { }
 
+        ~await_adapter()
+        {
+            this->revoke_canceller();
+        }
+
         std::conditional_t<preserve_context, Async const&, Async> async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
         std::int32_t failure = 0;

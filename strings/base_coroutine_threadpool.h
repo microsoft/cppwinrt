@@ -222,15 +222,22 @@ WINRT_EXPORT namespace winrt
 
         ~cancellable_awaiter()
         {
-            if (m_promise)
-            {
-                m_promise->revoke_canceller();
-            }
+            revoke_canceller();
         }
 
         void operator=(cancellable_awaiter const&) = delete;
 
     protected:
+        // Derived awaiters whose canceller touches their own members must call this from their
+        // destructor so that an in-flight cancel completes before those members are destroyed.
+        void revoke_canceller()
+        {
+            if (auto promise = std::exchange(m_promise, nullptr))
+            {
+                promise->revoke_canceller();
+            }
+        }
+
         template <typename T>
         void set_cancellable_promise_from_handle(std::coroutine_handle<T> const& handle)
         {
@@ -375,6 +382,11 @@ WINRT_EXPORT namespace winrt::impl
         {}
 #endif
 
+        ~timespan_awaiter()
+        {
+            this->revoke_canceller();
+        }
+
         void enable_cancellation(cancellable_promise* promise)
         {
             promise->set_canceller([](void* context)
@@ -482,6 +494,11 @@ WINRT_EXPORT namespace winrt::impl
             m_state{other.m_state.load()}
         {}
 #endif
+
+        ~signal_awaiter()
+        {
+            this->revoke_canceller();
+        }
 
         void enable_cancellation(cancellable_promise* promise)
         {
