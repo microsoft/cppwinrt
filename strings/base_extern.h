@@ -32,7 +32,6 @@ extern "C"
     std::int32_t __stdcall WINRT_IMPL_SetThreadpoolTimerEx(winrt::impl::ptp_timer, void*, std::uint32_t, std::uint32_t) noexcept WINRT_IMPL_LINK(SetThreadpoolTimerEx, 16);
     std::int32_t __stdcall WINRT_IMPL_SetThreadpoolWaitEx(winrt::impl::ptp_wait, void*, void*, void*) noexcept WINRT_IMPL_LINK(SetThreadpoolWaitEx, 16);
     std::int32_t __stdcall WINRT_IMPL_RoOriginateLanguageException(std::int32_t error, void* message, void* exception) noexcept WINRT_IMPL_LINK(RoOriginateLanguageException, 12);
-    std::int32_t __stdcall WINRT_IMPL_RoCaptureErrorContext(std::int32_t error) noexcept WINRT_IMPL_LINK(RoCaptureErrorContext, 4);
     void __stdcall WINRT_IMPL_RoFailFastWithErrorContext(std::int32_t) noexcept WINRT_IMPL_LINK(RoFailFastWithErrorContext, 4);
     std::int32_t __stdcall WINRT_IMPL_RoTransformError(std::int32_t, std::int32_t, void*) noexcept WINRT_IMPL_LINK(RoTransformError, 12);
 
@@ -52,7 +51,6 @@ extern "C"
     std::int32_t  __stdcall WINRT_IMPL_CoGetApartmentType(std::int32_t* type, std::int32_t* qualifier) noexcept WINRT_IMPL_LINK(CoGetApartmentType, 8);
     void*    __stdcall WINRT_IMPL_CoTaskMemAlloc(std::size_t size) noexcept WINRT_IMPL_LINK(CoTaskMemAlloc, 4);
     void     __stdcall WINRT_IMPL_CoTaskMemFree(void* ptr) noexcept WINRT_IMPL_LINK(CoTaskMemFree, 4);
-    winrt::impl::bstr __stdcall WINRT_IMPL_SysAllocString(wchar_t const* value) noexcept WINRT_IMPL_LINK(SysAllocString, 4);
     void     __stdcall WINRT_IMPL_SysFreeString(winrt::impl::bstr string) noexcept WINRT_IMPL_LINK(SysFreeString, 4);
     std::uint32_t __stdcall WINRT_IMPL_SysStringLen(winrt::impl::bstr string) noexcept WINRT_IMPL_LINK(SysStringLen, 4);
     std::int32_t  __stdcall WINRT_IMPL_IIDFromString(wchar_t const* string, winrt::guid* iid) noexcept WINRT_IMPL_LINK(IIDFromString, 8);
@@ -98,10 +96,6 @@ extern "C"
     winrt::impl::ptp_wait __stdcall WINRT_IMPL_CreateThreadpoolWait(void(__stdcall *callback)(void*, void* context, void*, std::uint32_t result), void* context, void*) noexcept WINRT_IMPL_LINK(CreateThreadpoolWait, 12);
     void     __stdcall WINRT_IMPL_SetThreadpoolWait(winrt::impl::ptp_wait wait, void* handle, void* timeout) noexcept WINRT_IMPL_LINK(SetThreadpoolWait, 12);
     void     __stdcall WINRT_IMPL_CloseThreadpoolWait(winrt::impl::ptp_wait wait) noexcept WINRT_IMPL_LINK(CloseThreadpoolWait, 4);
-    winrt::impl::ptp_io __stdcall WINRT_IMPL_CreateThreadpoolIo(void* object, void(__stdcall *callback)(void*, void* context, void* overlapped, std::uint32_t result, std::size_t bytes, void*) noexcept, void* context, void*) noexcept WINRT_IMPL_LINK(CreateThreadpoolIo, 16);
-    void     __stdcall WINRT_IMPL_StartThreadpoolIo(winrt::impl::ptp_io io) noexcept WINRT_IMPL_LINK(StartThreadpoolIo, 4);
-    void     __stdcall WINRT_IMPL_CancelThreadpoolIo(winrt::impl::ptp_io io) noexcept WINRT_IMPL_LINK(CancelThreadpoolIo, 4);
-    void     __stdcall WINRT_IMPL_CloseThreadpoolIo(winrt::impl::ptp_io io) noexcept WINRT_IMPL_LINK(CloseThreadpoolIo, 4);
     winrt::impl::ptp_pool __stdcall WINRT_IMPL_CreateThreadpool(void* reserved) noexcept WINRT_IMPL_LINK(CreateThreadpool, 4);
     void __stdcall WINRT_IMPL_SetThreadpoolThreadMaximum(winrt::impl::ptp_pool pool, std::uint32_t value) noexcept WINRT_IMPL_LINK(SetThreadpoolThreadMaximum, 8);
     std::int32_t __stdcall WINRT_IMPL_SetThreadpoolThreadMinimum(winrt::impl::ptp_pool pool, std::uint32_t value) noexcept WINRT_IMPL_LINK(SetThreadpoolThreadMinimum, 8);
