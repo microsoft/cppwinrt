@@ -147,7 +147,10 @@ WINRT_EXPORT namespace winrt
         {
             m_context = context;
             canceller_t expected = nullptr;
-            m_canceller.compare_exchange_strong(expected, canceller, std::memory_order_release, std::memory_order_relaxed);
+            if (!m_canceller.compare_exchange_strong(expected, canceller, std::memory_order_release, std::memory_order_relaxed))
+            {
+                canceller(context);
+            }
         }
 
         void revoke_canceller()
@@ -160,28 +163,40 @@ WINRT_EXPORT namespace winrt
                     std::this_thread::yield();
                     existing = m_canceller.load(std::memory_order_relaxed);
                 }
+
+                if (existing == cancelled_ptr)
+                {
+                    std::atomic_thread_fence(std::memory_order_acquire);
+                    return;
+                }
             }
             while (!m_canceller.compare_exchange_weak(existing, nullptr, std::memory_order_acquire, std::memory_order_relaxed));
         }
 
         void cancel()
         {
-            auto canceller = m_canceller.exchange(cancelling_ptr, std::memory_order_acquire);
-            if (canceller != cancelling_ptr)
+            auto canceller = m_canceller.load(std::memory_order_relaxed);
+            do
             {
-                struct unique_cancellation_lock
+                if (canceller == cancelling_ptr || canceller == cancelled_ptr)
                 {
-                    cancellable_promise* promise;
-                    ~unique_cancellation_lock()
-                    {
-                        promise->m_canceller.store(nullptr, std::memory_order_release);
-                    }
-                } lock{ this };
-
-                if (canceller != nullptr)
-                {
-                    canceller(m_context);
+                    return;
                 }
+            }
+            while (!m_canceller.compare_exchange_weak(canceller, cancelling_ptr, std::memory_order_acquire, std::memory_order_relaxed));
+
+            struct unique_cancellation_lock
+            {
+                cancellable_promise* promise;
+                ~unique_cancellation_lock()
+                {
+                    promise->m_canceller.store(cancelled_ptr, std::memory_order_release);
+                }
+            } lock{ this };
+
+            if (canceller != nullptr)
+            {
+                canceller(m_context);
             }
         }
 
@@ -207,6 +222,7 @@ WINRT_EXPORT namespace winrt
 
     private:
         static inline auto const cancelling_ptr = reinterpret_cast<canceller_t>(1);
+        static inline auto const cancelled_ptr = reinterpret_cast<canceller_t>(2);
 
         std::atomic<canceller_t> m_canceller{ nullptr };
         void* m_context{ nullptr };
