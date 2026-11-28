@@ -236,8 +236,16 @@ WINRT_EXPORT namespace winrt
         {
             if constexpr (std::is_base_of_v<cancellable_promise, T>)
             {
+                // Captured at suspend time so that await_resume need not reach for the
+                // promise, which may already have completed and released resources.
+                m_originate_on_cancel = handle.promise().should_originate_on_cancel();
                 set_cancellable_promise(&handle.promise());
             }
+        }
+
+        bool should_originate_on_cancel() const noexcept
+        {
+            return m_originate_on_cancel;
         }
 
     private:
@@ -251,6 +259,7 @@ WINRT_EXPORT namespace winrt
         }
 
         cancellable_promise* m_promise = nullptr;
+        bool m_originate_on_cancel = true;
     };
 
     [[nodiscard]] inline auto resume_background() noexcept
@@ -405,7 +414,14 @@ WINRT_EXPORT namespace winrt::impl
         {
             if (m_state.exchange(state::idle, std::memory_order_relaxed) == state::canceled)
             {
-                throw hresult_canceled();
+                if (should_originate_on_cancel())
+                {
+                    throw hresult_canceled();
+                }
+                else
+                {
+                    throw hresult_canceled(hresult_error::no_originate);
+                }
             }
         }
 
@@ -513,7 +529,14 @@ WINRT_EXPORT namespace winrt::impl
         {
             if (m_state.exchange(state::idle, std::memory_order_relaxed) == state::canceled)
             {
-                throw hresult_canceled();
+                if (should_originate_on_cancel())
+                {
+                    throw hresult_canceled();
+                }
+                else
+                {
+                    throw hresult_canceled(hresult_error::no_originate);
+                }
             }
             return m_result == 0;
         }

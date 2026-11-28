@@ -228,6 +228,7 @@
     <ClCompile Include="async_cancel_callback.cpp" />
     <ClCompile Include="async_check_cancel.cpp" />
     <ClCompile Include="async_completed.cpp" />
+    <ClCompile Include="async_originate_count_on_cancel.cpp" />
     <ClCompile Include="async_propagate_cancel.cpp" />
     <ClCompile Include="await_completed.cpp" />
     <ClCompile Include="box_array.cpp" />

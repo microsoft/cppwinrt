@@ -76,11 +76,18 @@ WINRT_EXPORT namespace winrt::impl
         return wait_for_completed(async, static_cast<std::uint32_t>(milliseconds));
     }
 
-    inline void check_status_canceled(Windows::Foundation::AsyncStatus status)
+    inline void check_status_canceled(Windows::Foundation::AsyncStatus status, bool originate = true)
     {
         if (status == Windows::Foundation::AsyncStatus::Canceled)
         {
-            throw hresult_canceled();
+            if (originate)
+            {
+                throw hresult_canceled();
+            }
+            else
+            {
+                throw hresult_canceled(hresult_error::no_originate);
+            }
         }
     }
 
@@ -197,7 +204,7 @@ WINRT_EXPORT namespace winrt::impl
         auto await_resume() const
         {
             check_hresult(failure);
-            check_status_canceled(status);
+            check_status_canceled(status, this->should_originate_on_cancel());
             return async.GetResults();
         }
 
@@ -520,7 +527,7 @@ WINRT_EXPORT namespace winrt::impl
                 if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Started)
                 {
                     m_status.store(AsyncStatus::Canceled, std::memory_order_relaxed);
-                    if (cancellable_promise::originate_on_cancel())
+                    if (this->should_originate_on_cancel())
                     {
                         m_exception = std::make_exception_ptr(hresult_canceled());
                     }
@@ -671,7 +678,7 @@ WINRT_EXPORT namespace winrt::impl
         {
             if (Status() == AsyncStatus::Canceled)
             {
-                if (cancellable_promise::originate_on_cancel())
+                if (this->should_originate_on_cancel())
                 {
                     throw winrt::hresult_canceled();
                 }
